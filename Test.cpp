@@ -32,20 +32,6 @@ void getGridSize(int dimensions[2]){
     // return dimensions;
 }
 
-void createMatrix(int n, int m){
-  // an array with 5 rows and 2 columns.
-   int a[5][2] = { {0,0}, {1,2}, {2,4}, {3,6},{4,8}};
-
-   // output each array element's value
-   for ( int i = 0; i < 5; i++ )
-      for ( int j = 0; j < 2; j++ ) {
-
-         cout << "a[" << i << "][" << j << "]: ";
-         cout << a[i][j]<< endl;
-      }
-
-}
-
 void printMatrix(string matrix[][m], size_t n, size_t m){
   for (size_t i = 0; i < n; i++) {
     for (size_t j = 0; j < m; j++) {
@@ -131,39 +117,39 @@ void fileReading(string matrix[][m]){
         {
           // cout<<"Fila "<<i<<endl;
           if (line[i] == 'X'){
-            cout<<"JODER UNA X ";
-            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            cout<<"FOUND AN X ";
+            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "X";
             xcount ++;
           }
           else if (line[i] == '*'){
-            cout<<"JODER UN POWERUP ";
-            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            cout<<"FOUND A POWERUP ";
+            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "*";
             powcount++;
           }
           else if (line[i] == '$'){
-            cout<<"JODER UN DIAMANTE ";
-            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            cout<<"FOUND A DIAMOND ";
+            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "$";
             diamcount++;
 
           }
           else if (line[i] == 'M'){
-            cout<<"JODER UN MONSTRUO ";
-            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            cout<<"FOUND A MONSTER";
+            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "M";
             monscount++;
           }
           else if (line[i] == ' '){
-            cout<<"JODER ESPACIO VACIO ";
-            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            cout<<"FOUND EMPTY SPACE";
+            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = " ";
             whitecount++;
           }
           else if (line[i] == 'J'){
-            cout<<"JODER JUGADOR ";
-            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            cout<<"FOUND PLAYER ";
+            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "J";
           }
         }
@@ -191,9 +177,9 @@ int main() {
   //     matrix[i][j] = "X";
   //   }
   // }
-  // movement(matrix,n,m);
   fileReading(matrix);
   printMatrix(matrix,n,m);
+  // movement(matrix,n,m);
 
   return 0;
 }
