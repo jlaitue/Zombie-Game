@@ -5,25 +5,9 @@
 #include <fstream>
 using namespace std;
 
-const size_t n = 5;
-const size_t m = 10;
-// void createGrid(int n, int m){
-//   int i, j;
-//   string arr1[n][m];
-//
-//   //This will allow you to input the numbers individually to fill the array.
-//   for (i = 0; i <= 7; i++)
-//        for (j = 0; j <= 7; j++)
-//              arr1[i][j] = " X ";
-//
-//   //This will output the array.
-//   for (i = 0; i <= 7; i++)
-//        {
-//        for (j = 0; j <= 7; j++)
-//              cout << arr1[i][j];
-//        cout << endl;
-//        }
-// }
+const size_t n = 6;
+const size_t m = 15;
+
 void getGridSize(int dimensions[2]){
   // array  dimensions;
   string line;
@@ -76,112 +60,140 @@ void movement(string matrix[][m], size_t n, size_t m){
   string move = "";
   int rowPosition = n/2;
   int colPosition = m/2;
-  matrix[rowPosition][colPosition] = "J";
+  matrix[rowPosition][colPosition] = "O";
   cout<<"Intial position (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
   cout<<"Initialized matrix: \n\n";
   printMatrix(matrix,n,m);
   while (move != "STOP") {
     cout<<"\nEnter move: ";
     cin>>move;
+
     if (move == "w"){
-      matrix[rowPosition][colPosition]="X";
+      matrix[rowPosition][colPosition] = "X";
       rowPosition --;
-      matrix[rowPosition][colPosition]="J";
+      matrix[rowPosition][colPosition] = "O";
       cout<<"Moving UP"<<endl;
       cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
       printMatrix(matrix,n,m);
     }
+
     if (move == "s"){
-      matrix[rowPosition][colPosition]="X";
+      matrix[rowPosition][colPosition] = "X";
       rowPosition ++;
-      matrix[rowPosition][colPosition]="J";
+      matrix[rowPosition][colPosition] = "O";
       cout<<"Moving DOWN"<<endl;
       cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
       printMatrix(matrix,n,m);
     }
+
     if (move == "d"){
-      matrix[rowPosition][colPosition]="X";
+      matrix[rowPosition][colPosition] = "X";
       colPosition++;
-      matrix[rowPosition][colPosition]="J";
+      matrix[rowPosition][colPosition] = "O";
       cout<<"Moving RIGHT"<<endl;
       cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
       printMatrix(matrix,n,m);
     }
+
     if (move == "a"){
-      matrix[rowPosition][colPosition]="X";
+      matrix[rowPosition][colPosition] = "X";
       colPosition--;
-      matrix[rowPosition][colPosition]="J";
+      matrix[rowPosition][colPosition] = "O";
       cout<<"Moving LEFT"<<endl;
       cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
       printMatrix(matrix,n,m);
     }
+
     if (move == "x"){
       move = "STOP";
     }
   }
 }
 
-void fileReading(){
-  // string line;
-  // int rows=0,columns=0;
-  //
-  // fstream inFile;
-  // inFile.open("tableau.txt");
-  //
-  // if (!inFile) {
-  //   cerr << "Unable to open file datafile.txt";
-  //   exit(1);   // call system to stop
-  // }
-  // while (getline(inFile, line)) {
-  //   int xcont = 0, astcont=0, diamcount=0;
-  //       // using printf() in all tests for consistency
-  //       // cout<<line;
-  //       // cout<<line.size();
-  //       for(unsigned int i = 0; i < line.length(); i++)
-  //       {
-  //         // cout<<"Fila "<<i<<endl;
-  //         if (line[i] == 'X'){
-  //           // cout<<"JODER UNA X ";
-  //           xcont ++;
-  //         }
-  //         else if (line[i] == '*'){
-  //           // cout<<"JODER UN POWERUP ";
-  //           astcont++;
-  //         }
-  //         else if (line[i] == '$'){
-  //           diamcount++;
-  //
-  //         }
-  //       }
-  //
-  //
-  //       // printf(line);
-  //       printf("\n");
-  //       // printf(line.length())s;
-  //       rows ++;
-  //       cout<<"Row: "<<rows<<endl;
-  //       cout<<"Amount X "<<xcont<<endl;
-  //       cout<<"Amount * "<<astcont<<endl;
-  //       cout<<"Amount $ "<<diamcount<<endl;
-  //   }
-  //   columns = line.size();
-  //   cout<<"Rows: "<<rows<<endl;
-  //   cout<<"Columns: "<<columns;
-  // createGrid(8,8);
-  // system("pause");
+void fileReading(string matrix[][m]){
+  string line;
+  int rows=0,columns=0;
+
+  fstream inFile;
+  inFile.open("tableau.txt");
+
+  if (!inFile) {
+    cerr << "Unable to open file datafile.txt";
+    exit(1);   // call system to stop
+  }
+  int xcount = 0, powcount=0, diamcount=0, monscount=0, whitecount=0;
+  while (getline(inFile, line)) {
+        cout<<"Analyzing row: "<<rows<<endl;
+        // using printf() in all tests for consistency
+        // cout<<line;
+        // cout<<line.size();
+        for(size_t i = 0; i < line.length(); i++)
+        {
+          // cout<<"Fila "<<i<<endl;
+          if (line[i] == 'X'){
+            cout<<"JODER UNA X ";
+            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            matrix[rows][i] = "X";
+            xcount ++;
+          }
+          else if (line[i] == '*'){
+            cout<<"JODER UN POWERUP ";
+            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            matrix[rows][i] = "*";
+            powcount++;
+          }
+          else if (line[i] == '$'){
+            cout<<"JODER UN DIAMANTE ";
+            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            matrix[rows][i] = "$";
+            diamcount++;
+
+          }
+          else if (line[i] == 'M'){
+            cout<<"JODER UN MONSTRUO ";
+            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            matrix[rows][i] = "M";
+            monscount++;
+          }
+          else if (line[i] == ' '){
+            cout<<"JODER ESPACIO VACIO ";
+            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            matrix[rows][i] = " ";
+            whitecount++;
+          }
+          else if (line[i] == 'J'){
+            cout<<"JODER JUGADOR ";
+            cout<<"Coordenadas: "<<rows<<", "<<i<<"\n";
+            matrix[rows][i] = "J";
+          }
+        }
+        printf("\n");
+        rows ++;
+    }
+    cout<<"Amount X "<<xcount<<endl;
+    cout<<"Amount * "<<powcount<<endl;
+    cout<<"Amount $ "<<diamcount<<endl;
+    cout<<"Amount M "<<monscount<<endl;
+    cout<<"Amount ' ' "<<whitecount<<endl;
+
+    columns = line.size();
+    cout<<"Total Rows: "<<rows<<endl;
+    cout<<"Total Columns: "<<columns<<endl;
+    system("pause");
+    cout<<"\n\n";
 }
 
 int main() {
-
-
   string matrix[n][m];
 
-  for (size_t i = 0; i < n; i++) {
-    for (size_t j = 0; j < m; j++) {
-      matrix[i][j]="X";
-    }
-  }
-  movement(matrix,n,m);
+  // for (size_t i = 0; i < n; i++) {
+  //   for (size_t j = 0; j < m; j++) {
+  //     matrix[i][j] = "X";
+  //   }
+  // }
+  // movement(matrix,n,m);
+  fileReading(matrix);
+  printMatrix(matrix,n,m);
 
   return 0;
 }
