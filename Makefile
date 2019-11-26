@@ -8,4 +8,3 @@ Boxint.o : Boxint.cpp
 	$(CPP) -c Boxint.cpp
 clean :
 	del	*.o
-g++ --std=c++11 -Wall -c Test.cpp

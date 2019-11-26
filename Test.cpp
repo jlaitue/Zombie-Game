@@ -46,6 +46,7 @@ void movement(string matrix[][m], size_t n, size_t m){
   string move = "";
   int rowPosition = n/2;
   int colPosition = m/2;
+
   matrix[rowPosition][colPosition] = "O";
   cout<<"Intial position (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
   cout<<"Initialized matrix: \n\n";
@@ -90,6 +91,45 @@ void movement(string matrix[][m], size_t n, size_t m){
       printMatrix(matrix,n,m);
     }
 
+    if (move == "e"){
+      matrix[rowPosition][colPosition] = "X";
+      colPosition++;
+      rowPosition--;
+      matrix[rowPosition][colPosition] = "O";
+      cout<<"Moving "<<endl;
+      cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
+      printMatrix(matrix,n,m);
+    }
+
+    if (move == "q"){
+      matrix[rowPosition][colPosition] = "X";
+      colPosition--;
+      rowPosition--;
+      matrix[rowPosition][colPosition] = "O";
+      cout<<"Moving "<<endl;
+      cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
+      printMatrix(matrix,n,m);
+    }
+
+    if (move == "z"){
+      matrix[rowPosition][colPosition] = "X";
+      colPosition--;
+      rowPosition++;
+      matrix[rowPosition][colPosition] = "O";
+      cout<<"Moving "<<endl;
+      cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
+      printMatrix(matrix,n,m);
+    }
+
+    if (move == "c"){
+      matrix[rowPosition][colPosition] = "X";
+      colPosition++;
+      rowPosition++;
+      matrix[rowPosition][colPosition] = "O";
+      cout<<"Moving "<<endl;
+      cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
+      printMatrix(matrix,n,m);
+    }
     if (move == "x"){
       move = "STOP";
     }
@@ -99,6 +139,7 @@ void movement(string matrix[][m], size_t n, size_t m){
 void fileReading(string matrix[][m]){
   string line;
   int rows=0,columns=0;
+  int xcount = 0, powcount=0, diamcount=0, monscount=0, whitecount=0;
 
   fstream inFile;
   inFile.open("tableau.txt");
@@ -107,7 +148,7 @@ void fileReading(string matrix[][m]){
     cerr << "Unable to open file datafile.txt";
     exit(1);   // call system to stop
   }
-  int xcount = 0, powcount=0, diamcount=0, monscount=0, whitecount=0;
+
   while (getline(inFile, line)) {
         cout<<"Analyzing row: "<<rows<<endl;
         // using printf() in all tests for consistency
@@ -177,9 +218,10 @@ int main() {
   //     matrix[i][j] = "X";
   //   }
   // }
+
   fileReading(matrix);
   printMatrix(matrix,n,m);
-  // movement(matrix,n,m);
+  movement(matrix,n,m);
 
   return 0;
 }
