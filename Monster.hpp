@@ -1,10 +1,11 @@
 #ifndef MONSTER_H
 #define MONSTER_H
+#include "Element.hpp"
 #include <string>
 
 using namespace std;
 
-class Monster {
+class Monster: public Element {
 private:
   string name;
 

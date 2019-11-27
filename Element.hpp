@@ -6,15 +6,18 @@ using namespace std;
 
 class Element {
 private:
-  string name;
+  string type;
+  int xcoord;
+  int ycoord;
+  string symbol;
 
 public:
     // Parameterized Constructor
-    Element(string name);
+    Element(string type, int x, int y, string symbol);
 
     void showElement();
-    // void setMonAttribut(int value);
-    string getElementName();
+    string getElementType();
+
     ~Element();
 };
 

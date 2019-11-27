@@ -6,7 +6,7 @@ using namespace std;
 
 Monster::Monster(string nameValue){
   name = nameValue;
-  cout<<"Monster destroyed"<<endl;
+  cout<<"Monster created"<<endl;
 }
 
 void Monster::showMonster(){

@@ -4,17 +4,23 @@
 
 using namespace std;
 
-Element::Element(string nameValue){
-  name = nameValue;
-  cout<<"Element destroyed"<<endl;
+Element::Element(string typeValue, int xValue, int yValue, string symbolValue){
+  type = typeValue;
+  xcoord = xValue;
+  ycoord = yValue;
+  symbol = symbolValue;
+  cout<<"Element created"<<endl;
 }
 
 void Element::showElement(){
-  std::cout<<getElementName()<<std::endl;
+  cout<<type<<endl;
+  cout<<xcoord<<endl;
+  cout<<ycoord<<endl;
+  cout<<symbol<<endl;
 }
 
-string Element::getElementName(){
-  return name;
+string Element::getElementType(){
+  return type;
 }
 
 Element::~Element(){

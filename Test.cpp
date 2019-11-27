@@ -3,6 +3,8 @@
 #include <string>
 #include <array>
 #include <fstream>
+#include "Element.hpp"
+#include "Monster.hpp"
 using namespace std;
 
 const size_t n = 6;
@@ -219,9 +221,21 @@ int main() {
   //   }
   // }
 
-  fileReading(matrix);
-  printMatrix(matrix,n,m);
-  movement(matrix,n,m);
+  Element element1("static", 0, 1, "$");
+  Element element2("static", 1, 1, "X");
+
+  element1.showElement();
+  element2.showElement();
+
+  // Monster monster1("Juan");
+  // Monster monster2("Mike");
+  //
+  // monster1.showMonster();
+  // monster2.showMonster();
+
+  // fileReading(matrix);
+  // printMatrix(matrix,n,m);
+  // movement(matrix,n,m);
 
   return 0;
 }
