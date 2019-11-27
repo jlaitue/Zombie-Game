@@ -219,9 +219,9 @@ int main() {
   //   }
   // }
 
-  fileReading(matrix);
-  printMatrix(matrix,n,m);
-  movement(matrix,n,m);
+  //fileReading(matrix);
+  //printMatrix(matrix,n,m);
+  //movement(matrix,n,m);
 
   return 0;
 }
