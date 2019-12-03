@@ -208,8 +208,19 @@ void fileReading(string matrix[][m]){
     columns = line.size();
     cout<<"Total Rows: "<<rows<<endl;
     cout<<"Total Columns: "<<columns<<endl;
-    system("pause");
-    cout<<"\n\n";
+    cout<<"\n\n\n";
+}
+
+void createMatrix(){
+  ofstream myfile ("EX1.txt");
+  if (myfile.is_open())
+  {
+    for (size_t i = 0; i < 20; i++) {
+      myfile << "XXXXXXXXXXXXXXXXXXXX\n";
+    }
+    myfile.close();
+  }
+  else cout << "Unable to open file";
 }
 
 int main() {
@@ -221,11 +232,11 @@ int main() {
   //   }
   // }
 
-  Element element1("static", 0, 1, "$");
-  Element element2("static", 1, 1, "X");
-
-  element1.showElement();
-  element2.showElement();
+  // Element element1("static", 0, 1, "$");
+  // Element element2("static", 1, 1, "X");
+  //
+  // element1.showElement();
+  // element2.showElement();
 
   // Monster monster1("Juan");
   // Monster monster2("Mike");
@@ -237,5 +248,10 @@ int main() {
   // printMatrix(matrix,n,m);
   // movement(matrix,n,m);
 
+  // createMatrix();
+  string cul = "HOLA";
+  cout<<cul[1]<<endl;
+  cul.replace(1,1,"X");
+  cout<<cul<<endl;
   return 0;
 }
