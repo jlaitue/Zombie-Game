@@ -9,4 +9,4 @@ Element.o : Element.cpp
 Monster.o : Monster.cpp
 	$(CPP) -c Monster.cpp
 clean :
-	rm	*.o *.hpp.gch
+	del	*.o *.hpp.gch
