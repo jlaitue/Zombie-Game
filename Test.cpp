@@ -3,12 +3,13 @@
 #include <string>
 #include <array>
 #include <fstream>
+#include <ctime>
 #include "Element.hpp"
 #include "Monster.hpp"
 using namespace std;
 
-const size_t n = 6;
-const size_t m = 15;
+const size_t n = 20;
+const size_t m = 41;
 
 void getGridSize(int dimensions[2]){
   // array  dimensions;
@@ -37,7 +38,7 @@ void getGridSize(int dimensions[2]){
 void printMatrix(string matrix[][m], size_t n, size_t m){
   for (size_t i = 0; i < n; i++) {
     for (size_t j = 0; j < m; j++) {
-      cout<<matrix[i][j]<<" ";
+      cout<<matrix[i][j];
     }
     cout<<"\n";
   }
@@ -138,13 +139,13 @@ void movement(string matrix[][m], size_t n, size_t m){
   }
 }
 
-void fileReading(string matrix[][m]){
+void fileReading(string filename, string matrix[][m]){
   string line;
   int rows=0,columns=0;
   int xcount = 0, powcount=0, diamcount=0, monscount=0, whitecount=0;
 
   fstream inFile;
-  inFile.open("tableau.txt");
+  inFile.open(filename);
 
   if (!inFile) {
     cerr << "Unable to open file datafile.txt";
@@ -223,6 +224,86 @@ void createMatrix(){
   else cout << "Unable to open file";
 }
 
+void createBoard(int nDiam){
+  int n = 20, m = 40;
+  string line = "", line2 = "X";
+
+  srand (time(NULL));
+  // cout<<row<<endl;
+  // cout<<column<<endl;
+
+  ofstream outfile ("board.txt");
+  int row = rand() %18 + 1;
+  int column = rand() %38 + 1;
+
+  cout<<row<<endl;
+  cout<<column<<endl;
+
+  for (int i = 0; i < m ; i++) {
+    line = line + "X";
+    if(i>1){
+      line2 = line2 + " ";
+    }
+  }
+
+  line = line + "X\n";
+  line2 = line2 + " X\n";
+  cout<< line<<endl;
+  cout<< line2<<endl;
+
+  if (outfile.is_open())
+  {
+    cout << "Writting to file"<<endl;
+
+    for (int i = 0; i < n; i++) {
+      if(i == 0 or i == n-1){
+        outfile << line;
+      }
+      else if (i == row and nDiam != 0){
+        string elementos = "X";
+
+        for (int k = 0; k < m ; k++) {
+          if(k!=column){
+            elementos = elementos + " ";
+          }
+          else {
+            elementos = elementos + "$";
+            nDiam --;
+          }
+        }
+        elementos = elementos + "X\n";
+        outfile<<elementos;
+      }
+      else {
+        outfile<<line2;
+      }
+    }
+
+    // while (nDiam != 0) {
+    //   for (int i = 0; i < n; i++) {
+    //     for (int j = 0; j < m; j++) {
+    //       if (i == row) {
+    //
+    //         outfile << "$";
+    //         nDiam --;
+    //       }
+    //     }
+    //   }
+    // }
+
+    outfile.close();
+    cout << "Done writting."<<endl;
+  }
+  else cout << "Unable to open file";
+}
+
+void randomValues(){
+  srand (time(NULL));
+  int row = rand() %19 + 1;
+  int column = rand() %39 + 1;
+  cout<<row<<endl;
+  cout<<column<<endl;
+}
 int main() {
   string matrix[n][m];
 
@@ -244,14 +325,15 @@ int main() {
   // monster1.showMonster();
   // monster2.showMonster();
 
-  // fileReading(matrix);
+  // fileReading("board.txt", matrix);
   // printMatrix(matrix,n,m);
   // movement(matrix,n,m);
 
-  // createMatrix();
   string cul = "HOLA";
   cout<<cul[1]<<endl;
   cul.replace(1,1,"X");
-  cout<<cul<<endl;
+  cout<<cul<<endl;¡
+  createBoard(3);
+  // randomValues();¡
   return 0;
 }
