@@ -1,5 +1,6 @@
-# Programmation Orienté à Objets Master Mathematiques et Informatique: Data Science
-Final project Languages Programmation Orientes Objets
+# Programmation orientée objet 
+# Master Mathématiques et Informatique: Data Science
+Final project
 
 TODO:
 
