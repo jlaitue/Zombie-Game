@@ -11,13 +11,18 @@ const size_t m = 40;
 
 void displayBoard(string matrix[][m], size_t n, size_t m){
     for (size_t i = 0; i < n; i++) {
+      if(i<10){cout<<i<<"  ";}
+      else{cout<<i<<" ";}
       for (size_t j = 0; j < m; j++) {
+        // if (i == n-1) {cout<<j;}
         cout<<matrix[i][j];
       }
       cout<<"\n";
     }
     cout<<"\n";
   }
+
+
 
 void movement(string matrix[][m], size_t n, size_t m){
   string move = "";
@@ -231,7 +236,7 @@ void movement(string matrix[][m], size_t n, size_t m){
     if (move == "x" or move == "X"){
       move = "STOP";
     }
-    
+
     matrix[rowPosition][colPosition] = "O";
     cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
     if (movementValid) {
@@ -327,8 +332,54 @@ void boardReading(string filename, string matrix[][m]){
     cout<<"\n\n\n";
 }
 
-void positionObjects(int nDiam, int nMons, int nDoors, int nStars, string matrix[][m]){
+string columnOrientation(){
+    if (rand() % 2 == 0)
+        return "horizontal";
+    else return "vertical";
+}
+
+void positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls, string matrix[][m]){
   srand (time(NULL));
+
+  while(nWalls != 0){
+      string direction = columnOrientation();
+      string s = "X";
+      int x1 = rand() %18 + 1;
+      int y1 = rand() %38 + 1;
+
+      cout<<"Column orientation: "<<direction<<endl;
+
+      //If beginning point is empty proceed
+      if(matrix[x1][y1] == " "){
+        cout<<"Wall number: "<<nWalls<<endl;
+        cout<<"Coords: "<<x1<<" "<<y1<<endl;
+
+        if(direction == "vertical"){
+          int length = rand() %18 + 1;
+          cout<<"Length: "<<length<<"\n\n";
+          for (int i = 0; i < length; i++) {
+            if (matrix[x1+i][y1] == " ") {
+              matrix[x1+i][y1] = s;
+            }
+            else break;
+          }
+          nWalls --;
+        }
+
+        else if(direction == "horizontal"){
+          int length = rand() %38 + 1;
+          cout<<"Length: "<<length<<"\n\n";
+          for (int i = 0; i < length; i++) {
+            if (matrix[x1][y1+i] == " ") {
+              matrix[x1][y1+i] = s;
+            }
+            else break;
+          }
+          nWalls --;
+        }
+
+      }
+    }
 
   while(nDiam != 0){
     int row = rand() %19 + 1;
@@ -403,7 +454,7 @@ void createTheMatrix(int level, string filename){
           matrix[i][j] = "X";
         }
         else if(i > 0 and (j > 0 and j < m-1)){
-          matrix[i][j] = "X";
+          matrix[i][j] = " ";
         }
       }
     }
@@ -412,44 +463,44 @@ void createTheMatrix(int level, string filename){
 Positioning of different amount of elements depending on difficulty level
 chosen
 */
-// switch (level) {
-//   case 1:
-//     {
-//       cout<<"Creation of board of level 1\n\n";
-//       int nDiam = 5, nMons = 1, nStars = 0, nDoors = 5;
-//       positionObjects(nDiam, nMons, nDoors, nStars, matrix);
-//       break;
-//     }
-//   case 2:
-//     {
-//       cout<<"Creation of board of level 2\n\n";
-//       int nDiam = 5, nMons = 1, nStars = 1, nDoors = 4;
-//       positionObjects(nDiam, nMons, nDoors, nStars, matrix);
-//       break;
-//     }
-//   case 3:
-//     {
-//       cout<<"Creation of board of level 3\n\n";
-//       int nDiam = 4, nMons = 3, nStars = 2, nDoors = 3;
-//       positionObjects(nDiam, nMons, nDoors, nStars, matrix);
-//       break;
-//     }
-//   case 4:
-//     {
-//       cout<<"Creation of board of level 4\n\n";
-//       int nDiam = 4, nMons = 4, nStars = 3, nDoors = 2;
-//       positionObjects(nDiam, nMons, nDoors, nStars, matrix);
-//       break;
-//     }
-//   case 5:
-//     {
-//       cout<<"Creation of board of level 5\n\n";
-//       int nDiam = 8, nMons = 5, nStars = 4, nDoors = 1;
-//       positionObjects(nDiam, nMons, nDoors, nStars, matrix);
-//       break;
-//     }
-//
-// }
+switch (level) {
+  case 1:
+    {
+      cout<<"Creation of board of level 1\n\n";
+      int nDiam = 5, nMons = 1, nStars = 0, nDoors = 5, nWalls = 2;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls, matrix);
+      break;
+    }
+  case 2:
+    {
+      cout<<"Creation of board of level 2\n\n";
+      int nDiam = 5, nMons = 1, nStars = 1, nDoors = 4, nWalls = 2;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls, matrix);
+      break;
+    }
+  case 3:
+    {
+      cout<<"Creation of board of level 3\n\n";
+      int nDiam = 4, nMons = 3, nStars = 2, nDoors = 3, nWalls = 3;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls, matrix);
+      break;
+    }
+  case 4:
+    {
+      cout<<"Creation of board of level 4\n\n";
+      int nDiam = 4, nMons = 4, nStars = 3, nDoors = 2, nWalls = 3;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls, matrix);
+      break;
+    }
+  case 5:
+    {
+      cout<<"Creation of board of level 5\n\n";
+      int nDiam = 8, nMons = 5, nStars = 4, nDoors = 1, nWalls = 5;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls, matrix);
+      break;
+    }
+
+}
 
   displayBoard(matrix, n, m);
 
@@ -484,14 +535,15 @@ int main() {
   // monster2.showMonster();
 
 
-  // createTheMatrix(1, "prueba1.txt");
+  // createTheMatrix(1, "pruebax.txt");
   // createTheMatrix(2, "prueba2.txt");
   // createTheMatrix(3, "prueba3.txt");
   // createTheMatrix(4, "prueba4.txt");
   // createTheMatrix(5, "prueba5.txt");
   // createTheMatrix(3, "prueba6.txt");
-  boardReading("boards/prueba5.txt", matrix);
+  boardReading("boards/pruebax.txt", matrix);
   displayBoard(matrix,n,m);
   movement(matrix,n,m);
+
   return 0;
 }
