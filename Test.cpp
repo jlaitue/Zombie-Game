@@ -22,6 +22,29 @@ void displayBoard(string matrix[][m], size_t n, size_t m){
     cout<<"\n";
   }
 
+// void updateCounters(bool movementValid, int rowPosition, int moveCase, string nextStr, int cDiams, int cStars, int lives){
+//   if (nextStr == "X") {
+//     cout<<"Invalid move. There is an obstacle.\n";
+//   }
+//   else{
+//     if(nextStr == "$"){
+//       cDiams++;
+//     }
+//     else if(nextStr == "*"){
+//       cStars++;
+//     }
+//     else if(nextStr == "M"){
+//       lives--;
+//     }
+//     switch (moveCase) {
+//       case 1:{
+//         rowPosition --;
+//         cout<<"Moving UP"<<endl;
+//         movementValid = 1;
+//       }
+//     }
+//   }
+// }
 
 
 void movement(string matrix[][m], size_t n, size_t m){
@@ -36,16 +59,17 @@ void movement(string matrix[][m], size_t n, size_t m){
   displayBoard(matrix,n,m);
 
   while (move != "STOP") {
-    bool movementValid = 1;
+    bool movementValid = 0;
     cout<<"\nEnter move: ";
     cin>>move;
     matrix[rowPosition][colPosition] = ".";
 
     if (move == "w" or move == "W"){
       string nextStr = matrix[rowPosition-1][colPosition];
+      // int moveCase = 1;
+      // updateCounters(movementValid, rowPosition, moveCase, nextStr, cDiams, cStars, lives);
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
-        movementValid = 0;
       }
       else{
         if(nextStr == "$"){
@@ -59,6 +83,7 @@ void movement(string matrix[][m], size_t n, size_t m){
         }
         rowPosition --;
         cout<<"Moving UP"<<endl;
+        movementValid = 1;
       }
     }
 
@@ -66,7 +91,6 @@ void movement(string matrix[][m], size_t n, size_t m){
       string nextStr = matrix[rowPosition+1][colPosition];
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
-        movementValid = 0;
       }
       else{
         if(nextStr == "$"){
@@ -80,6 +104,7 @@ void movement(string matrix[][m], size_t n, size_t m){
         }
         rowPosition ++;
         cout<<"Moving DOWN"<<endl;
+        movementValid = 1;
       }
     }
 
@@ -87,7 +112,6 @@ void movement(string matrix[][m], size_t n, size_t m){
       string nextStr = matrix[rowPosition][colPosition+1];
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
-        movementValid = 0;
       }
       else{
         if(nextStr == "$"){
@@ -101,6 +125,7 @@ void movement(string matrix[][m], size_t n, size_t m){
         }
         colPosition++;
         cout<<"Moving RIGHT"<<endl;
+        movementValid = 1;
       }
     }
 
@@ -108,7 +133,6 @@ void movement(string matrix[][m], size_t n, size_t m){
       string nextStr = matrix[rowPosition][colPosition-1];
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
-        movementValid = 0;
       }
       else{
         if(nextStr == "$"){
@@ -122,6 +146,7 @@ void movement(string matrix[][m], size_t n, size_t m){
         }
         colPosition--;
         cout<<"Moving LEFT"<<endl;
+        movementValid = 1;
       }
     }
 
@@ -129,7 +154,6 @@ void movement(string matrix[][m], size_t n, size_t m){
       string nextStr = matrix[rowPosition-1][colPosition+1];
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
-        movementValid = 0;
       }
       else{
         if(nextStr == "$"){
@@ -144,6 +168,7 @@ void movement(string matrix[][m], size_t n, size_t m){
         colPosition++;
         rowPosition--;
         cout<<"Moving DIAGONALLY UP R "<<endl;
+        movementValid = 1;
       }
     }
 
@@ -151,7 +176,6 @@ void movement(string matrix[][m], size_t n, size_t m){
       string nextStr = matrix[rowPosition-1][colPosition-1];
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
-        movementValid = 0;
       }
       else{
         if(nextStr == "$"){
@@ -166,6 +190,7 @@ void movement(string matrix[][m], size_t n, size_t m){
         colPosition--;
         rowPosition--;
         cout<<"Moving DIAGONALLY UP L "<<endl;
+        movementValid = 1;
       }
     }
 
@@ -173,7 +198,6 @@ void movement(string matrix[][m], size_t n, size_t m){
       string nextStr = matrix[rowPosition+1][colPosition-1];
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
-        movementValid = 0;
       }
       else{
         if(nextStr == "$"){
@@ -188,6 +212,7 @@ void movement(string matrix[][m], size_t n, size_t m){
         colPosition--;
         rowPosition++;
         cout<<"Moving DIAGONALLY DOWN L"<<endl;
+        movementValid = 1;
       }
     }
 
@@ -195,7 +220,6 @@ void movement(string matrix[][m], size_t n, size_t m){
       string nextStr = matrix[rowPosition+1][colPosition+1];
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
-        movementValid = 0;
       }
       else{
         if(nextStr == "$"){
@@ -210,10 +234,12 @@ void movement(string matrix[][m], size_t n, size_t m){
         colPosition++;
         rowPosition++;
         cout<<"Moving DIAGONALLY DOWN R"<<endl;
+        movementValid = 1;
       }
     }
 
     if (move == "p" or move == "P"){
+      movementValid = 1;
       if (cStars > 0) {
         int row = 0;
         int column = 0;
@@ -228,18 +254,18 @@ void movement(string matrix[][m], size_t n, size_t m){
       }
       else{
         cout<<"You do not have any teleporters. Sorry!"<<endl;
-        movementValid = 0;
       }
     }
 
-
     if (move == "x" or move == "X"){
+      cout<<"Game terminated.\n";
+      cout<<"Final score: "<<cDiams<<" diamonds"<<endl;
       move = "STOP";
     }
 
     matrix[rowPosition][colPosition] = "O";
-    cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
     if (movementValid) {
+      cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
       displayBoard(matrix,n,m);
       cout<<"Player has: "<<cDiams<<" diamonds.\n";
       cout<<"Player has: "<<cStars<<" stars.\n";
