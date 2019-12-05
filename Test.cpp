@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <ctime>
+#include <sstream>
 #include "Element.hpp"
 #include "Monster.hpp"
 using namespace std;
@@ -259,7 +260,7 @@ void movement(string matrix[][m], size_t n, size_t m){
 
     if (move == "x" or move == "X"){
       cout<<"Game terminated.\n";
-      cout<<"Final score: "<<cDiams<<" diamonds"<<endl;
+      cout<<"Final score: "<<cDiams<<" diamonds collected."<<endl;
       move = "STOP";
     }
 
@@ -373,16 +374,16 @@ void positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls, s
       int x1 = rand() %18 + 1;
       int y1 = rand() %38 + 1;
 
-      cout<<"Column orientation: "<<direction<<endl;
+      // cout<<"Column orientation: "<<direction<<endl;
 
       //If beginning point is empty proceed
       if(matrix[x1][y1] == " "){
-        cout<<"Wall number: "<<nWalls<<endl;
-        cout<<"Coords: "<<x1<<" "<<y1<<endl;
+        // cout<<"Wall number: "<<nWalls<<endl;
+        // cout<<"Coords: "<<x1<<" "<<y1<<endl;
 
         if(direction == "vertical"){
           int length = rand() %18 + 1;
-          cout<<"Length: "<<length<<"\n\n";
+          // cout<<"Length: "<<length<<"\n\n";
           for (int i = 0; i < length; i++) {
             if (matrix[x1+i][y1] == " ") {
               matrix[x1+i][y1] = s;
@@ -394,7 +395,7 @@ void positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls, s
 
         else if(direction == "horizontal"){
           int length = rand() %38 + 1;
-          cout<<"Length: "<<length<<"\n\n";
+          // cout<<"Length: "<<length<<"\n\n";
           for (int i = 0; i < length; i++) {
             if (matrix[x1][y1+i] == " ") {
               matrix[x1][y1+i] = s;
@@ -561,13 +562,18 @@ int main() {
   // monster2.showMonster();
 
 
-  // createTheMatrix(1, "pruebax.txt");
-  // createTheMatrix(2, "prueba2.txt");
-  // createTheMatrix(3, "prueba3.txt");
-  // createTheMatrix(4, "prueba4.txt");
-  // createTheMatrix(5, "prueba5.txt");
-  // createTheMatrix(3, "prueba6.txt");
-  boardReading("boards/pruebax.txt", matrix);
+  //Code for creating several random boards
+  // for (size_t i = 0; i < 20; i++) {
+  //   int level = rand() %5 + 1;
+  //   stringstream ss;
+  //   ss<<i;
+  //   string s;
+  //   ss>>s;
+  //   createTheMatrix(level, s+"prueba.txt");
+  // }
+
+
+  boardReading("boards/18prueba.txt", matrix);
   displayBoard(matrix,n,m);
   movement(matrix,n,m);
 
