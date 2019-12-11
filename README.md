@@ -10,3 +10,4 @@ TODO:
 - Logic for opening/closing of doors
 - Creation of all Classes of the project
 - Add logic of movement of MONSTERS
+- lechugal BasOmyic
