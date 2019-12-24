@@ -576,6 +576,7 @@ int main() {
   boardReading("boards/18prueba.txt", matrix);
   displayBoard(matrix,n,m);
   movement(matrix,n,m);
+  // Prueba
 
   return 0;
 }
