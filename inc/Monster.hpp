@@ -8,7 +8,7 @@ using namespace std;
 class Monster: public Element{
 public:
     // Parameterized Constructor
-    Monster(int id, string t = "dynamic", int x = 0, int y = 0, string s="M");
+    Monster(int id, int x = 0, int y = 0, string t = "dynamic", string s="M");
     ~Monster();
 };
 

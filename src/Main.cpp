@@ -5,6 +5,7 @@
 #include <sstream>
 #include "../inc/Element.hpp"
 #include "../inc/Monster.hpp"
+#include "../inc/Diamond.hpp"
 #include "../inc/Board.hpp"
 using namespace std;
 
@@ -305,6 +306,10 @@ int main() {
 
   Monster monster1(1);
   monster1.showElement();
+
+  Diamond diamond(1,2,3);
+  diamond.showElement();
+
 
 
   return 0;

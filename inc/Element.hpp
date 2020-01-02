@@ -7,14 +7,14 @@ using namespace std;
 class Element {
 private:
   int idtag;
-  string type;
   int xcoord;
   int ycoord;
+  string type;
   string symbol;
 
 public:
     // Parameterized Constructor
-    Element(int id, string t, int x, int y, string s);
+    Element(int id, int x, int y, string t, string s);
 
     void showElement();
     string getSymbol();

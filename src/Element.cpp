@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Element::Element(int id, string t, int x, int y, string s):
-idtag(id), type(t), xcoord(x), ycoord(y),symbol(s)
+Element::Element(int id, int x, int y, string t, string s):
+idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
 {
   cout<<"Element created"<<endl;
 }
