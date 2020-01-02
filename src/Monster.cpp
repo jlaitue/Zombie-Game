@@ -4,17 +4,10 @@
 
 using namespace std;
 
-Monster::Monster(string nameValue){
-  name = nameValue;
-  cout<<"Monster created"<<endl;
-}
-
-void Monster::showMonster(){
-  std::cout<<getMonsterName()<<std::endl;
-}
-
-string Monster::getMonsterName(){
-  return name;
+Monster::Monster(int id, string t, int x, int y, string s):
+Element(id,t,x,y,s)
+{
+  cout<<"Monster "<<id<<"created"<<endl;
 }
 
 Monster::~Monster(){

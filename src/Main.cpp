@@ -279,17 +279,6 @@ void movement(string matrix[][m], size_t n, size_t m){
 
 int main() {
   // string matrix[n][m];
-  // Element element1("static", 0, 1, "$");
-  // Element element2("static", 1, 1, "X");
-  //
-  // element1.showElement();
-  // element2.showElement();
-
-  // Monster monster1("Juan");
-  // Monster monster2("Mike");
-  //
-  // monster1.showMonster();
-  // monster2.showMonster();
 
 
   //Code for creating several random boards and integer parsing
@@ -303,18 +292,19 @@ int main() {
   // }
 
 
-  // boardReading("boards/18prueba.txt", matrix);
-  // displayBoard(matrix,n,m);
-  // movement(matrix,n,m);
-  int boardId = 1;
-  Board tablero(boardId);
-  tablero.readBoard("0prueba.txt");
-  tablero.displayBoard();
-  tablero.getBoardLevel();
-  tablero.createTheMatrix(3, "fuckyeah.txt");
-  tablero.getBoardLevel();
-  tablero.displayBoard();
-  cout<<"Total number of boards created: "<<Board::boardCount<<endl;
+  // int boardId = 1;
+  // Board tablero(boardId);
+  // tablero.readBoard("0prueba.txt");
+  // tablero.displayBoard();
+  // tablero.getBoardLevel();
+  // tablero.createTheMatrix(3, "fuckyeah.txt");
+  // tablero.getBoardLevel();
+  // tablero.displayBoard();
+  // cout<<"Total number of boards created: "<<Board::boardCount<<endl;
+
+
+  Monster monster1(1);
+  monster1.showElement();
 
 
   return 0;

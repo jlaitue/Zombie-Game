@@ -6,6 +6,7 @@ using namespace std;
 
 class Element {
 private:
+  int idtag;
   string type;
   int xcoord;
   int ycoord;
@@ -13,10 +14,10 @@ private:
 
 public:
     // Parameterized Constructor
-    Element(string type, int x, int y, string symbol);
+    Element(int id, string t, int x, int y, string s);
 
     void showElement();
-    string getElementType();
+    string getSymbol();
 
     ~Element();
 };
