@@ -6,6 +6,7 @@
 #include "../inc/Element.hpp"
 #include "../inc/Monster.hpp"
 #include "../inc/Diamond.hpp"
+#include "../inc/Door.hpp"
 #include "../inc/Board.hpp"
 using namespace std;
 
@@ -309,6 +310,9 @@ int main() {
 
   Diamond diamond(1,2,3);
   diamond.showElement();
+
+  Door door(2,3,4);
+  door.showElement();
 
 
 

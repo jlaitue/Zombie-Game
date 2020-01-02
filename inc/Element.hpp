@@ -17,6 +17,7 @@ public:
     Element(int id, int x, int y, string t, string s);
 
     void showElement();
+    void updateSymbol(string newS);
     string getSymbol();
 
     ~Element();

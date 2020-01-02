@@ -7,7 +7,7 @@ using namespace std;
 Element::Element(int id, int x, int y, string t, string s):
 idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
 {
-  cout<<"Element created"<<endl;
+  cout<<"Element "<<type<<" "<<id<<" created"<<endl;
 }
 
 void Element::showElement(){
@@ -20,6 +20,10 @@ void Element::showElement(){
 
 string Element::getSymbol(){
   return symbol;
+}
+
+void Element::updateSymbol(string newS){
+  symbol = newS;
 }
 
 Element::~Element(){
