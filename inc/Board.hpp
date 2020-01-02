@@ -1,27 +1,30 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <string>
-const size_t rows = 20;
-const size_t columns = 40;
 using namespace std;
+
+const int rows = 20;
+const int columns = 40;
 
 class Board {
 private:
-  int level = 3;
+  int level;
   int identifier;
-  size_t n = rows;
-  size_t m = columns;
-
+  int n = rows;
+  int m = columns;
   string matrix[rows][columns];
 
 public:
+  static int boardCount;
+
     // Parameterized Constructor
-    Board(int identifier, string directive);
+    Board(int identifier);
 
     void displayBoard();
     void positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls);
     void readBoard(string filename);
-    void createTheMatrix(string filename);
+    void createTheMatrix(int level, string filename);
+    void getBoardLevel();
     ~Board();
 };
 

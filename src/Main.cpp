@@ -3,9 +3,9 @@
 #include <fstream>
 #include <ctime>
 #include <sstream>
-#include "Element.hpp"
-#include "Monster.hpp"
-#include "Board.hpp"
+#include "../inc/Element.hpp"
+#include "../inc/Monster.hpp"
+#include "../inc/Board.hpp"
 using namespace std;
 
 const size_t n = 20;
@@ -306,7 +306,15 @@ int main() {
   // boardReading("boards/18prueba.txt", matrix);
   // displayBoard(matrix,n,m);
   // movement(matrix,n,m);
-  Board tablero(1, "read");
+  int boardId = 1;
+  Board tablero(boardId);
+  tablero.readBoard("0prueba.txt");
+  tablero.displayBoard();
+  tablero.getBoardLevel();
+  tablero.createTheMatrix(3, "fuckyeah.txt");
+  tablero.getBoardLevel();
+  tablero.displayBoard();
+  cout<<"Total number of boards created: "<<Board::boardCount<<endl;
 
 
   return 0;

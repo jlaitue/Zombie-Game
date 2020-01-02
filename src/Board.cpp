@@ -1,4 +1,4 @@
-#include "Board.hpp"
+#include "../inc/Board.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -7,21 +7,13 @@
 
 using namespace std;
 
-// This need changing because this should only crete the board
-Board::Board(int id, string directive){
-  identifier = id;
-  if (directive == "read") {
-    cout<<"Reading board..."<<endl;
-      readBoard("0prueba.txt");
-    }
-  else{
-    cout<<"Creating board..."<<endl;
-    createTheMatrix("fuckingtest.txt");
-  }
-    cout<<"Board created"<<endl;
-    cout<<"Board id: "<<identifier<<endl;
-    displayBoard();
-  }
+int Board::boardCount = 0;
+
+Board::Board(int id): identifier(id){
+  cout<<"Board created"<<"\n";
+  cout<<"Board id: "<<identifier<<"\n";
+  boardCount++;
+}
 
 string columnOrientation(){
     if (rand() % 2 == 0)
@@ -38,12 +30,12 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
       int x1 = rand() %18 + 1;
       int y1 = rand() %38 + 1;
 
-      // cout<<"Column orientation: "<<direction<<endl;
+      // cout<<"Column orientation: "<<direction<<"\n";
 
       //If beginning point is empty proceed
       if(matrix[x1][y1] == " "){
-        // cout<<"Wall number: "<<nWalls<<endl;
-        // cout<<"Coords: "<<x1<<" "<<y1<<endl;
+        // cout<<"Wall number: "<<nWalls<<"\n";
+        // cout<<"Coords: "<<x1<<" "<<y1<<"\n";
 
         if(direction == "vertical"){
           int length = rand() %18 + 1;
@@ -132,10 +124,10 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
 }
 
 void Board::displayBoard(){
-  for (size_t i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     if(i<10){cout<<i<<"  ";}
     else{cout<<i<<" ";}
-    for (size_t j = 0; j < m; j++) {
+    for (int j = 0; j < m; j++) {
       // if (i == n-1) {cout<<j;}
       cout<<matrix[i][j];
     }
@@ -145,12 +137,13 @@ void Board::displayBoard(){
 }
 
 void Board::readBoard(string filename){
+  cout<<"Operation READING..."<<"\n";
   string line;
   int rows=0,columns=0;
   int xcount = 0, powcount=0, diamcount=0, monscount=0, whitecount=0, doorscount = 0;
 
   fstream inFile;
-  inFile.open(filename);
+  inFile.open("../boards/"+filename);
 
   if (!inFile) {
     cerr << "Unable to open file datafile.txt";
@@ -158,63 +151,64 @@ void Board::readBoard(string filename){
   }
   cout << "Reading board file: "<<filename<<"\n\n";
   while (getline(inFile, line)) {
-        cout<<"Analyzing row: "<<rows<<endl;
+        // cout<<"Analyzing row: "<<rows<<"\n";
         // cout<<line;
         // cout<<line.size();
         for(size_t i = 0; i < line.length(); i++)
         {
-          // cout<<"Fila "<<i<<endl;
+          // cout<<"Fila "<<i<<"\n";
           if (line[i] == 'X'){
-            cout<<"FOUND AN X ";
-            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
+            // cout<<"FOUND AN X ";
+            // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "X";
             xcount ++;
           }
           else if (line[i] == '*'){
-            cout<<"FOUND A POWERUP ";
-            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
+            // cout<<"FOUND A POWERUP ";
+            // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "*";
             powcount++;
           }
           else if (line[i] == '$'){
-            cout<<"FOUND A DIAMOND ";
-            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
+            // cout<<"FOUND A DIAMOND ";
+            // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "$";
             diamcount++;
 
           }
           else if (line[i] == 'M'){
-            cout<<"FOUND A MONSTER ";
-            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
+            // cout<<"FOUND A MONSTER ";
+            // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "M";
             monscount++;
           }
           else if (line[i] == ' '){
-            cout<<"FOUND EMPTY SPACE ";
-            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
+            // cout<<"FOUND EMPTY SPACE ";
+            // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = " ";
             whitecount++;
           }
           else if (line[i] == 'J'){
-            cout<<"FOUND PLAYER ";
-            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
+            // cout<<"FOUND PLAYER ";
+            // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "J";
           }
           else if (line[i] == '/'){
-            cout<<"FOUND DOOR ";
-            cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
+            // cout<<"FOUND DOOR ";
+            // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             matrix[rows][i] = "/";
+            doorscount++;
           }
         }
-        cout<<"\n";
+        // cout<<"\n";
         rows ++;
     }
-    cout<<"Amount X "<<xcount<<endl;
-    cout<<"Amount * "<<powcount<<endl;
-    cout<<"Amount $ "<<diamcount<<endl;
-    cout<<"Amount M "<<monscount<<endl;
-    cout<<"Amount / "<<doorscount<<endl;
-    cout<<"Amount ' ' "<<whitecount<<endl;
+    cout<<"Amount X "<<xcount<<"\n";
+    cout<<"Amount * "<<powcount<<"\n";
+    cout<<"Amount $ "<<diamcount<<"\n";
+    cout<<"Amount M "<<monscount<<"\n";
+    cout<<"Amount / "<<doorscount<<"\n";
+    cout<<"Amount ' ' "<<whitecount<<"\n";
 
     /* This value of columns is zero because when the .txt file is saved, a new
     line is added at the end. The files have 21 lines, being the last one empty
@@ -222,17 +216,18 @@ void Board::readBoard(string filename){
     */
     // columns = line.size();
     columns = m;
-    cout<<"Total Rows: "<<rows<<endl;
-    cout<<"Total Columns: "<<columns<<endl;
-    cout<<"\n\n\n";
+    cout<<"Total Rows: "<<rows<<"\n";
+    cout<<"Total Columns: "<<columns<<"\n";
+    cout<<"\n\n";
 }
 
-void Board::createTheMatrix(string filename){
-  ofstream myfile ("boards/"+ filename);
+void Board::createTheMatrix(int l, string filename){
+  level = l;
+  ofstream myfile ("../boards/" + filename);
 
 // Creation of string matrix with elements of board
-  for (size_t i = 0; i < n; i++) {
-      for (size_t j = 0; j < m; j++) {
+  for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
         //Creation of horizontal outer walls
         if(i==0 or i == n-1){
           matrix[i][j] = "X";
@@ -290,24 +285,28 @@ switch (level) {
 
 }
 
-  displayBoard();
+  // displayBoard();
 
 // Writting of matrix previously created to .txt file
   if (myfile.is_open())
   {
-    cout<<"Writting to board file: boards/"<< filename<<" ..."<<endl;
-    for (size_t i = 0; i < n; i++) {
-      for (size_t j = 0; j < m; j++) {
+    cout<<"Writting to board file: boards/"<< filename<<" ..."<<"\n";
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
         myfile<<matrix[i][j];
       }
       myfile<<"\n";
     }
     myfile.close();
-    cout<<"Done writting."<<endl;
+    cout<<"Done writting."<<"\n";
   }
   else cout << "Unable to open file";
 }
 
+void Board::getBoardLevel(){
+  cout<<"Board with id "<<identifier<<" has level: "<<level<<"\n";
+}
+
 Board::~Board(){
-  cout<<"Board destroyed"<<endl;
+  cout<<"Board "<<identifier<<" destroyed."<<"\n";
 }

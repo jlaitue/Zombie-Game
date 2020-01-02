@@ -1,4 +1,4 @@
-#include "Monster.hpp"
+#include "../inc/Monster.hpp"
 #include <iostream>
 #include <string>
 
