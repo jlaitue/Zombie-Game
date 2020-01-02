@@ -1,12 +1,19 @@
-CPP=g++ --std=c++11 -Wall
-all : Test
-Test : Test.o Element.o Monster.o
-	$(CPP) -o Test Test.o Element.o Monster.o
-Test.o : Test.cpp
-	$(CPP) -c Test.cpp
-Element.o : Element.cpp
-	$(CPP) -c Element.cpp
-Monster.o : Monster.cpp
-	$(CPP) -c Monster.cpp
-clean :
-	del	*.o *.hpp.gch
+TARGET ?= Test.exe
+SRC_DIRS ?= ./src
+CC = g++ --std=c++11 -Wall
+
+SRCS := $(shell find $(SRC_DIRS) -name "*.cpp")
+OBJS := $(addsuffix .o,$(basename $(SRCS)))
+DEPS := $(OBJS:.o=.d)
+
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS)
+
+.PHONY: clean
+clean:
+	$(RM) $(OBJS) $(DEPS)
+
+deepclean:
+	$(RM) $(TARGET) $(OBJS) $(DEPS)
+
+-include $(DEPS)
