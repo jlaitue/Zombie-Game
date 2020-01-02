@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// This need changing because this should only crete the board
 Board::Board(int id, string directive){
   identifier = id;
   if (directive == "read") {
@@ -130,7 +131,6 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   }
 }
 
-
 void Board::displayBoard(){
   for (size_t i = 0; i < n; i++) {
     if(i<10){cout<<i<<"  ";}
@@ -159,7 +159,6 @@ void Board::readBoard(string filename){
   cout << "Reading board file: "<<filename<<"\n\n";
   while (getline(inFile, line)) {
         cout<<"Analyzing row: "<<rows<<endl;
-        // using printf() in all tests for consistency
         // cout<<line;
         // cout<<line.size();
         for(size_t i = 0; i < line.length(); i++)
