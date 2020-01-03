@@ -162,50 +162,43 @@ void Board::readBoard(string filename){
             // cout<<"FOUND AN X ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             // idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
-            Element wall(0,rows,i,"wall","X");
-            matrix[rows][i] = wall;
+            matrix[rows][i].updateElement(rows,i,"wall","X");
             xcount ++;
           }
           else if (line[i] == '*'){
             // cout<<"FOUND A POWERUP ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            Element power(0,rows,i,"power","*");
-            matrix[rows][i] = power;
+            matrix[rows][i].updateElement(rows,i,"power","*");
             powcount++;
           }
           else if (line[i] == '$'){
             // cout<<"FOUND A DIAMOND ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            Element diamond(0,rows,i,"diam","$");
-            matrix[rows][i] = diamond;
+            matrix[rows][i].updateElement(rows,i,"diam","$");
             diamcount++;
 
           }
           else if (line[i] == 'M'){
             // cout<<"FOUND A MONSTER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            Element monster(0,rows,i,"mons","M");
-            matrix[rows][i] = monster;
+            matrix[rows][i].updateElement(rows,i,"mons","M");
             monscount++;
           }
           else if (line[i] == ' '){
             // cout<<"FOUND EMPTY SPACE ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            Element space(0,rows,i,"space"," ");
-            matrix[rows][i] = space;
+            matrix[rows][i].updateElement(rows,i,"space"," ");
             whitecount++;
           }
           else if (line[i] == 'J'){
             // cout<<"FOUND PLAYER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            Element player(0,rows,i,"player","J");
-            matrix[rows][i] = player;
+            matrix[rows][i].updateElement(rows,i,"player","J");
           }
           else if (line[i] == '/'){
             // cout<<"FOUND DOOR ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            Element door(0,rows,i,"door","/");
-            matrix[rows][i] = door;
+            matrix[rows][i].updateElement(rows,i,"door","/");
             doorscount++;
           }
         }

@@ -22,6 +22,7 @@ public:
 
     void showElement();
     void updateSymbol(string newS);
+    void updateElement(int x, int y, string t, string s);
     string getSymbol();
 
     ~Element();

@@ -7,8 +7,9 @@ using namespace std;
 int Element::objectCount = 0;
 
 Element::Element(){
-  cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
   objectCount++;
+  idtag = objectCount;
+  cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
 }
 
 Element::Element(int id, int x, int y, string t, string s):
@@ -33,6 +34,14 @@ string Element::getSymbol(){
 void Element::updateSymbol(string newS){
   symbol = newS;
 }
+
+void Element::updateElement(int x, int y, string t, string s){
+  xcoord = x;
+  ycoord = y;
+  type = t;
+  symbol = s;
+}
+
 int Element::deletedCount = objectCount;
 Element::~Element(){
   deletedCount--;
