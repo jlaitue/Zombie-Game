@@ -14,6 +14,8 @@ private:
 
 public:
   // static int objectCount;
+    //Default Constructor
+    Element();
     // Parameterized Constructor
     Element(int id, int x, int y, string t, string s);
 

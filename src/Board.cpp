@@ -1,4 +1,5 @@
 #include "../inc/Board.hpp"
+#include "../inc/Element.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -9,7 +10,7 @@ using namespace std;
 
 int Board::boardCount = 0;
 
-Board::Board(int id): identifier(id){
+Board::Board(int id, Element blo): identifier(id){
   cout<<"Board created"<<"\n";
   cout<<"Board id: "<<identifier<<"\n";
   boardCount++;

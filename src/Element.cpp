@@ -6,6 +6,10 @@ using namespace std;
 
 // int Element::objectCount = 1;
 
+Element::Element(){
+  cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
+}
+
 Element::Element(int id, int x, int y, string t, string s):
 idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
 {

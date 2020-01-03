@@ -1,6 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <string>
+#include "Element.hpp"
 using namespace std;
 
 const int rows = 20;
@@ -12,13 +13,13 @@ private:
   int identifier;
   int n = rows;
   int m = columns;
-  string matrix[rows][columns];
+  Element matrix[rows][columns];
 
 public:
   static int boardCount;
 
     // Parameterized Constructor
-    Board(int identifier);
+    Board(int identifier, Element blo);
 
     void displayBoard();
     void positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls);
