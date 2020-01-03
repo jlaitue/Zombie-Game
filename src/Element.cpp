@@ -4,10 +4,12 @@
 
 using namespace std;
 
+// int Element::objectCount = 1;
+
 Element::Element(int id, int x, int y, string t, string s):
 idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
 {
-  cout<<"Element "<<type<<" "<<id<<" created"<<endl;
+  cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
 }
 
 void Element::showElement(){

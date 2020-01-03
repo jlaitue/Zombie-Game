@@ -13,6 +13,7 @@ private:
   string symbol;
 
 public:
+  // static int objectCount;
     // Parameterized Constructor
     Element(int id, int x, int y, string t, string s);
 

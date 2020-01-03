@@ -5,9 +5,9 @@
 using namespace std;
 
 Player::Player(int id, int x, int y, string t, string s):
-Element(id,x,y,t,s)
+Element(id, x,y,t,s)
 {
-  cout<<"Player "<<id<<"created"<<endl;
+  cout<<"Player created"<<endl;
 }
 
 Player::~Player(){
