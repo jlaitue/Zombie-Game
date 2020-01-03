@@ -1,10 +1,6 @@
 #include "../inc/Game.hpp"
 #include "../inc/Board.hpp"
 #include <iostream>
-#include <string>
-#include <fstream>
-#include <ctime>
-#include <sstream>
 
 using namespace std;
 
@@ -14,6 +10,23 @@ Game::Game(int id): identifier(id){
   cout<<"Game created"<<"\n";
   cout<<"Game id: "<<identifier<<"\n";
   gameCount++;
+}
+
+void Game::addBoard(int level, string filename, string directive){
+  if (directive == "read") {
+    board.readBoard(filename);
+  }
+  else if (directive == "create"){
+    board.createTheMatrix(level, filename);
+  }
+  else{
+    // There is a bug that needs fixing, an empty BOARD is shown in this case
+    cout<<"You have not sent a correct directive."<<endl;
+  }
+}
+
+void Game::executeGame(){
+  board.play();
 }
 
 void Game::getGameLevel(){

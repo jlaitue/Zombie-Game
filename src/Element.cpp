@@ -10,7 +10,7 @@ Element::Element(){
   objectCount++;
   idtag = objectCount;
   symbol = " ";
-  cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
+  // cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
 }
 
 Element::Element(int id, int x, int y, string t, string s):
@@ -44,7 +44,8 @@ void Element::updateElement(int x, int y, string t, string s){
 }
 
 int Element::deletedCount = objectCount;
+
 Element::~Element(){
   deletedCount--;
-  cout<<"Element "<<type<<" "<<idtag<<" destroyed"<<endl;
+  // cout<<"Element "<<type<<" "<<idtag<<" destroyed"<<endl;
 }

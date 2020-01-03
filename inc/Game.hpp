@@ -8,6 +8,7 @@ class Game {
 private:
   int level;
   int identifier;
+  // Will transform into a data array for holding several boards
   Board board;
 
 public:
@@ -17,10 +18,9 @@ public:
     Game(int identifier);
 
     void displayGame();
-    void positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls);
-    void readGame(string filename);
-    void createTheMatrix(int level, string filename);
     void getGameLevel();
+    void addBoard(int level, string filename, string directive);
+    void executeGame();
     ~Game();
 };
 
