@@ -10,7 +10,7 @@ using namespace std;
 
 int Board::boardCount = 0;
 
-Board::Board(int id, Element blo): identifier(id){
+Board::Board(int id): identifier(id){
   cout<<"Board created"<<"\n";
   cout<<"Board id: "<<identifier<<"\n";
   boardCount++;
@@ -161,43 +161,51 @@ void Board::readBoard(string filename){
           if (line[i] == 'X'){
             // cout<<"FOUND AN X ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i] = "X";
+            // idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
+            Element wall(0,rows,i,"wall","X");
+            matrix[rows][i] = wall;
             xcount ++;
           }
           else if (line[i] == '*'){
             // cout<<"FOUND A POWERUP ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i] = "*";
+            Element power(0,rows,i,"power","*");
+            matrix[rows][i] = power;
             powcount++;
           }
           else if (line[i] == '$'){
             // cout<<"FOUND A DIAMOND ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i] = "$";
+            Element diamond(0,rows,i,"diam","$");
+            matrix[rows][i] = diamond;
             diamcount++;
 
           }
           else if (line[i] == 'M'){
             // cout<<"FOUND A MONSTER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i] = "M";
+            Element monster(0,rows,i,"mons","M");
+            matrix[rows][i] = monster;
             monscount++;
           }
           else if (line[i] == ' '){
             // cout<<"FOUND EMPTY SPACE ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i] = " ";
+            Element space(0,rows,i,"space"," ");
+            matrix[rows][i] = space;
             whitecount++;
           }
           else if (line[i] == 'J'){
             // cout<<"FOUND PLAYER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i] = "J";
+            Element player(0,rows,i,"player","J");
+            matrix[rows][i] = player;
           }
           else if (line[i] == '/'){
             // cout<<"FOUND DOOR ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i] = "/";
+            Element door(0,rows,i,"door","/");
+            matrix[rows][i] = door;
             doorscount++;
           }
         }

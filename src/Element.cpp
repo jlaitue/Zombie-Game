@@ -13,7 +13,7 @@ Element::Element(){
 Element::Element(int id, int x, int y, string t, string s):
 idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
 {
-  cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
+  // cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
 }
 
 void Element::showElement(){
@@ -33,5 +33,5 @@ void Element::updateSymbol(string newS){
 }
 
 Element::~Element(){
-  cout<<"Element destroyed"<<endl;
+  // cout<<"Element destroyed"<<endl;
 }
