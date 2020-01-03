@@ -294,25 +294,25 @@ int main() {
   // }
 
 
-  // int boardId = 1;
-  // Board tablero(boardId);
+  int boardId = 1;
+  Board tablero(boardId);
   // tablero.readBoard("0prueba.txt");
   // tablero.displayBoard();
   // tablero.getBoardLevel();
-  // tablero.createTheMatrix(3, "fuckyeah.txt");
-  // tablero.getBoardLevel();
-  // tablero.displayBoard();
-  // cout<<"Total number of boards created: "<<Board::boardCount<<endl;
+  tablero.createTheMatrix(3, "TEST.txt");
+  tablero.getBoardLevel();
+  tablero.displayBoard();
+  cout<<"Total number of boards created: "<<Board::boardCount<<endl;
 
 
-  Monster monster1(1);
-  monster1.showElement();
-
-  Diamond diamond(1,2,3);
-  diamond.showElement();
-
-  Door door(2,3,4);
-  door.showElement();
+  // Monster monster1(1);
+  // monster1.showElement();
+  //
+  // Diamond diamond(1,2,3);
+  // diamond.showElement();
+  //
+  // Door door(2,3,4);
+  // door.showElement();
 
 
 
