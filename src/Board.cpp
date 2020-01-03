@@ -1,5 +1,6 @@
 #include "../inc/Board.hpp"
 #include "../inc/Element.hpp"
+#include "../inc/Player.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -9,6 +10,10 @@
 using namespace std;
 
 int Board::boardCount = 0;
+
+Board::Board(){
+  cout<<"Board created"<<endl;
+}
 
 Board::Board(int id): identifier(id){
   cout<<"Board created"<<"\n";
@@ -193,7 +198,8 @@ void Board::readBoard(string filename){
           else if (line[i] == 'J'){
             // cout<<"FOUND PLAYER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"player","J");
+            Player player1(1,rows,i,"player","J");
+            matrix[rows][i] = player1;
           }
           else if (line[i] == '/'){
             // cout<<"FOUND DOOR ";

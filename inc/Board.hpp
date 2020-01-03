@@ -19,6 +19,7 @@ public:
   static int boardCount;
 
     // Parameterized Constructor
+    Board();
     Board(int identifier);
 
     void displayBoard();

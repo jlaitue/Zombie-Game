@@ -295,15 +295,11 @@ int main() {
 
 
   int boardId = 1;
-  // Element element;
   Board tablero(boardId);
   cout<<"Total number of elements created: "<<Element::objectCount<<endl;
   tablero.readBoard("0prueba.txt");
   tablero.displayBoard();
   // tablero.getBoardLevel();
-  // tablero.createTheMatrix(3, "TEST.txt");
-  // tablero.getBoardLevel();
-  // tablero.displayBoard();
   cout<<"Total number of boards created: "<<Board::boardCount<<endl;
   cout<<"Total number of elements created: "<<Element::objectCount<<endl;
   cout<<"Total number of elements eliminated: "<<Element::deletedCount<<endl;

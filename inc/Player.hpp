@@ -6,9 +6,14 @@
 using namespace std;
 
 class Player: public Element{
+private:
+  int nDiamonds;
+  int nPower;
+  int nLives;
 public:
     // Parameterized Constructor
-    Player(int id, int x, int y, string t = "dynamic", string s = "J");
+    Player(int id, int x, int y, string t = "player", string s = "J");
+    void movement();
     ~Player();
 };
 
