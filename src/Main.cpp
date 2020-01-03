@@ -68,13 +68,14 @@ int main() {
   int boardId = 1;
   Board tablero(boardId);
   cout<<"Total number of elements created: "<<Element::objectCount<<endl;
-  tablero.readBoard("0prueba.txt");
+  // tablero.readBoard("0prueba.txt");
+  tablero.createTheMatrix(4,"TRY.txt");
   tablero.displayBoard();
   // tablero.getBoardLevel();
   cout<<"Total number of boards created: "<<Board::boardCount<<endl;
-  cout<<"Total number of elements created: "<<Element::objectCount<<endl;
-  cout<<"Total number of elements eliminated: "<<Element::deletedCount<<endl;
-
+  cout<<"Total number of elements created: "<<Element::objectCount<<"\n\n";
+  // cout<<"Total number of elements eliminated: "<<Element::deletedCount<<endl;
+  tablero.play();
 
   // Monster monster1(1);
   // monster1.showElement();

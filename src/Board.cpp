@@ -27,110 +27,117 @@ string columnOrientation(){
     else return "vertical";
 }
 
-// void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls){
-//   srand (time(NULL));
-//
-//   while(nWalls != 0){
-//       string direction = columnOrientation();
-//       string s = "X";
-//       int x1 = rand() %18 + 1;
-//       int y1 = rand() %38 + 1;
-//
-//       // cout<<"Column orientation: "<<direction<<"\n";
-//
-//       //If beginning point is empty proceed
-//       if(matrix[x1][y1] == " "){
-//         // cout<<"Wall number: "<<nWalls<<"\n";
-//         // cout<<"Coords: "<<x1<<" "<<y1<<"\n";
-//
-//         if(direction == "vertical"){
-//           int length = rand() %18 + 1;
-//           // cout<<"Length: "<<length<<"\n\n";
-//           for (int i = 0; i < length; i++) {
-//             if (matrix[x1+i][y1] == " ") {
-//               matrix[x1+i][y1] = s;
-//             }
-//             else break;
-//           }
-//           nWalls --;
-//         }
-//
-//         else if(direction == "horizontal"){
-//           int length = rand() %38 + 1;
-//           // cout<<"Length: "<<length<<"\n\n";
-//           for (int i = 0; i < length; i++) {
-//             if (matrix[x1][y1+i] == " ") {
-//               matrix[x1][y1+i] = s;
-//             }
-//             else break;
-//           }
-//           nWalls --;
-//         }
-//
-//       }
-//     }
-//
-//   while(nDiam != 0){
-//     int row = rand() %19 + 1;
-//     int column = rand() %39 + 1;
-//     if(matrix[row][column] == " "){
-//       matrix[row][column] = "$";
-//       nDiam --;
-//     }
-//   }
-//
-//   while(nMons != 0){
-//     int row = rand() %19 + 1;
-//     int column = rand() %39 + 1;
-//     if(matrix[row][column] == " "){
-//       matrix[row][column] = "M";
-//       nMons --;
-//     }
-//   }
-//
-//   while(nStars != 0){
-//     int row = rand() %19 + 1;
-//     int column = rand() %39 + 1;
-//     if(matrix[row][column] == " "){
-//       matrix[row][column] = "*";
-//       nStars --;
-//     }
-//   }
-//
-//   while(nDoors != 0){
-//     int doorCoordCase = rand() %4 + 1;
-//     switch (doorCoordCase) {
-//       case 1:{
-//         int row = rand() %18 + 1;
-//         int column = 0;
-//         matrix[row][column] = "/";
-//         break;
-//       }
-//       case 2:{
-//         int row = 0;
-//         int column = rand() %38 + 1;
-//         matrix[row][column] = "/";
-//         break;
-//       }
-//       case 3:{
-//         int row = rand() %18 + 1;
-//         int column = 39;
-//         matrix[row][column] = "/";
-//         break;
-//       }
-//       case 4:{
-//         int row = 19;
-//         int column = rand() %38 + 1;
-//         matrix[row][column] = "/";
-//         break;
-//       }
-//     }
-//     nDoors--;
-//   }
-// }
+void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls){
+  srand (time(NULL));
+
+  while(nWalls != 0){
+      string direction = columnOrientation();
+      string s = "X";
+      int x1 = rand() %18 + 1;
+      int y1 = rand() %38 + 1;
+
+      // cout<<"Column orientation: "<<direction<<"\n";
+
+      //If beginning point is empty proceed
+      if(matrix[x1][y1].getSymbol() == " "){
+        // cout<<"Wall number: "<<nWalls<<"\n";
+        // cout<<"Coords: "<<x1<<" "<<y1<<"\n";
+
+        if(direction == "vertical"){
+          int length = rand() %18 + 1;
+          // cout<<"Length: "<<length<<"\n\n";
+          for (int i = 0; i < length; i++) {
+            if (matrix[x1+i][y1].getSymbol() == " ") {
+              matrix[x1+i][y1].updateSymbol(s);
+            }
+            else break;
+          }
+          nWalls --;
+        }
+
+        else if(direction == "horizontal"){
+          int length = rand() %38 + 1;
+          // cout<<"Length: "<<length<<"\n\n";
+          for (int i = 0; i < length; i++) {
+            if (matrix[x1][y1+i].getSymbol() == " ") {
+              matrix[x1][y1+i].updateSymbol(s);
+            }
+            else break;
+          }
+          nWalls --;
+        }
+
+      }
+    }
+
+  while(nDiam != 0){
+    int row = rand() %19 + 1;
+    int column = rand() %39 + 1;
+    if(matrix[row][column].getSymbol() == " "){
+      matrix[row][column].updateElement(row,column,"diamond","$");
+      nDiam --;
+    }
+  }
+
+  while(nMons != 0){
+    int row = rand() %19 + 1;
+    int column = rand() %39 + 1;
+    if(matrix[row][column].getSymbol() == " "){
+      matrix[row][column].updateElement(row,column,"monster","M");
+      nMons --;
+    }
+  }
+
+  while(nStars != 0){
+    int row = rand() %19 + 1;
+    int column = rand() %39 + 1;
+    if(matrix[row][column].getSymbol() == " "){
+      matrix[row][column].updateElement(row,column,"power","*");
+      nStars --;
+    }
+  }
+
+  while(nDoors != 0){
+    int doorCoordCase = rand() %4 + 1;
+    switch (doorCoordCase) {
+      case 1:{
+        int row = rand() %18 + 1;
+        int column = 0;
+        matrix[row][column].updateElement(row,column,"door","/");
+        break;
+      }
+      case 2:{
+        int row = 0;
+        int column = rand() %38 + 1;
+        matrix[row][column].updateElement(row,column,"door","/");
+        break;
+      }
+      case 3:{
+        int row = rand() %18 + 1;
+        int column = 39;
+        matrix[row][column].updateElement(row,column,"door","/");
+        break;
+      }
+      case 4:{
+        int row = 19;
+        int column = rand() %38 + 1;
+        matrix[row][column].updateElement(row,column,"door","/");
+        break;
+      }
+    }
+    nDoors--;
+  }
+}
 
 void Board::displayBoard(){
+  //Small code for centering the board in terminal
+  string centeringSpace = "";
+  for (int k = 0; k < 26; k++){
+    centeringSpace = centeringSpace + " ";
+  }
+  //Display of gameboard
   for (int i = 0; i < n; i++) {
+    cout<<centeringSpace;
     if(i<10){cout<<i<<"  ";}
     else{cout<<i<<" ";}
     for (int j = 0; j < m; j++) {
@@ -229,87 +236,86 @@ void Board::readBoard(string filename){
     cout<<"\n\n";
 }
 
-// void Board::createTheMatrix(int l, string filename){
-//   level = l;
-//   ofstream myfile ("../boards/" + filename);
-//
-// // Creation of string matrix with elements of board
-//   for (int i = 0; i < n; i++) {
-//       for (int j = 0; j < m; j++) {
-//         //Creation of horizontal outer walls
-//         if(i==0 or i == n-1){
-//           matrix[i][j] = "X";
-//         }
-//         //Creation of vertical outer walls
-//         else if(i > 0 and (j == 0 or j == m-1)){
-//           matrix[i][j] = "X";
-//         }
-//         else if(i > 0 and (j > 0 and j < m-1)){
-//           matrix[i][j] = " ";
-//         }
-//       }
-//     }
-//
-// /*
-// Positioning of different amount of elements depending on difficulty level
-// chosen
-// */
-// switch (level) {
-//   case 1:
-//     {
-//       cout<<"Creation of board of level 1\n\n";
-//       int nDiam = 5, nMons = 1, nStars = 0, nDoors = 5, nWalls = 2;
-//       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
-//       break;
-//     }
-//   case 2:
-//     {
-//       cout<<"Creation of board of level 2\n\n";
-//       int nDiam = 5, nMons = 1, nStars = 1, nDoors = 4, nWalls = 2;
-//       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
-//       break;
-//     }
-//   case 3:
-//     {
-//       cout<<"Creation of board of level 3\n\n";
-//       int nDiam = 4, nMons = 3, nStars = 2, nDoors = 3, nWalls = 3;
-//       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
-//       break;
-//     }
-//   case 4:
-//     {
-//       cout<<"Creation of board of level 4\n\n";
-//       int nDiam = 4, nMons = 4, nStars = 3, nDoors = 2, nWalls = 3;
-//       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
-//       break;
-//     }
-//   case 5:
-//     {
-//       cout<<"Creation of board of level 5\n\n";
-//       int nDiam = 8, nMons = 5, nStars = 4, nDoors = 1, nWalls = 5;
-//       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
-//       break;
-//     }
-//
-// }
-//
-//   // displayBoard();
-//
-// // Writting of matrix previously created to .txt file
-//   if (myfile.is_open())
-//   {
-//     cout<<"Writting to board file: boards/"<< filename<<" ..."<<"\n";
-//     for (int i = 0; i < n; i++) {
-//       for (int j = 0; j < m; j++) {
-//         myfile<<matrix[i][j];
-//       }
-//       myfile<<"\n";
-//     }
-//     myfile.close();
-//     cout<<"Done writting."<<"\n";
-//   }
-//   else cout << "Unable to open file";
-// }
+void Board::createTheMatrix(int l, string filename){
+  level = l;
+  ofstream myfile ("../boards/" + filename);
+
+// Creation of string matrix with elements of board
+  for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        //Creation of horizontal outer walls
+        if(i==0 or i == n-1){
+          matrix[i][j].updateElement(i,j,"wall","X");
+        }
+        //Creation of vertical outer walls
+        else if(i > 0 and (j == 0 or j == m-1)){
+          matrix[i][j].updateElement(i,j,"wall","X");
+        }
+        else if(i > 0 and (j > 0 and j < m-1)){
+          matrix[i][j].updateElement(i,j,"space"," ");
+        }
+      }
+    }
+
+/*
+Positioning of different amount of elements depending on difficulty level
+chosen
+*/
+switch (level) {
+  case 1:
+    {
+      cout<<"Creation of board of level 1\n\n";
+      int nDiam = 5, nMons = 1, nStars = 0, nDoors = 5, nWalls = 2;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
+      break;
+    }
+  case 2:
+    {
+      cout<<"Creation of board of level 2\n\n";
+      int nDiam = 5, nMons = 1, nStars = 1, nDoors = 4, nWalls = 2;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
+      break;
+    }
+  case 3:
+    {
+      cout<<"Creation of board of level 3\n\n";
+      int nDiam = 4, nMons = 3, nStars = 2, nDoors = 3, nWalls = 3;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
+      break;
+    }
+  case 4:
+    {
+      cout<<"Creation of board of level 4\n\n";
+      int nDiam = 4, nMons = 4, nStars = 3, nDoors = 2, nWalls = 3;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
+      break;
+    }
+  case 5:
+    {
+      cout<<"Creation of board of level 5\n\n";
+      int nDiam = 8, nMons = 5, nStars = 4, nDoors = 1, nWalls = 5;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
+      break;
+    }
+
+}
+  // displayBoard();
+
+// Writting of matrix previously created to .txt file
+  if (myfile.is_open())
+  {
+    cout<<"Writting to board file: boards/"<< filename<<" ..."<<"\n";
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        myfile<<matrix[i][j].getSymbol();
+      }
+      myfile<<"\n";
+    }
+    myfile.close();
+    cout<<"Done writting."<<"\n";
+  }
+  else cout << "Unable to open file";
+}
 
 void Board::getBoardLevel(){
   cout<<"Board with id "<<identifier<<" has level: "<<level<<"\n";
@@ -323,13 +329,13 @@ void Board::play(){
   int cDiams = 0, cStars = 0, lives = 3;
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
-  cout<<"Initial position (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
-  cout<<"Initialized matrix: \n\n";
+  cout<<"Initial player position (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
+  cout<<"Initialized BOARD: \n\n";
   displayBoard();
 
   while (move != "STOP") {
     bool movementValid = 0;
-    cout<<"\nEnter move: ";
+    cout<<"\nENTER NEXT MOVE: ";
     cin>>move;
     matrix[rowPosition][colPosition].updateSymbol(".");
 
@@ -377,7 +383,7 @@ void Board::play(){
       }
     }
 
-    if (move == "d" or move == "D"){
+    else if (move == "d" or move == "D"){
       string nextStr = matrix[rowPosition][colPosition+1].getSymbol();
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
@@ -398,7 +404,7 @@ void Board::play(){
       }
     }
 
-    if (move == "a" or move == "A"){
+    else if (move == "a" or move == "A"){
       string nextStr = matrix[rowPosition][colPosition-1].getSymbol();
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
@@ -419,7 +425,7 @@ void Board::play(){
       }
     }
 
-    if (move == "e" or move == "E"){
+    else if (move == "e" or move == "E"){
       string nextStr = matrix[rowPosition-1][colPosition+1].getSymbol();
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
@@ -441,7 +447,7 @@ void Board::play(){
       }
     }
 
-    if (move == "q" or move == "Q"){
+    else if (move == "q" or move == "Q"){
       string nextStr = matrix[rowPosition-1][colPosition-1].getSymbol();
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
@@ -463,7 +469,7 @@ void Board::play(){
       }
     }
 
-    if (move == "z" or move == "Z"){
+    else if (move == "z" or move == "Z"){
       string nextStr = matrix[rowPosition+1][colPosition-1].getSymbol();
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
@@ -485,7 +491,7 @@ void Board::play(){
       }
     }
 
-    if (move == "c" or move == "C"){
+    else if (move == "c" or move == "C"){
       string nextStr = matrix[rowPosition+1][colPosition+1].getSymbol();
       if (nextStr == "X") {
         cout<<"Invalid move. There is an obstacle.\n";
@@ -507,7 +513,7 @@ void Board::play(){
       }
     }
 
-    if (move == "p" or move == "P"){
+    else if (move == "p" or move == "P"){
       movementValid = 1;
       if (cStars > 0) {
         int row = 0;
@@ -526,10 +532,13 @@ void Board::play(){
       }
     }
 
-    if (move == "x" or move == "X"){
-      cout<<"Game terminated.\n";
-      cout<<"Final score: "<<cDiams<<" diamonds collected."<<endl;
+    else if (move == "x" or move == "X"){
+      cout<<"GAME TERMINATED.\n";
+      cout<<"FINAL SCORE: "<<cDiams<<" diamonds collected."<<endl;
       move = "STOP";
+    }
+    else{
+      cout<<"Try a valid key input.\n";
     }
 
     matrix[rowPosition][colPosition].updateSymbol("O");
@@ -544,5 +553,5 @@ void Board::play(){
 }
 
 Board::~Board(){
-  cout<<"Board "<<identifier<<" destroyed."<<"\n";
+  // cout<<"Board "<<identifier<<" destroyed."<<"\n";
 }
