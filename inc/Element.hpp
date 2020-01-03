@@ -13,7 +13,8 @@ private:
   string symbol;
 
 public:
-  // static int objectCount;
+  static int objectCount;
+  static int deletedCount;
     //Default Constructor
     Element();
     // Parameterized Constructor

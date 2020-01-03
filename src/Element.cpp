@@ -4,16 +4,18 @@
 
 using namespace std;
 
-// int Element::objectCount = 1;
+int Element::objectCount = 0;
 
 Element::Element(){
   cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
+  objectCount++;
 }
 
 Element::Element(int id, int x, int y, string t, string s):
 idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
 {
   // cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
+  objectCount++;
 }
 
 void Element::showElement(){
@@ -31,7 +33,8 @@ string Element::getSymbol(){
 void Element::updateSymbol(string newS){
   symbol = newS;
 }
-
+int Element::deletedCount = objectCount;
 Element::~Element(){
+  deletedCount--;
   // cout<<"Element destroyed"<<endl;
 }
