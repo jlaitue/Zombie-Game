@@ -28,12 +28,13 @@ string columnOrientation(){
 
 void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls){
   srand (time(NULL));
-
+  int emptyRows = n-2;
+  int emptyCols = m-2;
   while(nWalls != 0){
       string direction = columnOrientation();
       string s = "X";
-      int x1 = rand() %18 + 1;
-      int y1 = rand() %38 + 1;
+      int x1 = rand() %emptyRows + 1;
+      int y1 = rand() %emptyCols + 1;
 
       // cout<<"Column orientation: "<<direction<<"\n";
 
@@ -43,7 +44,7 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
         // cout<<"Coords: "<<x1<<" "<<y1<<"\n";
 
         if(direction == "vertical"){
-          int length = rand() %18 + 1;
+          int length = rand() %emptyRows + 1;
           // cout<<"Length: "<<length<<"\n\n";
           for (int i = 0; i < length; i++) {
             if (matrix[x1+i][y1].getSymbol() == " ") {
@@ -55,7 +56,7 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
         }
 
         else if(direction == "horizontal"){
-          int length = rand() %38 + 1;
+          int length = rand() %emptyCols + 1;
           // cout<<"Length: "<<length<<"\n\n";
           for (int i = 0; i < length; i++) {
             if (matrix[x1][y1+i].getSymbol() == " ") {
@@ -70,8 +71,8 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
     }
 
   while(nDiam != 0){
-    int row = rand() %19 + 1;
-    int column = rand() %39 + 1;
+    int row = rand() %emptyRows + 1;
+    int column = rand() %emptyCols + 1;
     if(matrix[row][column].getSymbol() == " "){
       matrix[row][column].updateElement(row,column,"diamond","$");
       nDiam --;
@@ -79,8 +80,8 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   }
 
   while(nMons != 0){
-    int row = rand() %19 + 1;
-    int column = rand() %39 + 1;
+    int row = rand() %emptyRows + 1;
+    int column = rand() %emptyCols + 1;
     if(matrix[row][column].getSymbol() == " "){
       matrix[row][column].updateElement(row,column,"monster","M");
       nMons --;
@@ -88,8 +89,8 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   }
 
   while(nStars != 0){
-    int row = rand() %19 + 1;
-    int column = rand() %39 + 1;
+    int row = rand() %emptyRows + 1;
+    int column = rand() %emptyCols + 1;
     if(matrix[row][column].getSymbol() == " "){
       matrix[row][column].updateElement(row,column,"power","*");
       nStars --;
@@ -100,26 +101,26 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
     int doorCoordCase = rand() %4 + 1;
     switch (doorCoordCase) {
       case 1:{
-        int row = rand() %18 + 1;
+        int row = rand() %emptyRows + 1;
         int column = 0;
         matrix[row][column].updateElement(row,column,"door","/");
         break;
       }
       case 2:{
         int row = 0;
-        int column = rand() %38 + 1;
+        int column = rand() %emptyCols + 1;
         matrix[row][column].updateElement(row,column,"door","/");
         break;
       }
       case 3:{
-        int row = rand() %18 + 1;
+        int row = rand() %emptyRows + 1;
         int column = 39;
         matrix[row][column].updateElement(row,column,"door","/");
         break;
       }
       case 4:{
         int row = 19;
-        int column = rand() %38 + 1;
+        int column = rand() %emptyCols + 1;
         matrix[row][column].updateElement(row,column,"door","/");
         break;
       }
@@ -326,6 +327,8 @@ void Board::play(){
   int rowPosition = n/2;
   int colPosition = m/2;
   int cDiams = 0, cStars = 0, lives = 3;
+  int emptyRows = n-2;
+  int emptyCols = m-2;
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
   cout<<"Initial player position (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
@@ -518,9 +521,10 @@ void Board::play(){
         int row = 0;
         int column = 0;
 
+        //Maybe add rule that forbids teleportation to the place of a Monster
         while (matrix[row][column].getSymbol() == "X") {
-          row = rand() %18 + 1;
-          column = rand() %38 + 1;
+          row = rand() %emptyRows + 1;
+          column = rand() %emptyCols + 1;
         }
         cStars--;
         rowPosition = row;

@@ -12,7 +12,6 @@
 using namespace std;
 
 int main() {
-
   // int boardId = 1;
   // Board tablero(boardId);
   // cout<<"Total number of elements created: "<<Element::objectCount<<endl;
@@ -26,9 +25,8 @@ int main() {
   // tablero.play();
 
   Game game1(1);
-  game1.addBoard(3,"FIRE.txt","read");
+  game1.addBoard(3,"FIRE.txt","create");
   game1.executeGame();
-
 
 
   return 0;

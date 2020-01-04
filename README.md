@@ -4,8 +4,11 @@ Final project
 
 TODO:
 
-- Improve rules of movement to movement() function
+- Improve rules of movement to play() function
+- Clean code of play() function
 - Logic for opening/closing of doors
 - Creation of all Classes of the project
 - Add logic of movement of MONSTERS
+- updateElement() for when the player moves to another place so that we
+  modify the objet in which it is standing rather than just changing the symbol
 - lechugal BasOmyic
