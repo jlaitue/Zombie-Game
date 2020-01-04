@@ -338,6 +338,9 @@ void validateMovement(int &rowPosition, int &colPosition, string nextStr,
     }
     else if(nextStr == "M"){
       lives--;
+      if(lives == 0){
+        cout<<"YOU ARE DEAD! :C"<<endl;
+      }
     }
     switch (moveCase) {
       case 1:{
@@ -393,9 +396,10 @@ void Board::play(){
   string move = "";
   int rowPosition = n/2;
   int colPosition = m/2;
-  int cDiams = 0, cStars = 0, lives = 3;
   int emptyRows = n-2;
   int emptyCols = m-2;
+  // This will become Player attributes
+  int cDiams = 0, cStars = 0, lives = 3;
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
   cout<<"Initial player position (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
@@ -404,12 +408,21 @@ void Board::play(){
 
   while (move != "STOP") {
     bool movementValid = 0;
-    cout<<"\nENTER NEXT MOVE: ";
-    cin>>move;
+    if (lives>0) {
+      cout<<"\nENTER NEXT MOVE: ";
+      cin>>move;
+      cout<<"\n";
+    }
 
     matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",".");
 
-    if (move == "w" or move == "W"){
+    if (move == "k" or move == "K" or lives == 0){
+      cout<<"\nGAME OVER!\n";
+      cout<<"FINAL SCORE: "<<cDiams<<" diamonds collected."<<endl;
+      move = "STOP";
+    }
+
+    else if (move == "w" or move == "W"){
       string nextStr = matrix[rowPosition-1][colPosition].getSymbol();
       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
          cStars, lives, 1);
@@ -457,14 +470,12 @@ void Board::play(){
          cStars, lives, 8);
     }
 
-    else if (move == "p" or move == "P"){
-      movementValid = 1;
+    else if (move == "t" or move == "T"){
       if (cStars > 0) {
+        movementValid = 1;
         int row = 0;
         int column = 0;
-
-        //Maybe add rule that forbids teleportation to the place of a Monster
-        while (matrix[row][column].getSymbol() == "X") {
+        while (matrix[row][column].getSymbol() == "X" or matrix[row][column].getSymbol() == "M") {
           row = rand() %emptyRows + 1;
           column = rand() %emptyCols + 1;
         }
@@ -473,14 +484,8 @@ void Board::play(){
         colPosition = column;
       }
       else{
-        cout<<"You do not have any teleporters. Sorry!"<<endl;
+        cout<<"YOU DO NOT HAVE ANY TELEPORTERS. SORRY!"<<endl;
       }
-    }
-
-    else if (move == "k" or move == "K"){
-      cout<<"GAME TERMINATED.\n";
-      cout<<"FINAL SCORE: "<<cDiams<<" diamonds collected."<<endl;
-      move = "STOP";
     }
 
     else{
@@ -491,7 +496,7 @@ void Board::play(){
       matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
       cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
       displayBoard();
-      cout<<"PLAYER HUD\n";
+      cout<<"PLAYER DATA\n";
       cout<<"DIAMONDS: "<<cDiams<<endl;
       cout<<"POWERUPS: "<<cStars<<endl;
       cout<<"LIVES   : "<<lives<<endl;

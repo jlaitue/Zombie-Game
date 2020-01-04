@@ -25,7 +25,7 @@ int main() {
   // tablero.play();
 
   Game game1(1);
-  game1.addBoard(3,"FIRE.txt","create");
+  game1.addBoard(3,"FIRE.txt","read");
   game1.executeGame();
 
 
