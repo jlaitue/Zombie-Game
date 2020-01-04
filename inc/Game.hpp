@@ -20,7 +20,7 @@ public:
     void displayGame();
     void getGameLevel();
     void addBoard(int level, string filename, string directive);
-    void executeGame();
+    void runGame();
     ~Game();
 };
 

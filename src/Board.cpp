@@ -394,16 +394,19 @@ void validateMovement(int &rowPosition, int &colPosition, string nextStr,
 
 void Board::play(){
   string move = "";
+  // Initial player position which probably should be changed to a randomized pos
   int rowPosition = n/2;
   int colPosition = m/2;
+
+  // Square area in which the player can teleport to
   int emptyRows = n-2;
   int emptyCols = m-2;
   // This will become Player attributes
   int cDiams = 0, cStars = 0, lives = 3;
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
-  cout<<"Initial player position (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
-  cout<<"Initialized BOARD: \n\n";
+  cout<<"INITIAL PLAYER POSITION (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
+  cout<<"INITIALIZED GAME BOARD: \n\n";
   displayBoard();
 
   while (move != "STOP") {

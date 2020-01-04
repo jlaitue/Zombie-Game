@@ -25,7 +25,7 @@ void Game::addBoard(int level, string filename, string directive){
   }
 }
 
-void Game::executeGame(){
+void Game::runGame(){
   board.play();
 }
 
