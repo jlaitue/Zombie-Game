@@ -359,7 +359,7 @@ void Board::play(){
           lives--;
         }
         rowPosition --;
-        cout<<"Moving UP"<<endl;
+        cout<<"MOVING UP"<<endl;
         movementValid = 1;
       }
     }
@@ -380,7 +380,7 @@ void Board::play(){
           lives--;
         }
         rowPosition ++;
-        cout<<"Moving DOWN"<<endl;
+        cout<<"MOVING DOWN"<<endl;
         movementValid = 1;
       }
     }
@@ -401,7 +401,7 @@ void Board::play(){
           lives--;
         }
         colPosition++;
-        cout<<"Moving RIGHT"<<endl;
+        cout<<"MOVING RIGHT"<<endl;
         movementValid = 1;
       }
     }
@@ -422,7 +422,7 @@ void Board::play(){
           lives--;
         }
         colPosition--;
-        cout<<"Moving LEFT"<<endl;
+        cout<<"MOVING LEFT"<<endl;
         movementValid = 1;
       }
     }
@@ -444,7 +444,7 @@ void Board::play(){
         }
         colPosition++;
         rowPosition--;
-        cout<<"Moving DIAGONALLY UP R "<<endl;
+        cout<<"MOVING DIAGONALLY UP R "<<endl;
         movementValid = 1;
       }
     }
@@ -466,7 +466,7 @@ void Board::play(){
         }
         colPosition--;
         rowPosition--;
-        cout<<"Moving DIAGONALLY UP L "<<endl;
+        cout<<"MOVING DIAGONALLY UP L "<<endl;
         movementValid = 1;
       }
     }
@@ -488,7 +488,7 @@ void Board::play(){
         }
         colPosition--;
         rowPosition++;
-        cout<<"Moving DIAGONALLY DOWN L"<<endl;
+        cout<<"MOVING DIAGONALLY DOWN L"<<endl;
         movementValid = 1;
       }
     }
@@ -510,7 +510,7 @@ void Board::play(){
         }
         colPosition++;
         rowPosition++;
-        cout<<"Moving DIAGONALLY DOWN R"<<endl;
+        cout<<"MOVING DIAGONALLY DOWN R"<<endl;
         movementValid = 1;
       }
     }
