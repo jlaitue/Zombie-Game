@@ -135,6 +135,7 @@ void Board::displayBoard(){
   for (int k = 0; k < 26; k++){
     centeringSpace = centeringSpace + " ";
   }
+  cout<<boardName<<endl;
   //Display of gameboard
   for (int i = 0; i < n; i++) {
     cout<<centeringSpace;
@@ -150,6 +151,7 @@ void Board::displayBoard(){
 }
 
 void Board::readBoard(string filename){
+  boardName = filename;
   cout<<"Operation READING..."<<"\n";
   string line;
   int rows=0,columns=0;
@@ -238,6 +240,7 @@ void Board::readBoard(string filename){
 
 void Board::createTheMatrix(int l, string filename){
   level = l;
+  boardName = filename;
   ofstream myfile ("../boards/" + filename);
 
 // Creation of string matrix with elements of board
@@ -392,7 +395,7 @@ void validateMovement(int &rowPosition, int &colPosition, string nextStr,
   }
 }
 
-void Board::play(){
+string Board::play(){
   string move = "";
   // Initial player position which probably should be changed to a randomized pos
   int rowPosition = n/2;
@@ -406,7 +409,7 @@ void Board::play(){
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
   cout<<"INITIAL PLAYER POSITION (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
-  cout<<"INITIALIZED GAME BOARD: \n\n";
+  cout<<"INITIALIZED GAME BOARD "<<boardName<<": \n\n";
   displayBoard();
 
   while (move != "STOP") {
@@ -423,6 +426,7 @@ void Board::play(){
       cout<<"\nGAME OVER!\n";
       cout<<"FINAL SCORE: "<<cDiams<<" diamonds collected."<<endl;
       move = "STOP";
+      return "KILL";
     }
 
     else if (move == "w" or move == "W"){
@@ -473,6 +477,10 @@ void Board::play(){
          cStars, lives, 8);
     }
 
+    else if (move == "n" or move == "N"){
+      return "NEXT";
+    }
+
     else if (move == "t" or move == "T"){
       if (cStars > 0) {
         movementValid = 1;
@@ -505,6 +513,7 @@ void Board::play(){
       cout<<"LIVES   : "<<lives<<endl;
     }
   }
+  return "CONTINUE";
 }
 
 Board::~Board(){

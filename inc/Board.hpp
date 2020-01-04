@@ -11,6 +11,7 @@ class Board {
 private:
   int level;
   int identifier;
+  string boardName;
   int n = rows;
   int m = columns;
   Element matrix[rows][columns];
@@ -27,7 +28,7 @@ public:
     void readBoard(string filename);
     void createTheMatrix(int level, string filename);
     void getBoardLevel();
-    void play();
+    string play();
     ~Board();
 };
 

@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 #include <string>
+#include <vector>
 #include "Board.hpp"
 using namespace std;
 
@@ -9,18 +10,20 @@ private:
   int level;
   int identifier;
   // Will transform into a data array for holding several boards
-  Board board;
+  // vector <Board> boards;
+  Board boards[5];
 
 public:
   static int gameCount;
 
     // Parameterized Constructor
-    Game(int identifier);
+    Game();
 
     void displayGame();
-    void getGameLevel();
+    void loadBoards();
     void addBoard(int level, string filename, string directive);
-    void runGame();
+    void run();
+
     ~Game();
 };
 

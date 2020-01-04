@@ -1,23 +1,30 @@
 #include "../inc/Game.hpp"
 #include "../inc/Board.hpp"
 #include <iostream>
+#include <ctime>
+#include <sstream>
 
 using namespace std;
 
+
 int Game::gameCount = 0;
 
-Game::Game(int id): identifier(id){
+Game::Game(){
+  identifier = gameCount;
   cout<<"Game created"<<"\n";
   cout<<"Game id: "<<identifier<<"\n";
   gameCount++;
 }
 
-void Game::addBoard(int level, string filename, string directive){
+// Fix inconsistency with level and index fro createTheMatrix
+void Game::addBoard(int index, string filename, string directive){
   if (directive == "read") {
-    board.readBoard(filename);
+    boards[index].readBoard(filename);
+    boards[index].displayBoard();
   }
   else if (directive == "create"){
-    board.createTheMatrix(level, filename);
+    boards[index].createTheMatrix(index, filename);
+    boards[index].displayBoard();
   }
   else{
     // There is a bug that needs fixing, an empty BOARD is shown in this case
@@ -25,12 +32,38 @@ void Game::addBoard(int level, string filename, string directive){
   }
 }
 
-void Game::runGame(){
-  board.play();
+void Game::run(){
+  int stage = 0;
+  bool playing = true;
+  string userStage = "";
+
+  while (playing == true) {
+    userStage = boards[stage].play();
+    if (userStage == "KILL") {
+      cout<<"GAME METHOD runGame() TERMINATED BY USER."<<endl;
+      playing = false;
+    }
+    else if (userStage == "NEXT") {
+      cout<<"BOARD CHANGED BY USER."<<endl;
+      cout<<"\n                   LOADING NEXT BOARD...\n\n";
+      stage++;
+    }
+  }
+
 }
 
-void Game::getGameLevel(){
-  cout<<"Game with id "<<identifier<<" has level: "<<level<<"\n";
+void Game::loadBoards(){
+  srand (time(NULL));
+
+  // Value 5 is hardcoded with Game.hpp should change it
+  for (size_t i = 0; i < 5; i++) {
+    int boardId = rand() %19 + 2;
+    stringstream ss;
+    ss<<boardId;
+    string s;
+    ss>>s;
+    addBoard(i, s+"prueba.txt", "read");
+  }
 }
 
 Game::~Game(){
