@@ -5,6 +5,7 @@ Final project
 TODO:
 
 - Improve rules of movement to play() function
+- If board file is already created just read from it
 - Clean code of play() function
 - Logic for opening/closing of doors
 - Creation of all Classes of the project

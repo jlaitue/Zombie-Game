@@ -1,20 +1,20 @@
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/XXXXXXXXX
-X                                      X
-X                      XXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 X                                      X
 X                                      X
-X                          M           X
+X                                      /
+X        *           *                 X
 X                                      X
 X                                      X
-X       $                              X
-X             *              $        *X
-X                       M        $     X
-X                      $               X
+X            M  XXXXXXXXXXXXXXXXXXXXXXXX
 X                                      X
-X             XXXXXXXXXXXXXXXXXXXXX    X
+X      M                               X
 X                                      X
 X                                      X
-X              M                       X
-X                              XXXXXXXXX
-X                                      X
-XXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXX
+X                            $    $    X
+X$                                     X
+X                         M  X         X
+X                            X        XX
+X                            X        XX
+X                            X$       XX
+X                            X        XX
+XXXXXXXXXXXXX/XXXXXXXXXXXX/XXXXXXXXXXXXX

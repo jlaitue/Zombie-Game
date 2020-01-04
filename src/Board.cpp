@@ -321,7 +321,74 @@ void Board::getBoardLevel(){
   cout<<"Board with id "<<identifier<<" has level: "<<level<<"\n";
 }
 
-//THIS FUNCTION WILL GO TO THE "GAME" CLASS
+void validateMovement(int &rowPosition, int &colPosition, string nextStr,
+  bool &movementValid, int &cDiams,
+  int &cStars, int &lives, int moveCase){
+
+  if (nextStr == "X") {
+    cout<<"Invalid move. There is an obstacle.\n";
+  }
+  else{
+    movementValid = 1;
+    if(nextStr == "$"){
+      cDiams++;
+    }
+    else if(nextStr == "*"){
+      cStars++;
+    }
+    else if(nextStr == "M"){
+      lives--;
+    }
+    switch (moveCase) {
+      case 1:{
+        rowPosition --;
+        cout<<"MOVING UP"<<endl;
+        break;
+      }
+      case 2:{
+        rowPosition ++;
+        cout<<"MOVING DOWN"<<endl;
+        break;
+      }
+      case 3:{
+        colPosition++;
+        cout<<"MOVING RIGHT"<<endl;
+        break;
+      }
+      case 4:{
+        colPosition--;
+        cout<<"MOVING LEFT"<<endl;
+        break;
+      }
+      case 5:{
+        colPosition++;
+        rowPosition--;
+        cout<<"MOVING DIAGONALLY UP R "<<endl;
+        break;
+      }
+      case 6:{
+        colPosition--;
+        rowPosition--;
+        cout<<"MOVING DIAGONALLY UP L "<<endl;
+        break;
+      }
+      case 7:{
+        colPosition--;
+        rowPosition++;
+        cout<<"MOVING DIAGONALLY DOWN L"<<endl;
+        break;
+      }
+      case 8:{
+        colPosition++;
+        rowPosition++;
+        cout<<"MOVING DIAGONALLY DOWN R"<<endl;
+        break;
+      }
+    }
+
+  }
+}
+
 void Board::play(){
   string move = "";
   int rowPosition = n/2;
@@ -339,180 +406,55 @@ void Board::play(){
     bool movementValid = 0;
     cout<<"\nENTER NEXT MOVE: ";
     cin>>move;
-    matrix[rowPosition][colPosition].updateSymbol(".");
+
+    matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",".");
 
     if (move == "w" or move == "W"){
       string nextStr = matrix[rowPosition-1][colPosition].getSymbol();
-      // int moveCase = 1;
-      // updateCounters(movementValid, rowPosition, moveCase, nextStr, cDiams, cStars, lives);
-      if (nextStr == "X") {
-        cout<<"Invalid move. There is an obstacle.\n";
-      }
-      else{
-        if(nextStr == "$"){
-          cDiams++;
-        }
-        else if(nextStr == "*"){
-          cStars++;
-        }
-        else if(nextStr == "M"){
-          lives--;
-        }
-        rowPosition --;
-        cout<<"MOVING UP"<<endl;
-        movementValid = 1;
-      }
+      validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+         cStars, lives, 1);
     }
 
-    if (move == "s" or move == "S"){
+    else if (move == "s" or move == "S"){
       string nextStr = matrix[rowPosition+1][colPosition].getSymbol();
-      if (nextStr == "X") {
-        cout<<"Invalid move. There is an obstacle.\n";
-      }
-      else{
-        if(nextStr == "$"){
-          cDiams++;
-        }
-        else if(nextStr == "*"){
-          cStars++;
-        }
-        else if(nextStr == "M"){
-          lives--;
-        }
-        rowPosition ++;
-        cout<<"MOVING DOWN"<<endl;
-        movementValid = 1;
-      }
+      validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+         cStars, lives, 2);
     }
 
     else if (move == "d" or move == "D"){
       string nextStr = matrix[rowPosition][colPosition+1].getSymbol();
-      if (nextStr == "X") {
-        cout<<"Invalid move. There is an obstacle.\n";
-      }
-      else{
-        if(nextStr == "$"){
-          cDiams++;
-        }
-        else if(nextStr == "*"){
-          cStars++;
-        }
-        else if(nextStr == "M"){
-          lives--;
-        }
-        colPosition++;
-        cout<<"MOVING RIGHT"<<endl;
-        movementValid = 1;
-      }
+      validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+         cStars, lives, 3);
     }
 
     else if (move == "a" or move == "A"){
       string nextStr = matrix[rowPosition][colPosition-1].getSymbol();
-      if (nextStr == "X") {
-        cout<<"Invalid move. There is an obstacle.\n";
-      }
-      else{
-        if(nextStr == "$"){
-          cDiams++;
-        }
-        else if(nextStr == "*"){
-          cStars++;
-        }
-        else if(nextStr == "M"){
-          lives--;
-        }
-        colPosition--;
-        cout<<"MOVING LEFT"<<endl;
-        movementValid = 1;
-      }
+      validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+         cStars, lives, 4);
     }
 
     else if (move == "e" or move == "E"){
       string nextStr = matrix[rowPosition-1][colPosition+1].getSymbol();
-      if (nextStr == "X") {
-        cout<<"Invalid move. There is an obstacle.\n";
-      }
-      else{
-        if(nextStr == "$"){
-          cDiams++;
-        }
-        else if(nextStr == "*"){
-          cStars++;
-        }
-        else if(nextStr == "M"){
-          lives--;
-        }
-        colPosition++;
-        rowPosition--;
-        cout<<"MOVING DIAGONALLY UP R "<<endl;
-        movementValid = 1;
-      }
+      validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+         cStars, lives, 5);
     }
 
     else if (move == "q" or move == "Q"){
       string nextStr = matrix[rowPosition-1][colPosition-1].getSymbol();
-      if (nextStr == "X") {
-        cout<<"Invalid move. There is an obstacle.\n";
-      }
-      else{
-        if(nextStr == "$"){
-          cDiams++;
-        }
-        else if(nextStr == "*"){
-          cStars++;
-        }
-        else if(nextStr == "M"){
-          lives--;
-        }
-        colPosition--;
-        rowPosition--;
-        cout<<"MOVING DIAGONALLY UP L "<<endl;
-        movementValid = 1;
-      }
+      validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+         cStars, lives, 6);
     }
 
     else if (move == "z" or move == "Z"){
       string nextStr = matrix[rowPosition+1][colPosition-1].getSymbol();
-      if (nextStr == "X") {
-        cout<<"Invalid move. There is an obstacle.\n";
-      }
-      else{
-        if(nextStr == "$"){
-          cDiams++;
-        }
-        else if(nextStr == "*"){
-          cStars++;
-        }
-        else if(nextStr == "M"){
-          lives--;
-        }
-        colPosition--;
-        rowPosition++;
-        cout<<"MOVING DIAGONALLY DOWN L"<<endl;
-        movementValid = 1;
-      }
+      validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+         cStars, lives, 7);
     }
 
     else if (move == "c" or move == "C"){
       string nextStr = matrix[rowPosition+1][colPosition+1].getSymbol();
-      if (nextStr == "X") {
-        cout<<"Invalid move. There is an obstacle.\n";
-      }
-      else{
-        if(nextStr == "$"){
-          cDiams++;
-        }
-        else if(nextStr == "*"){
-          cStars++;
-        }
-        else if(nextStr == "M"){
-          lives--;
-        }
-        colPosition++;
-        rowPosition++;
-        cout<<"MOVING DIAGONALLY DOWN R"<<endl;
-        movementValid = 1;
-      }
+      validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+         cStars, lives, 8);
     }
 
     else if (move == "p" or move == "P"){
@@ -535,22 +477,24 @@ void Board::play(){
       }
     }
 
-    else if (move == "x" or move == "X"){
+    else if (move == "k" or move == "K"){
       cout<<"GAME TERMINATED.\n";
       cout<<"FINAL SCORE: "<<cDiams<<" diamonds collected."<<endl;
       move = "STOP";
     }
+
     else{
-      cout<<"Try a valid key input.\n";
+      cout<<"TRY A VALID KEY INPUT.\n";
     }
 
-    matrix[rowPosition][colPosition].updateSymbol("O");
     if (movementValid) {
+      matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
       cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
       displayBoard();
-      cout<<"Player has: "<<cDiams<<" diamonds.\n";
-      cout<<"Player has: "<<cStars<<" stars.\n";
-      cout<<"Player has: "<<lives<<" lives.\n";
+      cout<<"PLAYER HUD\n";
+      cout<<"DIAMONDS: "<<cDiams<<endl;
+      cout<<"POWERUPS: "<<cStars<<endl;
+      cout<<"LIVES   : "<<lives<<endl;
     }
   }
 }
