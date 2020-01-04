@@ -9,7 +9,6 @@ class Game {
 private:
   int level;
   int identifier;
-  // Will transform into a data array for holding several boards
   // vector <Board> boards;
   Board boards[5];
 

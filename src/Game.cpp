@@ -10,10 +10,10 @@ using namespace std;
 int Game::gameCount = 0;
 
 Game::Game(){
+  gameCount++;
   identifier = gameCount;
   cout<<"Game created"<<"\n";
   cout<<"Game id: "<<identifier<<"\n";
-  gameCount++;
 }
 
 // Fix inconsistency with level and index fro createTheMatrix

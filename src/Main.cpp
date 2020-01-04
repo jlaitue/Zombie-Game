@@ -1,9 +1,3 @@
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <ctime>
-#include <sstream>
-#include "../inc/Board.hpp"
 #include "../inc/Game.hpp"
 using namespace std;
 
