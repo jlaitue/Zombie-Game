@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 int Game::gameCount = 0;
 
 Game::Game(){
@@ -15,7 +14,6 @@ Game::Game(){
   cout<<"Game created"<<"\n";
   cout<<"Game id: "<<identifier<<"\n";
 }
-
 // Fix inconsistency with level and index fro createTheMatrix
 void Game::addBoard(int index, string filename, string directive){
   if (directive == "read") {
