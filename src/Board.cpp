@@ -131,12 +131,9 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
 }
 
 void Board::displayCurses(){
-  // char out;
-  // const char *out;
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
-      // out = matrix[i][j].getSymbol().c_str();
-      mvaddch(5+i,20+j, 'X');
+      mvaddch(5+i,20+j, matrix[i][j].getSymbol());
     }
   }
 }
@@ -474,8 +471,9 @@ string Board::play(){
   // int rowPosition = n/2;
   // int colPosition = m/2;
   // char userInputchar;
-  //
-  // // Square area in which the player can teleport to
+
+
+  // Square area in which the player can teleport to
   // int emptyRows = n-2;
   // int emptyCols = m-2;
   // // This will become Player attributes
