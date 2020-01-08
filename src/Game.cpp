@@ -39,7 +39,6 @@ void Game::run(){
   int maxlines;
 
   initscr();
-  // cbreak();
   raw();
   noecho();
   clear();
