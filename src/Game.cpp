@@ -50,15 +50,16 @@ void Game::run(){
     if (userStage == "KILL") {
       // cout<<"GAME METHOD runGame() TERMINATED BY USER."<<endl;
       playing = false;
-      mvaddstr(maxlines, 0, "Press any key to quit ");
+      mvaddstr(maxlines, 0, "Press any key to terminate... ");
       refresh();
       getch();
       endwin();
       exit(0);
     }
     else if (userStage == "NEXT") {
-      cout<<"BOARD CHANGED BY USER."<<endl;
-      cout<<"\n                   LOADING NEXT BOARD...\n\n";
+      mvaddstr(27, 0, "BOARD CHANGED BY USER.");
+      refresh();
+      // cout<<"\n                   LOADING NEXT BOARD...\n\n";
       stage++;
     }
   }

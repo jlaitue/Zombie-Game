@@ -401,7 +401,7 @@ void validateMovement(int &rowPosition, int &colPosition, char nextStr,
   int &cStars, int &lives, int moveCase){
 
   if (nextStr == 'X') {
-    cout<<"Invalid move. There is an obstacle.\n";
+    mvaddstr(31, 0, "INVALID MOVE. THERE IS AN OBSTACLE.");
   }
   else{
     movementValid = 1;
@@ -414,52 +414,52 @@ void validateMovement(int &rowPosition, int &colPosition, char nextStr,
     else if(nextStr == 'M'){
       lives--;
       if(lives == 0){
-        cout<<"YOU ARE DEAD! :C"<<endl;
+        mvaddstr(31, 0, "YOU ARE DEAD! :C");
       }
     }
     switch (moveCase) {
       case 1:{
         rowPosition --;
-        cout<<"MOVING UP"<<endl;
+        // cout<<"MOVING UP"<<endl;
         break;
       }
       case 2:{
         rowPosition ++;
-        cout<<"MOVING DOWN"<<endl;
+        // cout<<"MOVING DOWN"<<endl;
         break;
       }
       case 3:{
         colPosition++;
-        cout<<"MOVING RIGHT"<<endl;
+        // cout<<"MOVING RIGHT"<<endl;
         break;
       }
       case 4:{
         colPosition--;
-        cout<<"MOVING LEFT"<<endl;
+        // cout<<"MOVING LEFT"<<endl;
         break;
       }
       case 5:{
         colPosition++;
         rowPosition--;
-        cout<<"MOVING DIAGONALLY UP R "<<endl;
+        // cout<<"MOVING DIAGONALLY UP R "<<endl;
         break;
       }
       case 6:{
         colPosition--;
         rowPosition--;
-        cout<<"MOVING DIAGONALLY UP L "<<endl;
+        // cout<<"MOVING DIAGONALLY UP L "<<endl;
         break;
       }
       case 7:{
         colPosition--;
         rowPosition++;
-        cout<<"MOVING DIAGONALLY DOWN L"<<endl;
+        // cout<<"MOVING DIAGONALLY DOWN L"<<endl;
         break;
       }
       case 8:{
         colPosition++;
         rowPosition++;
-        cout<<"MOVING DIAGONALLY DOWN R"<<endl;
+        // cout<<"MOVING DIAGONALLY DOWN R"<<endl;
         break;
       }
     }
@@ -487,15 +487,25 @@ string Board::play(){
   // cout<<"INITIALIZED GAME BOARD "<<boardName<<": \n\n";
   // displayBoard();
   displayCurses();
+  mvaddstr(5, m+25, "PLAYER INFO");
+  mvaddstr(6, m+25, "Diamonds: ");
+  mvaddstr(7, m+25, "Lives: ");
+  mvaddstr(8, m+25, "Teleports: ");
 
-  mvaddstr(27, 0, "ENTER NEXT MOVE...");
+  mvaddstr(10, m+25, "KEYBOARD COMMANDS");
+  mvaddstr(11, m+25, "T for teleportation");
+  mvaddstr(12, m+25, "K for terminating");
+  mvaddstr(13, m+25, "N for next board");
+  mvaddstr(14, m+25, "W,Q,E,S,A,D,Z,C for movement");
+
+  mvaddstr(27, 0, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
     bool movementValid = 0;
     if (lives>0) {
-      move = getch();
-      mvaddstr(30, 0, "KEY INPUT:");
-      mvaddch(30, 12, userInput);
-      mvaddstr(27, 0, "ENTER NEXT MOVE:");
+      userInput = getch();
+      mvaddstr(30, 0, "KEY INPUT: ");
+      mvaddch(30, 13, userInput);
+      mvaddstr(27, 0, "ENTER NEXT MOVE: ");
       refresh();
     }
 
@@ -576,17 +586,17 @@ string Board::play(){
         colPosition = column;
       }
       else{
-        cout<<"YOU DO NOT HAVE ANY TELEPORTERS. SORRY!"<<endl;
+        mvaddstr(31, 0, "YOU DO NOT HAVE ANY TELEPORTERS. SORRY!");
       }
     }
 
     else{
-      cout<<"TRY A VALID KEY INPUT.\n";
+      mvaddstr(31, 0, "TRY A VALID KEY INPUT.");
     }
 
     if (movementValid) {
       matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
-      cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
+      // cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
       displayCurses();
       mvaddstr(5, m+25, "PLAYER INFO");
       mvaddstr(6, m+25, "Diamonds: ");
@@ -596,14 +606,12 @@ string Board::play(){
       mvaddstr(10, m+25, "KEYBOARD COMMANDS");
       mvaddstr(11, m+25, "T for teleportation");
       mvaddstr(12, m+25, "K for terminating");
-      mvaddstr(13, m+25, "N for next level");
-      // cout<<"PLAYER DATA\n";
-      // cout<<"DIAMONDS: "<<cDiams<<endl;
-      // cout<<"POWERUPS: "<<cStars<<endl;
-      // cout<<"LIVES   : "<<lives<<endl;
+      mvaddstr(13, m+25, "N for next board");
+      mvaddstr(14, m+25, "W,Q,E,S,A,D,Z,C for movement");
     }
-  }
+  }//fin del while
 //   return "CONTINUE";
+// cd /mnt/c/Users/NOVUS/Desktop/POO_FP/bin/
 return "KILL";
 }
 
