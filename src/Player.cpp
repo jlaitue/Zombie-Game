@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Player::Player(int id, int x, int y, string t, string s):
+Player::Player(int id, int x, int y, string t, char s):
 Element(id,x,y,t,s),nDiamonds(0), nPower(0),nLives(3)
 {
   cout<<"Player created"<<endl;

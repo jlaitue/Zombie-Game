@@ -12,7 +12,7 @@ private:
   int nLives;
 public:
     // Parameterized Constructor
-    Player(int id, int x, int y, string t = "player", string s = "J");
+    Player(int id, int x, int y, string t = "player", char s = 'J');
     void movement();
     ~Player();
 };

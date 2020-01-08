@@ -10,7 +10,7 @@ private:
   int xcoord;
   int ycoord;
   string type;
-  string symbol;
+  char symbol;
 
 public:
   static int objectCount;
@@ -18,12 +18,12 @@ public:
     //Default Constructor
     Element();
     // Parameterized Constructor
-    Element(int id, int x, int y, string t, string s);
+    Element(int id, int x, int y, string t, char s);
 
     void showElement();
-    void updateSymbol(string newS);
-    void updateElement(int x, int y, string t, string s);
-    string getSymbol();
+    void updateSymbol(char newS);
+    void updateElement(int x, int y, string t, char s);
+    char getSymbol();
 
     ~Element();
 };

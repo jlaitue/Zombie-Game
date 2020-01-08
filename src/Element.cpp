@@ -9,11 +9,11 @@ int Element::objectCount = 0;
 Element::Element(){
   objectCount++;
   idtag = objectCount;
-  symbol = " ";
+  symbol = ' ';
   // cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
 }
 
-Element::Element(int id, int x, int y, string t, string s):
+Element::Element(int id, int x, int y, string t, char s):
 idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
 {
   cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
@@ -28,15 +28,15 @@ void Element::showElement(){
   cout<<"Symb: "<<symbol<<endl;
 }
 
-string Element::getSymbol(){
+char Element::getSymbol(){
   return symbol;
 }
 
-void Element::updateSymbol(string newS){
+void Element::updateSymbol(char newS){
   symbol = newS;
 }
 
-void Element::updateElement(int x, int y, string t, string s){
+void Element::updateElement(int x, int y, string t, char s){
   xcoord = x;
   ycoord = y;
   type = t;

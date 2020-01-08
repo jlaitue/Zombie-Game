@@ -8,7 +8,7 @@ using namespace std;
 class Door: public Element{
 public:
     // Parameterized Constructor
-    Door(int id, int x, int y, string t = "static",  string s = "/");
+    Door(int id, int x, int y, string t = "static",  char s = '/');
     ~Door();
 };
 

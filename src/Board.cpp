@@ -33,14 +33,14 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   int emptyCols = m-2;
   while(nWalls != 0){
       string direction = columnOrientation();
-      string s = "X";
+      char s = 'X';
       int x1 = rand() %emptyRows + 1;
       int y1 = rand() %emptyCols + 1;
 
       // cout<<"Column orientation: "<<direction<<"\n";
 
       //If beginning point is empty proceed
-      if(matrix[x1][y1].getSymbol() == " "){
+      if(matrix[x1][y1].getSymbol() == ' '){
         // cout<<"Wall number: "<<nWalls<<"\n";
         // cout<<"Coords: "<<x1<<" "<<y1<<"\n";
 
@@ -48,7 +48,7 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
           int length = rand() %emptyRows + 1;
           // cout<<"Length: "<<length<<"\n\n";
           for (int i = 0; i < length; i++) {
-            if (matrix[x1+i][y1].getSymbol() == " ") {
+            if (matrix[x1+i][y1].getSymbol() == ' ') {
               matrix[x1+i][y1].updateSymbol(s);
             }
             else break;
@@ -60,7 +60,7 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
           int length = rand() %emptyCols + 1;
           // cout<<"Length: "<<length<<"\n\n";
           for (int i = 0; i < length; i++) {
-            if (matrix[x1][y1+i].getSymbol() == " ") {
+            if (matrix[x1][y1+i].getSymbol() == ' ') {
               matrix[x1][y1+i].updateSymbol(s);
             }
             else break;
@@ -74,8 +74,8 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   while(nDiam != 0){
     int row = rand() %emptyRows + 1;
     int column = rand() %emptyCols + 1;
-    if(matrix[row][column].getSymbol() == " "){
-      matrix[row][column].updateElement(row,column,"diamond","$");
+    if(matrix[row][column].getSymbol() == ' '){
+      matrix[row][column].updateElement(row,column,"diamond",'$');
       nDiam --;
     }
   }
@@ -83,8 +83,8 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   while(nMons != 0){
     int row = rand() %emptyRows + 1;
     int column = rand() %emptyCols + 1;
-    if(matrix[row][column].getSymbol() == " "){
-      matrix[row][column].updateElement(row,column,"monster","M");
+    if(matrix[row][column].getSymbol() == ' '){
+      matrix[row][column].updateElement(row,column,"monster",'M');
       nMons --;
     }
   }
@@ -92,8 +92,8 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   while(nStars != 0){
     int row = rand() %emptyRows + 1;
     int column = rand() %emptyCols + 1;
-    if(matrix[row][column].getSymbol() == " "){
-      matrix[row][column].updateElement(row,column,"power","*");
+    if(matrix[row][column].getSymbol() == ' '){
+      matrix[row][column].updateElement(row,column,"power", '*');
       nStars --;
     }
   }
@@ -104,25 +104,25 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
       case 1:{
         int row = rand() %emptyRows + 1;
         int column = 0;
-        matrix[row][column].updateElement(row,column,"door","/");
+        matrix[row][column].updateElement(row,column,"door",'/');
         break;
       }
       case 2:{
         int row = 0;
         int column = rand() %emptyCols + 1;
-        matrix[row][column].updateElement(row,column,"door","/");
+        matrix[row][column].updateElement(row,column,"door",'/');
         break;
       }
       case 3:{
         int row = rand() %emptyRows + 1;
         int column = 39;
-        matrix[row][column].updateElement(row,column,"door","/");
+        matrix[row][column].updateElement(row,column,"door",'/');
         break;
       }
       case 4:{
         int row = 19;
         int column = rand() %emptyCols + 1;
-        matrix[row][column].updateElement(row,column,"door","/");
+        matrix[row][column].updateElement(row,column,"door",'/');
         break;
       }
     }
@@ -249,44 +249,44 @@ void Board::readBoard(string filename){
             // cout<<"FOUND AN X ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
             // idtag(id), xcoord(x), ycoord(y),type(t),symbol(s)
-            matrix[rows][i].updateElement(rows,i,"wall","X");
+            matrix[rows][i].updateElement(rows,i,"wall",'X');
             xcount ++;
           }
           else if (line[i] == '*'){
             // cout<<"FOUND A POWERUP ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"power","*");
+            matrix[rows][i].updateElement(rows,i,"power",'*');
             powcount++;
           }
           else if (line[i] == '$'){
             // cout<<"FOUND A DIAMOND ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"diam","$");
+            matrix[rows][i].updateElement(rows,i,"diam",'$');
             diamcount++;
 
           }
           else if (line[i] == 'M'){
             // cout<<"FOUND A MONSTER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"mons","M");
+            matrix[rows][i].updateElement(rows,i,"mons",'M');
             monscount++;
           }
           else if (line[i] == ' '){
             // cout<<"FOUND EMPTY SPACE ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"space"," ");
+            matrix[rows][i].updateElement(rows,i,"space",' ');
             whitecount++;
           }
-          else if (line[i] == 'J'){
-            // cout<<"FOUND PLAYER ";
-            // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            Player player1(1,rows,i,"player","J");
-            matrix[rows][i] = player1;
-          }
+          // else if (line[i] == 'J'){
+          //   // cout<<"FOUND PLAYER ";
+          //   // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
+          //   Player player1(1,rows,i,"player",'J');
+          //   matrix[rows][i] = player1;
+          // }
           else if (line[i] == '/'){
             // cout<<"FOUND DOOR ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"door","/");
+            matrix[rows][i].updateElement(rows,i,"door",'/');
             doorscount++;
           }
         }
@@ -305,7 +305,7 @@ void Board::readBoard(string filename){
     which is why the value size of that last line is 0
     */
     // columns = line.size();
-    columns = m;
+    // columns = m;
     // cout<<"Total Rows: "<<rows<<"\n";
     // cout<<"Total Columns: "<<columns<<"\n";
     // cout<<"\n\n";
@@ -321,14 +321,14 @@ void Board::createTheMatrix(int l, string filename){
       for (int j = 0; j < m; j++) {
         //Creation of horizontal outer walls
         if(i==0 or i == n-1){
-          matrix[i][j].updateElement(i,j,"wall","X");
+          matrix[i][j].updateElement(i,j,"wall",'X');
         }
         //Creation of vertical outer walls
         else if(i > 0 and (j == 0 or j == m-1)){
-          matrix[i][j].updateElement(i,j,"wall","X");
+          matrix[i][j].updateElement(i,j,"wall",'X');
         }
         else if(i > 0 and (j > 0 and j < m-1)){
-          matrix[i][j].updateElement(i,j,"space"," ");
+          matrix[i][j].updateElement(i,j,"space",' ');
         }
       }
     }
@@ -397,22 +397,22 @@ void Board::getBoardLevel(){
   cout<<"Board with id "<<identifier<<" has level: "<<level<<"\n";
 }
 
-void validateMovement(int &rowPosition, int &colPosition, string nextStr,
+void validateMovement(int &rowPosition, int &colPosition, char nextStr,
   bool &movementValid, int &cDiams,
   int &cStars, int &lives, int moveCase){
 
-  if (nextStr == "X") {
+  if (nextStr == 'X') {
     cout<<"Invalid move. There is an obstacle.\n";
   }
   else{
     movementValid = 1;
-    if(nextStr == "$"){
+    if(nextStr == '$'){
       cDiams++;
     }
-    else if(nextStr == "*"){
+    else if(nextStr == '*'){
       cStars++;
     }
-    else if(nextStr == "M"){
+    else if(nextStr == 'M'){
       lives--;
       if(lives == 0){
         cout<<"YOU ARE DEAD! :C"<<endl;
@@ -471,17 +471,17 @@ void validateMovement(int &rowPosition, int &colPosition, string nextStr,
 string Board::play(){
   string move = "";
   // Initial player position which probably should be changed to a randomized pos
-  int rowPosition = n/2;
-  int colPosition = m/2;
-  char userInputchar;
-
-  // Square area in which the player can teleport to
+  // int rowPosition = n/2;
+  // int colPosition = m/2;
+  // char userInputchar;
+  //
+  // // Square area in which the player can teleport to
   // int emptyRows = n-2;
   // int emptyCols = m-2;
   // // This will become Player attributes
   // int cDiams = 0, cStars = 0, lives = 3;
-  //
-  // matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
+
+  // matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
   // cout<<"INITIAL PLAYER POSITION (x,y) =  "<<rowPosition<<", "<<colPosition<<endl;
   // cout<<"INITIALIZED GAME BOARD "<<boardName<<": \n\n";
   // displayBoard();
@@ -499,107 +499,107 @@ string Board::play(){
   //   refresh();
   // }
 
-//   while (move != "STOP") {
-//     bool movementValid = 0;
-//     if (lives>0) {
-//       cout<<"\nENTER NEXT MOVE: ";
-//       cin>>move;
-//       cout<<"\n";
-//     }
-//
-//     matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",".");
-//
-//     if (move == "k" or move == "K" or lives == 0){
-//       cout<<"\nGAME OVER!\n";
-//       cout<<"FINAL SCORE: "<<cDiams<<" diamonds collected."<<endl;
-//       move = "STOP";
-//       return "KILL";
-//     }
-//
-//     else if (move == "w" or move == "W"){
-//       string nextStr = matrix[rowPosition-1][colPosition].getSymbol();
-//       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-//          cStars, lives, 1);
-//     }
-//
-//     else if (move == "s" or move == "S"){
-//       string nextStr = matrix[rowPosition+1][colPosition].getSymbol();
-//       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-//          cStars, lives, 2);
-//     }
-//
-//     else if (move == "d" or move == "D"){
-//       string nextStr = matrix[rowPosition][colPosition+1].getSymbol();
-//       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-//          cStars, lives, 3);
-//     }
-//
-//     else if (move == "a" or move == "A"){
-//       string nextStr = matrix[rowPosition][colPosition-1].getSymbol();
-//       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-//          cStars, lives, 4);
-//     }
-//
-//     else if (move == "e" or move == "E"){
-//       string nextStr = matrix[rowPosition-1][colPosition+1].getSymbol();
-//       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-//          cStars, lives, 5);
-//     }
-//
-//     else if (move == "q" or move == "Q"){
-//       string nextStr = matrix[rowPosition-1][colPosition-1].getSymbol();
-//       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-//          cStars, lives, 6);
-//     }
-//
-//     else if (move == "z" or move == "Z"){
-//       string nextStr = matrix[rowPosition+1][colPosition-1].getSymbol();
-//       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-//          cStars, lives, 7);
-//     }
-//
-//     else if (move == "c" or move == "C"){
-//       string nextStr = matrix[rowPosition+1][colPosition+1].getSymbol();
-//       validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-//          cStars, lives, 8);
-//     }
-//
-//     else if (move == "n" or move == "N"){
-//       return "NEXT";
-//     }
-//
-//     else if (move == "t" or move == "T"){
-//       if (cStars > 0) {
-//         movementValid = 1;
-//         int row = 0;
-//         int column = 0;
-//         while (matrix[row][column].getSymbol() == "X" or matrix[row][column].getSymbol() == "M") {
-//           row = rand() %emptyRows + 1;
-//           column = rand() %emptyCols + 1;
-//         }
-//         cStars--;
-//         rowPosition = row;
-//         colPosition = column;
-//       }
-//       else{
-//         cout<<"YOU DO NOT HAVE ANY TELEPORTERS. SORRY!"<<endl;
-//       }
-//     }
-//
-//     else{
-//       cout<<"TRY A VALID KEY INPUT.\n";
-//     }
-//
-//     if (movementValid) {
-//       matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player","O");
-//       cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
-//       displayBoard();
-//       cout<<"PLAYER DATA\n";
-//       cout<<"DIAMONDS: "<<cDiams<<endl;
-//       cout<<"POWERUPS: "<<cStars<<endl;
-//       cout<<"LIVES   : "<<lives<<endl;
-//     }
-//   }
+  // while (move != "STOP") {
+  //   bool movementValid = 0;
+  //   if (lives>0) {
+  //     cout<<"\nENTER NEXT MOVE: ";
+  //     cin>>move;
+  //     cout<<"\n";
+  //   }
+  //
+  //   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",'.');
+  //
+  //   if (move == "k" or move == "K" or lives == 0){
+  //     cout<<"\nGAME OVER!\n";
+  //     cout<<"FINAL SCORE: "<<cDiams<<" diamonds collected."<<endl;
+  //     move = "STOP";
+  //     return "KILL";
+  //   }
+  //
+  //   else if (move == "w" or move == "W"){
+  //     char nextStr = matrix[rowPosition-1][colPosition].getSymbol();
+  //     validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+  //        cStars, lives, 1);
+  //   }
+  //
+  //   else if (move == "s" or move == "S"){
+  //     char nextStr = matrix[rowPosition+1][colPosition].getSymbol();
+  //     validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+  //        cStars, lives, 2);
+  //   }
+  //
+  //   else if (move == "d" or move == "D"){
+  //     char nextStr = matrix[rowPosition][colPosition+1].getSymbol();
+  //     validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+  //        cStars, lives, 3);
+  //   }
+  //
+  //   else if (move == "a" or move == "A"){
+  //     char nextStr = matrix[rowPosition][colPosition-1].getSymbol();
+  //     validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+  //        cStars, lives, 4);
+  //   }
+  //
+  //   else if (move == "e" or move == "E"){
+  //     char nextStr = matrix[rowPosition-1][colPosition+1].getSymbol();
+  //     validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+  //        cStars, lives, 5);
+  //   }
+  //
+  //   else if (move == "q" or move == "Q"){
+  //     char nextStr = matrix[rowPosition-1][colPosition-1].getSymbol();
+  //     validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+  //        cStars, lives, 6);
+  //   }
+  //
+  //   else if (move == "z" or move == "Z"){
+  //     char nextStr = matrix[rowPosition+1][colPosition-1].getSymbol();
+  //     validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+  //        cStars, lives, 7);
+  //   }
+  //
+  //   else if (move == "c" or move == "C"){
+  //     char nextStr = matrix[rowPosition+1][colPosition+1].getSymbol();
+  //     validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
+  //        cStars, lives, 8);
+  //   }
+  //
+  //   else if (move == "n" or move == "N"){
+  //     return "NEXT";
+  //   }
+  //
+  //   else if (move == "t" or move == "T"){
+  //     if (cStars > 0) {
+  //       movementValid = 1;
+  //       int row = 0;
+  //       int column = 0;
+  //       while (matrix[row][column].getSymbol() == 'X' or matrix[row][column].getSymbol() == 'M') {
+  //         row = rand() %emptyRows + 1;
+  //         column = rand() %emptyCols + 1;
+  //       }
+  //       cStars--;
+  //       rowPosition = row;
+  //       colPosition = column;
+  //     }
+  //     else{
+  //       cout<<"YOU DO NOT HAVE ANY TELEPORTERS. SORRY!"<<endl;
+  //     }
+  //   }
+  //
+  //   else{
+  //     cout<<"TRY A VALID KEY INPUT.\n";
+  //   }
+  //
+  //   if (movementValid) {
+  //     matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
+  //     cout<<"(x,y) = ("<<rowPosition<<", "<<colPosition<<")"<<endl;
+  //     displayBoard();
+  //     cout<<"PLAYER DATA\n";
+  //     cout<<"DIAMONDS: "<<cDiams<<endl;
+  //     cout<<"POWERUPS: "<<cStars<<endl;
+  //     cout<<"LIVES   : "<<lives<<endl;
+  //   }
+  // }
 //   return "CONTINUE";
 return "KILL";
 }

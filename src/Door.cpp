@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Door::Door(int id, int x, int y, string t, string s):
+Door::Door(int id, int x, int y, string t, char s):
 Element(id,x,y,t,s)
 {
   cout<<"Door "<<id<<"created"<<endl;
