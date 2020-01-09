@@ -8,10 +8,11 @@ SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS := --std=c++11 -Wall
 INC := -I include
+LDLIBS := -lncurses
 
 $(TARGET): $(OBJECTS)
 	@echo " Linking...";
-	@echo " $(CC) $^ -o $(TARGET)"; $(CC) $^ -o $(TARGET) -lncurses
+	@echo " $(CC) $^ -o $(TARGET)"; $(CC) $^ -o $(TARGET) $(LDLIBS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR);
