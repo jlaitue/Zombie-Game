@@ -458,8 +458,10 @@ string Board::play(){
       matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",'.');
 
       if (userInput == 'k' or userInput == 'K'){
-        mvaddstr(27, 0, "GAME OVER!");
-        mvaddstr(28, 0, "FINAL SCORE");
+        mvprintw(27,0,"");
+        clrtoeol();
+        mvprintw(27, 0, "GAME OVER!");
+        mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", cDiams);
         refresh();
         return "KILL";
       }
