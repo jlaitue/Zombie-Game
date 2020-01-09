@@ -425,23 +425,20 @@ string Board::play(){
 
   // // This will become Player attributes
   int cDiams = 0, cStars = 0, lives = 3;
-  //
-  // stringstream diam, star, live;
-  // const char dia, sta, liv;
-  // diam<<cDiams;
-  // star<<stars;
-  // live<<lives;
-  // diam>>dia;
-  // star>>sta;
-  // live>>liv;
+
+  string diamstr = "Diamonds: " + to_string(cDiams);
+  string starstr = "Teleports: " + to_string(cStars);
+  string livestr = "Lives: " + to_string(lives);
+  char const *diamond = diamstr.c_str();  //use char const* as target type
+  char const *stars = starstr.c_str();  //use char const* as target type
+  char const *live = livestr.c_str();  //use char const* as target type
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
   displayBoard();
-  mvaddstr(5, m+25, "PLAYER INFO");
-  mvaddstr(6, m+25, "Diamonds: ");
-  mvaddstr(6, m+25, "Diamonds: ");
-  mvaddstr(7, m+25, "Lives: ");
-  mvaddstr(8, m+25, "Teleports: ");
+  mvaddstr(5, m+25, "PLAYER");
+  mvaddstr(6, m+25, diamond);
+  mvaddstr(7, m+25, stars);
+  mvaddstr(8, m+25, live);
 
   mvaddstr(10, m+25, "KEYBOARD COMMANDS");
   mvaddstr(11, m+25, "T for teleportation");
@@ -545,10 +542,10 @@ string Board::play(){
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
-        mvaddstr(5, m+25, "PLAYER INFO");
-        mvaddstr(6, m+25, "Diamonds: ");
-        mvaddstr(7, m+25, "Lives: ");
-        mvaddstr(8, m+25, "Teleports: ");
+        mvaddstr(5, m+25, "PLAYER");
+        mvaddstr(6, m+25, diamond);
+        mvaddstr(7, m+25, stars);
+        mvaddstr(8, m+25, live);
       }
     }
     else{
