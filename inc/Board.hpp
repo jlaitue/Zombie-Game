@@ -28,8 +28,6 @@ public:
     void readBoard(string filename);
     void createTheMatrix(int level, string filename);
     void getBoardLevel();
-    void displayCurses();
-    void playCurses();
     string play();
     ~Board();
 };

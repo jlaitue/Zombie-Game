@@ -132,94 +132,12 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   }
 }
 
-void Board::displayCurses(){
+void Board::displayBoard(){
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
       mvaddch(5+i,20+j, matrix[i][j].getSymbol());
     }
   }
-}
-
- void Board::playCurses(){
-   // int maxcols, maxlines, rows, cols, yshift, xshift;
-   // char matrix[20][40];
-   // int userInput;
-   // char userInputchar;
-
-   // readBoard(matrix,"FIRE.txt");
-   /* initialize curses */
-   // initscr();
-   // // cbreak();
-   // raw();
-   // noecho();
-   // clear();
-
-   /* initialize board */
-   // yshift = 10;
-   // xshift = 20;
-   // maxlines = LINES - 1;
-   // maxcols = COLS - 1;
-   // rows = 20;
-   // cols = 40;
-   //
-   // //Display of gameboard
-   // matrix[10][20] = 'O';
-   // displayCurses();
-   //
-   // mvaddstr(5, cols+25, "PLAYER INFO");
-   // mvaddstr(6, cols+25, "Diamonds: ");
-   // mvaddstr(7, cols+25, "Lives: ");
-   // mvaddstr(8, cols+25, "Teleports: ");
-   //
-   // mvaddstr(10, cols+25, "KEYBOARD COMMANDS");
-   // mvaddstr(11, cols+25, "T for teleportation");
-   // mvaddstr(12, cols+25, "K for terminating");
-   // mvaddstr(13, cols+25, "N for next level");
-   //
-   // refresh();
-
-   // play part of code
-   // move(27,0);
-   // printw("Write ESC to finish: ");
-   // int count = 0;
-   // while ((userInputchar = getch()) != 'a') {
-   //   move(30,0);
-   //   printw("Character: %c",userInputchar);
-   //   move(27,0);
-   //   printw("Write ESC to finish: ");
-   //   matrix[10-count][20] = ':';
-   //   count++;
-   //   matrix[10-count][20] = 'O';
-   //   displayCurses();
-   //   refresh();
-   // }
-
-   /* done */
-     // mvaddstr(maxlines, 0, "Press any key to quit ");
-     // refresh();
-     // getch();
-     // endwin();
- }
-
-void Board::displayBoard(){
-  //Small code for centering the board in terminal
-  string centeringSpace = "";
-  for (int k = 0; k < 26; k++){
-    centeringSpace = centeringSpace + " ";
-  }
-  cout<<boardName<<endl;
-  //Display of gameboard
-  for (int i = 0; i < n; i++) {
-    cout<<centeringSpace;
-    if(i<10){cout<<i<<"  ";}
-    else{cout<<i<<" ";}
-    for (int j = 0; j < m; j++) {
-      // if (i == n-1) {cout<<j;}
-      cout<<matrix[i][j].getSymbol();
-    }
-    cout<<"\n";
-  }
-  cout<<"\n";
 }
 
 void Board::readBoard(string filename){
@@ -493,7 +411,7 @@ string Board::play(){
   // live>>liv;
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
-  displayCurses();
+  displayBoard();
   mvaddstr(5, m+25, "PLAYER INFO");
   mvaddstr(6, m+25, "Diamonds: ");
   mvaddstr(6, m+25, "Diamonds: ");
@@ -601,7 +519,7 @@ string Board::play(){
 
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
-        displayCurses();
+        displayBoard();
         mvaddstr(5, m+25, "PLAYER INFO");
         mvaddstr(6, m+25, "Diamonds: ");
         mvaddstr(7, m+25, "Lives: ");
