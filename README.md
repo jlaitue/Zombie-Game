@@ -5,7 +5,8 @@ Final project
 TODO:
 
 - Make it work the way its supposed to do
-- Creation of .game and .board files
+- Creation of .game and .board files / Almost DONE already created .game files
+  we still need to include all the capabilities required
 - Improve rules of movement to play() function
 - If board file is already created just read from it
 - Logic for opening/closing of doors

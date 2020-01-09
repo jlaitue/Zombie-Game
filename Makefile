@@ -1,7 +1,7 @@
 CC := g++ # This is the main compiler
 SRCDIR := src
 BUILDDIR := build
-TARGET := bin/Test.exe
+TARGET := bin/Test.game
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
