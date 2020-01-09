@@ -132,10 +132,35 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
   }
 }
 
+void colorCoding(char element, int &colorCode){
+  if (element == 'O') {
+    colorCode = 1;
+  }
+  else if (element == 'M') {
+    colorCode = 2;
+  }
+  else if (element == '*') {
+    colorCode = 3;
+  }
+  else if (element == '$') {
+    colorCode = 4;
+  }
+  else if (element == '.') {
+    colorCode = 5;
+  }
+  else{
+    colorCode = 6;
+  }
+}
+
 void Board::displayBoard(){
+  char element;
+  int colorCode;
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
-      mvaddch(5+i,20+j, matrix[i][j].getSymbol());
+      element = matrix[i][j].getSymbol();
+      colorCoding(element, colorCode);
+      mvaddch(5+i,20+j, element | COLOR_PAIR(colorCode));
     }
   }
 }
@@ -320,7 +345,7 @@ void validateMovement(int &rowPosition, int &colPosition, char nextStr,
   int &cStars, int &lives, int moveCase){
 
   if (nextStr == 'X') {
-    mvaddstr(31, 0, "INVALID MOVE. THERE IS AN OBSTACLE.");
+    mvaddstr(31, 0, "INVALID MOVE. THERE IS AN OBSTACLE!");
   }
   else{
     movementValid = 1;
