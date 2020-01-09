@@ -65,10 +65,13 @@ void Game::run(){
       exit(0);
     }
     else if (userStage == "NEXT") {
-      mvaddstr(27, 0, "BOARD CHANGED BY USER.");
+      stage++;
+      // string clas = boards[stage].getBoardName();
+      // char mesg[20];
+      // mesg = boards[stage].getBoardName();
+      mvprintw(31, 0, "BOARD CHANGED BY USER %s", boards[stage].getBoardName());
       refresh();
       // cout<<"\n                   LOADING NEXT BOARD...\n\n";
-      stage++;
     }
   }
 

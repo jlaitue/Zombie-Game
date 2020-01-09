@@ -27,7 +27,7 @@ public:
     void positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls);
     void readBoard(string filename);
     void createTheMatrix(int level, string filename);
-    void getBoardLevel();
+    string getBoardName();
     string play();
     ~Board();
 };

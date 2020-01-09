@@ -336,8 +336,8 @@ switch (level) {
   else cout << "Unable to open file";
 }
 
-void Board::getBoardLevel(){
-  cout<<"Board with id "<<identifier<<" has level: "<<level<<"\n";
+string Board::getBoardName(){
+  return boardName;
 }
 
 void validateMovement(int &rowPosition, int &colPosition, char nextStr,
@@ -351,13 +351,18 @@ void validateMovement(int &rowPosition, int &colPosition, char nextStr,
     movementValid = 1;
     if(nextStr == '$'){
       cDiams++;
+      mvaddstr(31, 0, "YOU FOUND A DIAMOND!");
     }
     else if(nextStr == '*'){
       cStars++;
+      mvaddstr(31, 0, "YOU FOUND A TELEPORTER!");
     }
     else if(nextStr == 'M'){
       cLives--;
+      mvaddstr(31, 0, "YOU JUST GOT EATEN!");
       if(cLives == 0){
+        mvprintw(31,0,"");
+        clrtoeol();
         mvaddstr(31, 0, "YOU ARE DEAD! :C");
       }
     }
@@ -411,16 +416,6 @@ void validateMovement(int &rowPosition, int &colPosition, char nextStr,
   }
 }
 
-// void updatePlayerScore(int cDiams, int cStars, int cLives, char &diamond[20],
-//   char &stars[20], char &lives){
-//   string diamstr, starstr, livestr;
-//   diamstr = "Diamonds: " + to_string(cDiams);
-//   starstr = "Teleports: " + to_string(cStars);
-//   livestr = "Lives: " + to_string(cLives);
-//   diamond = diamstr.c_str();
-//   stars = starstr.c_str();
-//   lives = livestr.c_str();
-// }
 
 string Board::play(){
   string move = "";
@@ -436,32 +431,28 @@ string Board::play(){
 
   // // This will become Player attributes
   int cDiams = 0, cStars = 0, cLives = 3;
-  // char const *diamond, *stars, *lives;
-  // char diamond[20] , stars[20], lives[20];
-  //
-  // updatePlayerScore(cDiams, cStars, cLives, diamond, stars, lives);
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
   displayBoard();
-  mvprintw(5, m+25, "PLAYER");
-  mvprintw(6, m+25, "Diamonds: %d", cDiams);
-  mvprintw(7, m+25, "Lives: %d", cLives);
-  mvprintw(8, m+25, "Teleports: %d", cStars);
+  mvprintw(5, m+30, "PLAYER");
+  mvprintw(6, m+30, "Diamonds: %d", cDiams);
+  mvprintw(7, m+30, "Lives: %d", cLives);
+  mvprintw(8, m+30, "Teleports: %d", cStars);
 
-  mvaddstr(10, m+25, "KEYBOARD COMMANDS");
-  mvaddstr(11, m+25, "T for teleportation");
-  mvaddstr(12, m+25, "K for terminating");
-  mvaddstr(13, m+25, "N for next board");
-  mvaddstr(14, m+25, "W,Q,E,S,A,D,Z,C for movement");
+  mvaddstr(10, m+30, "KEYBOARD COMMANDS");
+  mvaddstr(11, m+30, "T for teleportation");
+  mvaddstr(12, m+30, "K for terminating");
+  mvaddstr(13, m+30, "N for next board");
+  mvaddstr(14, m+30, "W,Q,E,S,A,D,Z,C for movement");
 
   mvaddstr(27, 0, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
     bool movementValid = 0;
     if (cLives>0) {
       userInput = getch();
-      mvaddstr(30, 0, "KEY INPUT: ");
-      mvaddch(30, 13, userInput);
-      mvaddstr(27, 0, "ENTER NEXT MOVE: ");
+      mvprintw(27, 0, "ENTER NEXT MOVE: %c", userInput);
+      mvprintw(31,0,"");
+      clrtoeol();
       refresh();
 
       matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",'.');
@@ -550,9 +541,9 @@ string Board::play(){
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
-        mvprintw(6, m+25, "Diamonds: %d", cDiams);
-        mvprintw(7, m+25, "Lives: %d", cLives);
-        mvprintw(8, m+25, "Teleports: %d", cStars);
+        mvprintw(6, m+30, "Diamonds: %d", cDiams);
+        mvprintw(7, m+30, "Lives: %d", cLives);
+        mvprintw(8, m+30, "Teleports: %d", cStars);
       }
     }
     else{
