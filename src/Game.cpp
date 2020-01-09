@@ -15,6 +15,7 @@ Game::Game(){
   // cout<<"Game created"<<"\n";
   // cout<<"Game id: "<<identifier<<"\n";
 }
+
 // Fix inconsistency with level and index fro createTheMatrix
 void Game::addBoard(int index, string filename, string directive){
   if (directive == "read") {
@@ -50,7 +51,7 @@ void Game::run(){
     if (userStage == "KILL") {
       // cout<<"GAME METHOD runGame() TERMINATED BY USER."<<endl;
       playing = false;
-      mvaddstr(maxlines, 0, "Press any key to terminate... ");
+      mvaddstr(maxlines-10, 0, "Press any key to terminate... ");
       refresh();
       getch();
       endwin();
