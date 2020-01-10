@@ -148,6 +148,12 @@ void colorCoding(char element, int &colorCode){
   else if (element == '.') {
     colorCode = 5;
   }
+  else if (element == '/') {
+    colorCode = 2;
+  }
+  else if (element == '#') {
+    colorCode = 1;
+  }
   else{
     colorCode = 6;
   }
@@ -350,18 +356,41 @@ string Board::getBoardName(){
   return boardName;
 }
 
-void validateMovement(int &rowPosition, int &colPosition, char nextStr,
+bool Board::openDoor(){
+  bool found = false;
+  for (int i = 0; i < n; i++) {
+    if(found){break;}
+    for (int j = 0; j < m; j++) {
+      if(matrix[i][j].getSymbol() == '/'){
+        matrix[i][j].updateSymbol('#');
+        found = true;
+        break;
+      }
+    }
+  }
+  return found;
+}
+
+void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
   bool &movementValid, int &cDiams,
   int &cStars, int &cLives, int moveCase){
 
   if (nextStr == 'X') {
     mvaddstr(31, 0, "INVALID MOVE. THERE IS AN OBSTACLE!");
   }
+  else if (nextStr == '/') {
+    mvaddstr(31, 0, "DOOR CLOSED. GET A DIAMOND TO OPEN IT!");
+  }
   else{
     movementValid = 1;
     if(nextStr == '$'){
       cDiams++;
-      mvaddstr(31, 0, "YOU FOUND A DIAMOND!");
+      if(openDoor()) {
+        mvaddstr(31, 0, "YOUR DIAMOND OPENED A DOOR!");
+      }
+      else{
+        mvaddstr(31, 0, "YOU FOUND A DIAMOND!");
+      }
     }
     else if(nextStr == '*'){
       cStars++;
@@ -422,10 +451,8 @@ void validateMovement(int &rowPosition, int &colPosition, char nextStr,
         break;
       }
     }
-
   }
 }
-
 
 string Board::play(){
   string move = "";
@@ -525,7 +552,7 @@ string Board::play(){
       }
 
       else if (userInput == 'n' or userInput == 'N'){
-        return "NEXT";
+        // return "NEXT";
       }
 
       else if (userInput == 't' or userInput == 'T'){
@@ -558,6 +585,7 @@ string Board::play(){
         mvprintw(8, m+30, "Teleports: %d", cStars);
       }
     }
+
     else{
       return "KILL";
     }

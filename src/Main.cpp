@@ -4,6 +4,6 @@ using namespace std;
 int main() {
   Game game;
   game.loadBoards();
-  // game.run();
+  game.run();
   return 0;
 }

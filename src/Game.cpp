@@ -83,7 +83,7 @@ void Game::loadBoards(){
     string s;
     s = to_string(i);
     cout<<"Name: "<<boardId<<endl;
-    addBoard(i, s+"prueba.board", "create");
+    addBoard(i, s+"prueba.txt", "read");
   }
 }
 

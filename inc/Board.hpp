@@ -27,6 +27,10 @@ public:
     void positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls);
     void readBoard(string filename);
     void createTheMatrix(int level, string filename);
+    bool openDoor();
+    void validateMovement(int &rowPosition, int &colPosition, char nextStr,
+      bool &movementValid, int &cDiams,
+      int &cStars, int &cLives, int moveCase);
     string getBoardName();
     string play();
     ~Board();
