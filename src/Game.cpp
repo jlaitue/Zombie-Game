@@ -55,7 +55,6 @@ void Game::run(){
   while (playing == true) {
     userStage = boards[stage].play();
     if (userStage == "KILL") {
-      // cout<<"GAME METHOD runGame() TERMINATED BY USER."<<endl;
       playing = false;
       mvaddstr(maxlines, 0, "PRESS ANY KEY TO TERMINATE... ");
       refresh();
@@ -68,7 +67,7 @@ void Game::run(){
       // string clas = boards[stage].getBoardName();
       // char mesg[20];
       // mesg = boards[stage].getBoardName();
-      mvprintw(31, 0, "BOARD CHANGED BY USER");
+      mvprintw(31, 0, "REACHED NEW LEVEL!");
       refresh();
     }
   }
@@ -82,7 +81,7 @@ void Game::loadBoards(){
     int boardId = rand() %19 + 2;
     string s;
     s = to_string(i);
-    cout<<"Name: "<<boardId<<endl;
+    // cout<<"Name: "<<boardId<<endl;
     addBoard(i, s+"prueba.txt", "read");
   }
 }

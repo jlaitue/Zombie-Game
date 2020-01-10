@@ -9,13 +9,10 @@ TODO:
   we still need to include all the capabilities required
 - Improve rules of movement to play() function
 - If board file is already created just read from it
-- Logic for opening/closing of doors
 - Creation of all Classes of the project
 - Add logic of movement of MONSTERS
 - Hardcoded value for amount of boards in Game object
 - Add doors attribute to Board class?
-- Improve visualization of Game in general
-- Add visualization of counters
 - Welcome text for instructions of use
 - Considering changing the harcoded dimensions of matrix
 - Considering changing data structure for matrix
