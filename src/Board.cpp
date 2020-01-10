@@ -255,9 +255,12 @@ void Board::readBoard(string filename){
 }
 
 void Board::createTheMatrix(int l, string filename){
+  string path = "../boards/level_"+ to_string(l)+"/";
   level = l;
   boardName = filename;
-  ofstream myfile ("../boards/" + filename);
+
+  // boost::filesystem::create_directories(path);
+  ofstream myfile (path + filename);
 
 // Creation of string matrix with elements of board
   for (int i = 0; i < n; i++) {
@@ -322,7 +325,6 @@ switch (level) {
       cout<<"Creation of board of level default\n\n";
       int nDiam = 15, nMons = 10, nStars = 10, nDoors = 1, nWalls = 10;
       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
-      cout<<"PENE\n\n";
       break;
     }
 
@@ -330,8 +332,7 @@ switch (level) {
   // displayBoard();
 
 // Writting of matrix previously created to .txt file
-  if (myfile.is_open())
-  {
+  if (myfile.is_open()) {
     cout<<"Writting to board file: boards/"<< filename<<" ..."<<"\n";
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < m; j++) {
