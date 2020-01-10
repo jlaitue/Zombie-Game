@@ -55,30 +55,35 @@ void Game::run(){
   maxlines = LINES-1;
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
+
       userStage = boards[stage].play(player);
+
+      if (userStage == "KILL") {
+        playing = false;
+        mvaddstr(maxlines-1, 0, "GAME TERMINATED BY PLAYER");
+      }
+      else if (userStage == "NEXT") {
+        stage++;
+        mvprintw(31, 0, "REACHED NEW LEVEL!");
+        refresh();
+      }
     }
     else {
       playing = false;
-      mvaddstr(maxlines-1, 0, "GAME FINISHED ");
-      mvaddstr(maxlines, 0, "PRESS ANY KEY TO TERMINATE... ");
-      refresh();
-      getch();
-      endwin();
-      exit(0);
-    }
-    if (userStage == "NEXT") {
-      stage++;
-      mvprintw(31, 0, "REACHED NEW LEVEL!");
-      refresh();
+      mvaddstr(31, 0, "YOU FINISHED ALL LEVELS!");
     }
   }
-
+  mvaddstr(maxlines, 0, "PRESS ANY KEY TO TERMINATE... ");
+  refresh();
+  getch();
+  endwin();
+  exit(0);
 }
 
 void Game::loadBoards(){
   srand (time(NULL));
   // Value 5 is hardcoded with Game.hpp should change it
-  for (size_t i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 2; i++) {
     // int boardId = rand() %19 + 2;
     string s;
     s = to_string(i);
