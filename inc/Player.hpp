@@ -15,9 +15,9 @@ public:
     // Parameterized Constructor
     Player();
     Player(int id, int x, int y, string t = "player");
-    int numDiamonds();
-    int numPowerups();
-    int numLives();
+    int Diamonds();
+    int Powerups();
+    int Lives();
     void incrementDiamonds();
     void incrementPowerups();
     void decrementPowerups();

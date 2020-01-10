@@ -5,6 +5,7 @@ Final project
 TODO:
 
 - Make it work the way its supposed to do
+- Improve the generation of random values
 - Creation of .game and .board files / Almost DONE already created .game files
   we still need to include all the capabilities required
 - Improve rules of movement to play() function

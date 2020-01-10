@@ -404,7 +404,7 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
     else if(nextStr == 'M'){
       player.decrementLives();
       mvaddstr(31, 0, "YOU JUST GOT EATEN!");
-      if(player.numLives() == 0){
+      if(player.Lives() == 0){
         mvprintw(31,0,"");
         clrtoeol();
         mvaddstr(31, 0, "YOU ARE DEAD! :C");
@@ -466,22 +466,19 @@ string Board::play(Player &player){
   int colPosition = m/2;
   char userInput;
 
-
   // Square area in which the player can teleport to
   int emptyRows = n-2;
   int emptyCols = m-2;
 
-  // // This will become Player attributes
-  // int cDiams = 0, cStars = 0, cLives = 3;
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
   // matrix[rowPosition][colPosition] = player;
 
   displayBoard();
   mvprintw(5, m+30, "PLAYER");
-  mvprintw(6, m+30, "Diamonds: %d", player.numDiamonds());
-  mvprintw(7, m+30, "Lives: %d", player.numLives());
-  mvprintw(8, m+30, "Teleports: %d", player.numPowerups());
+  mvprintw(6, m+30, "Diamonds: %d", player.Diamonds());
+  mvprintw(7, m+30, "Lives: %d", player.Lives());
+  mvprintw(8, m+30, "Teleports: %d", player.Powerups());
 
   mvaddstr(10, m+30, "KEYBOARD COMMANDS");
   mvaddstr(11, m+30, "T for teleportation");
@@ -493,7 +490,7 @@ string Board::play(Player &player){
   while (move != "STOP") {
     bool movementValid = 0;
     bool nextBoard = 0;
-    if (player.numLives() > 0) {
+    if (player.Lives() > 0) {
       userInput = getch();
       mvprintw(27, 0, "ENTER NEXT MOVE: %c", userInput);
       mvprintw(31,0,"");
@@ -506,7 +503,7 @@ string Board::play(Player &player){
         mvprintw(27,0,"");
         clrtoeol();
         mvprintw(27, 0, "GAME OVER!");
-        mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", player.numDiamonds());
+        mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", player.Diamonds());
         refresh();
         return "KILL";
       }
@@ -560,7 +557,7 @@ string Board::play(Player &player){
       }
 
       else if (userInput == 't' or userInput == 'T'){
-        if (player.numPowerups() > 0) {
+        if (player.Powerups() > 0) {
           movementValid = 1;
           int row = 0;
           int column = 0;
@@ -588,9 +585,9 @@ string Board::play(Player &player){
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
-        mvprintw(6, m+30, "Diamonds: %d", player.numDiamonds());
-        mvprintw(7, m+30, "Lives: %d", player.numLives());
-        mvprintw(8, m+30, "Teleports: %d", player.numPowerups());
+        mvprintw(6, m+30, "Diamonds: %d", player.Diamonds());
+        mvprintw(7, m+30, "Lives: %d", player.Lives());
+        mvprintw(8, m+30, "Teleports: %d", player.Powerups());
       }
 
     }

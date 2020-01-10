@@ -20,15 +20,15 @@ Element(id,x,y,t,'O'),nDiamonds(30), nPowers(30),nLives(30)
   cout<<"Player created"<<endl;
 }
 
-int Player::numDiamonds(){
+int Player::Diamonds(){
   return nDiamonds;
 }
 
-int Player::numPowerups(){
+int Player::Powerups(){
   return nPowers;
 }
 
-int Player::numLives(){
+int Player::Lives(){
   return nLives;
 }
 
