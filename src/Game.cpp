@@ -33,8 +33,6 @@ void Game::addBoard(int index, string filename, string directive){
 }
 
 void Game::run(){
-
-  Player player;
   int stage = 0;
   bool playing = true;
   string userStage = "";

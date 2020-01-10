@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Board.hpp"
+#include "Player.hpp"
 using namespace std;
 
 class Game {
@@ -11,6 +12,7 @@ private:
   int identifier;
   // vector <Board> boards;
   Board boards[5];
+  Player player;
 
 public:
   static int gameCount;
