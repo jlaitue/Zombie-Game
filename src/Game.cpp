@@ -1,5 +1,6 @@
 #include "../inc/Game.hpp"
 #include "../inc/Board.hpp"
+#include "../inc/Player.hpp"
 #include <iostream>
 #include <ctime>
 #include <ncurses.h>
@@ -33,6 +34,7 @@ void Game::addBoard(int index, string filename, string directive){
 
 void Game::run(){
 
+  Player player;
   int stage = 0;
   bool playing = true;
   string userStage = "";
@@ -53,7 +55,7 @@ void Game::run(){
 
   maxlines = LINES-1;
   while (playing == true) {
-    userStage = boards[stage].play();
+    userStage = boards[stage].play(player);
     if (userStage == "KILL") {
       playing = false;
       mvaddstr(maxlines, 0, "PRESS ANY KEY TO TERMINATE... ");
@@ -78,7 +80,7 @@ void Game::loadBoards(){
   srand (time(NULL));
   // Value 5 is hardcoded with Game.hpp should change it
   for (size_t i = 0; i < 5; i++) {
-    int boardId = rand() %19 + 2;
+    // int boardId = rand() %19 + 2;
     string s;
     s = to_string(i);
     // cout<<"Name: "<<boardId<<endl;

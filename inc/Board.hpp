@@ -2,6 +2,7 @@
 #define BOARD_H
 #include <string>
 #include "Element.hpp"
+#include "Player.hpp"
 using namespace std;
 
 const int rows = 20;
@@ -32,7 +33,7 @@ public:
       bool &movementValid, bool &nextBoard, int &cDiams,
       int &cStars, int &cLives, int moveCase);
     string getBoardName();
-    string play();
+    string play(Player &player);
     ~Board();
 };
 

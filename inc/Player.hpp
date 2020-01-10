@@ -11,8 +11,10 @@ private:
   int nPower;
   int nLives;
 public:
+  static int playerCount;
     // Parameterized Constructor
-    Player(int id, int x, int y, string t = "player", char s = 'J');
+    Player();
+    Player(int id, int x, int y, string t = "player");
     void movement();
     ~Player();
 };

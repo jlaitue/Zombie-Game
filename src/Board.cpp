@@ -460,7 +460,7 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
   }
 }
 
-string Board::play(){
+string Board::play(Player &player){
   string move = "";
   // Initial player position which probably should be changed to a randomized pos
   int rowPosition = n/2;

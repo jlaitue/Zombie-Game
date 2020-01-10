@@ -4,13 +4,17 @@
 
 using namespace std;
 
-Player::Player(int id, int x, int y, string t, char s):
-Element(id,x,y,t,s),nDiamonds(0), nPower(0),nLives(3)
-{
-  cout<<"Player created"<<endl;
+int Player::playerCount = 0;
+
+Player::Player(){
+
 }
 
-void Player::movement(){
+Player::Player(int id, int x, int y, string t):
+Element(id,x,y,t,'O'),nDiamonds(0), nPower(0),nLives(3)
+{
+  playerCount++;
+  cout<<"Player created"<<endl;
 }
 
 Player::~Player(){
