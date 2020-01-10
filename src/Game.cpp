@@ -21,14 +21,11 @@ void Game::addBoard(int index, string filename, string directive){
     Board board;
     board.readBoard(filename);
     boards.push_back(board);
-    // boards[index].displayBoard();
   }
   else if (directive == "create"){
     boards[index].createTheMatrix(index, filename);
-    // boards[index].displayBoard();
   }
   else{
-    // There is a bug that needs fixing, an empty BOARD is shown in this case
     cout<<"You have not sent a correct directive."<<endl;
   }
 }

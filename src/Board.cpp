@@ -217,7 +217,7 @@ void Board::readBoard(string filename){
           else if (line[i] == 'M'){
             // cout<<"FOUND A MONSTER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"mons",'M');
+            // matrix[rows][i].updateElement(rows,i,"mons",'M');
             monscount++;
           }
           else if (line[i] == ' '){
@@ -459,6 +459,22 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
   }
 }
 
+void Board::moveMonsters(int emptyRows, int emptyCols){
+  int monsters = 3;
+  int row = 0;
+  int column = 0;
+  char c;
+  for (int i = 0; i < monsters; i++) {
+    c = matrix[row][column].getSymbol();
+    while ( c == 'X' or c == '*' or c == '$' or c == 'O') {
+      row = rand() %emptyRows + 1;
+      column = rand() %emptyCols + 1;
+      c = matrix[row][column].getSymbol();
+    }
+    matrix[row][column].updateElement(row,column,"monster",'M');
+  }
+}
+
 string Board::play(Player &player){
   string move = "";
   // Initial player position which probably should be changed to a randomized pos
@@ -497,6 +513,7 @@ string Board::play(Player &player){
       clrtoeol();
       refresh();
 
+      moveMonsters(emptyRows, emptyCols);
       matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",'.');
 
       if (userInput == 'k' or userInput == 'K'){
