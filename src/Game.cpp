@@ -2,7 +2,6 @@
 #include "../inc/Board.hpp"
 #include <iostream>
 #include <ctime>
-#include <sstream>
 #include <ncurses.h>
 
 using namespace std;
@@ -81,11 +80,10 @@ void Game::loadBoards(){
   // Value 5 is hardcoded with Game.hpp should change it
   for (size_t i = 0; i < 5; i++) {
     int boardId = rand() %19 + 2;
-    stringstream ss;
-    ss<<boardId;
     string s;
-    ss>>s;
-    addBoard(i, s+"prueba.txt", "read");
+    s = to_string(i);
+    cout<<"Name: "<<boardId<<endl;
+    addBoard(i, s+"prueba.board", "create");
   }
 }
 

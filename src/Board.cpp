@@ -30,7 +30,7 @@ string columnOrientation(){
 }
 
 void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nWalls){
-  srand (time(NULL));
+  // srand (time(NULL));
   int emptyRows = n-2;
   int emptyCols = m-2;
   while(nWalls != 0){
@@ -314,6 +314,15 @@ switch (level) {
       cout<<"Creation of board of level 5\n\n";
       int nDiam = 8, nMons = 5, nStars = 4, nDoors = 1, nWalls = 5;
       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
+      cout<<"PENE\n\n";
+      break;
+    }
+  default:
+    {
+      cout<<"Creation of board of level default\n\n";
+      int nDiam = 15, nMons = 10, nStars = 10, nDoors = 1, nWalls = 10;
+      positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
+      cout<<"PENE\n\n";
       break;
     }
 
