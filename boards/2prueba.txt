@@ -1,4 +1,4 @@
-XXXXXXX/XXXXXXXXXXXXXXXXXXXX/XXXXXXXXXXX
+XXXXXXX#XXXXXXXXXXXXXXXXXXXX#XXXXXXXXXXX
 X                                      X
 X               M                      X
 X                                      X
@@ -13,8 +13,8 @@ X                                      X
 X   $                                  X
 X                 $            *       X
 X $                                    X
-/                  X                   X
+#                  X                   X
 X   XXXXXXXXXXXXXXXX                   X
 X       $          X                   X
 X                  X                   X
-XXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXX#XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

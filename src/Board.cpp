@@ -106,25 +106,25 @@ void Board::positionObjects(int nDiam, int nMons, int nDoors, int nStars, int nW
       case 1:{
         int row = rand() %emptyRows + 1;
         int column = 0;
-        matrix[row][column].updateElement(row,column,"door",'/');
+        matrix[row][column].updateElement(row,column,"door",'#');
         break;
       }
       case 2:{
         int row = 0;
         int column = rand() %emptyCols + 1;
-        matrix[row][column].updateElement(row,column,"door",'/');
+        matrix[row][column].updateElement(row,column,"door",'#');
         break;
       }
       case 3:{
         int row = rand() %emptyRows + 1;
         int column = 39;
-        matrix[row][column].updateElement(row,column,"door",'/');
+        matrix[row][column].updateElement(row,column,"door",'#');
         break;
       }
       case 4:{
         int row = 19;
         int column = rand() %emptyCols + 1;
-        matrix[row][column].updateElement(row,column,"door",'/');
+        matrix[row][column].updateElement(row,column,"door",'#');
         break;
       }
     }
@@ -148,7 +148,7 @@ void colorCoding(char element, int &colorCode){
   else if (element == '.') {
     colorCode = 5;
   }
-  else if (element == '/') {
+  else if (element == '#') {
     colorCode = 2;
   }
   else if (element == '+') {
@@ -232,10 +232,10 @@ void Board::readBoard(string filename){
           //   Player player1(1,rows,i,"player",'J');
           //   matrix[rows][i] = player1;
           // }
-          else if (line[i] == '/'){
+          else if (line[i] == '#'){
             // cout<<"FOUND DOOR ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"door",'/');
+            matrix[rows][i].updateElement(rows,i,"door",'#');
             doorscount++;
           }
         }
@@ -361,7 +361,7 @@ bool Board::openDoor(){
   for (int i = 0; i < n; i++) {
     if(found){break;}
     for (int j = 0; j < m; j++) {
-      if(matrix[i][j].getSymbol() == '/'){
+      if(matrix[i][j].getSymbol() == '#'){
         matrix[i][j].updateSymbol('+');
         found = true;
         break;
@@ -378,7 +378,7 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
     mvaddstr(31, 0, "INVALID MOVE. THERE IS AN OBSTACLE!");
   }
 
-  else if (nextStr == '/') {
+  else if (nextStr == '#') {
     mvaddstr(31, 0, "DOOR CLOSED. GET A DIAMOND TO OPEN IT!");
   }
 
