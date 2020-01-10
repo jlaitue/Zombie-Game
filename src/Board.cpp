@@ -372,8 +372,7 @@ bool Board::openDoor(){
 }
 
 void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
-  bool &movementValid, bool &nextBoard, int &cDiams,
-  int &cStars, int &cLives, int moveCase){
+  bool &movementValid, bool &nextBoard, Player &player, int moveCase){
 
   if (nextStr == 'X') {
     mvaddstr(31, 0, "INVALID MOVE. THERE IS AN OBSTACLE!");
@@ -390,7 +389,7 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
   else{
     movementValid = 1;
     if(nextStr == '$'){
-      cDiams++;
+      player.incrementDiamonds();
       if(openDoor()) {
         mvaddstr(31, 0, "YOUR DIAMOND OPENED A DOOR!");
       }
@@ -399,13 +398,13 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
       }
     }
     else if(nextStr == '*'){
-      cStars++;
+      player.incrementPowerups();
       mvaddstr(31, 0, "YOU FOUND A TELEPORTER!");
     }
     else if(nextStr == 'M'){
-      cLives--;
+      player.decrementLives();
       mvaddstr(31, 0, "YOU JUST GOT EATEN!");
-      if(cLives == 0){
+      if(player.numLives() == 0){
         mvprintw(31,0,"");
         clrtoeol();
         mvaddstr(31, 0, "YOU ARE DEAD! :C");
@@ -473,14 +472,16 @@ string Board::play(Player &player){
   int emptyCols = m-2;
 
   // // This will become Player attributes
-  int cDiams = 0, cStars = 0, cLives = 3;
+  // int cDiams = 0, cStars = 0, cLives = 3;
 
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
+  // matrix[rowPosition][colPosition] = player;
+
   displayBoard();
   mvprintw(5, m+30, "PLAYER");
-  mvprintw(6, m+30, "Diamonds: %d", cDiams);
-  mvprintw(7, m+30, "Lives: %d", cLives);
-  mvprintw(8, m+30, "Teleports: %d", cStars);
+  mvprintw(6, m+30, "Diamonds: %d", player.numDiamonds());
+  mvprintw(7, m+30, "Lives: %d", player.numLives());
+  mvprintw(8, m+30, "Teleports: %d", player.numPowerups());
 
   mvaddstr(10, m+30, "KEYBOARD COMMANDS");
   mvaddstr(11, m+30, "T for teleportation");
@@ -492,7 +493,7 @@ string Board::play(Player &player){
   while (move != "STOP") {
     bool movementValid = 0;
     bool nextBoard = 0;
-    if (cLives>0) {
+    if (player.numLives() > 0) {
       userInput = getch();
       mvprintw(27, 0, "ENTER NEXT MOVE: %c", userInput);
       mvprintw(31,0,"");
@@ -505,7 +506,7 @@ string Board::play(Player &player){
         mvprintw(27,0,"");
         clrtoeol();
         mvprintw(27, 0, "GAME OVER!");
-        mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", cDiams);
+        mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", player.numDiamonds());
         refresh();
         return "KILL";
       }
@@ -513,53 +514,53 @@ string Board::play(Player &player){
       else if (userInput == 'w' or userInput == 'W'){
         char nextStr = matrix[rowPosition-1][colPosition].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
-          nextBoard, cDiams, cStars, cLives, 1);
+          nextBoard, player, 1);
       }
 
       else if (userInput == 's' or userInput == 'S'){
         char nextStr = matrix[rowPosition+1][colPosition].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
-          nextBoard, cDiams, cStars, cLives, 2);
+          nextBoard, player, 2);
       }
 
       else if (userInput == 'd' or userInput == 'D'){
         char nextStr = matrix[rowPosition][colPosition+1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
-          nextBoard, cDiams, cStars, cLives, 3);
+          nextBoard, player, 3);
       }
 
       else if (userInput == 'a' or userInput == 'A'){
         char nextStr = matrix[rowPosition][colPosition-1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
-          nextBoard, cDiams, cStars, cLives, 4);
+          nextBoard, player, 4);
       }
 
       else if (userInput == 'e' or userInput == 'E'){
         char nextStr = matrix[rowPosition-1][colPosition+1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
-          nextBoard, cDiams, cStars, cLives, 5);
+          nextBoard, player, 5);
       }
 
       else if (userInput == 'q' or userInput == 'Q'){
         char nextStr = matrix[rowPosition-1][colPosition-1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
-          nextBoard, cDiams, cStars, cLives, 6);
+          nextBoard, player, 6);
       }
 
       else if (userInput == 'z' or userInput == 'Z'){
         char nextStr = matrix[rowPosition+1][colPosition-1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
-          nextBoard, cDiams, cStars, cLives, 7);
+          nextBoard, player, 7);
       }
 
       else if (userInput == 'c' or userInput == 'C'){
         char nextStr = matrix[rowPosition+1][colPosition+1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
-          nextBoard, cDiams, cStars, cLives, 8);
+          nextBoard, player, 8);
       }
 
       else if (userInput == 't' or userInput == 'T'){
-        if (cStars > 0) {
+        if (player.numPowerups() > 0) {
           movementValid = 1;
           int row = 0;
           int column = 0;
@@ -567,7 +568,7 @@ string Board::play(Player &player){
             row = rand() %emptyRows + 1;
             column = rand() %emptyCols + 1;
           }
-          cStars--;
+          player.decrementPowerups();
           rowPosition = row;
           colPosition = column;
         }
@@ -587,9 +588,9 @@ string Board::play(Player &player){
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
-        mvprintw(6, m+30, "Diamonds: %d", cDiams);
-        mvprintw(7, m+30, "Lives: %d", cLives);
-        mvprintw(8, m+30, "Teleports: %d", cStars);
+        mvprintw(6, m+30, "Diamonds: %d", player.numDiamonds());
+        mvprintw(7, m+30, "Lives: %d", player.numLives());
+        mvprintw(8, m+30, "Teleports: %d", player.numPowerups());
       }
 
     }

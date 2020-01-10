@@ -7,14 +7,45 @@ using namespace std;
 int Player::playerCount = 0;
 
 Player::Player(){
-
+nDiamonds = 0;
+nPowers = 0;
+nLives = 3;
+cout<<"Player created"<<endl;
 }
 
 Player::Player(int id, int x, int y, string t):
-Element(id,x,y,t,'O'),nDiamonds(0), nPower(0),nLives(3)
+Element(id,x,y,t,'O'),nDiamonds(30), nPowers(30),nLives(30)
 {
   playerCount++;
   cout<<"Player created"<<endl;
+}
+
+int Player::numDiamonds(){
+  return nDiamonds;
+}
+
+int Player::numPowerups(){
+  return nPowers;
+}
+
+int Player::numLives(){
+  return nLives;
+}
+
+void Player::incrementDiamonds(){
+  nDiamonds++;
+}
+
+void Player::incrementPowerups(){
+  nPowers++;
+}
+
+void Player::decrementPowerups(){
+  nPowers--;
+}
+
+void Player::decrementLives(){
+  nLives--;
 }
 
 Player::~Player(){

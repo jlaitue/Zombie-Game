@@ -30,8 +30,7 @@ public:
     void createTheMatrix(int level, string filename);
     bool openDoor();
     void validateMovement(int &rowPosition, int &colPosition, char nextStr,
-      bool &movementValid, bool &nextBoard, int &cDiams,
-      int &cStars, int &cLives, int moveCase);
+      bool &movementValid, bool &nextBoard, Player &player, int moveCase);
     string getBoardName();
     string play(Player &player);
     ~Board();
