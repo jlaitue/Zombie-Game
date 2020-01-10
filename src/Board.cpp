@@ -460,7 +460,7 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
 }
 
 void Board::moveMonsters(int emptyRows, int emptyCols){
-  int monsters = 5;
+  int monsters = 2;
   int row = 0;
   int column = 0;
   char c;
