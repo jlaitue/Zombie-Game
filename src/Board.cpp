@@ -151,7 +151,7 @@ void colorCoding(char element, int &colorCode){
   else if (element == '/') {
     colorCode = 2;
   }
-  else if (element == '#') {
+  else if (element == '+') {
     colorCode = 5;
   }
   else{
@@ -362,7 +362,7 @@ bool Board::openDoor(){
     if(found){break;}
     for (int j = 0; j < m; j++) {
       if(matrix[i][j].getSymbol() == '/'){
-        matrix[i][j].updateSymbol('#');
+        matrix[i][j].updateSymbol('+');
         found = true;
         break;
       }
@@ -382,7 +382,7 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
     mvaddstr(31, 0, "DOOR CLOSED. GET A DIAMOND TO OPEN IT!");
   }
 
-  else if (nextStr == '#'){
+  else if (nextStr == '+'){
     nextBoard = 1;
   }
 
