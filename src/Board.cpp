@@ -152,7 +152,7 @@ void colorCoding(char element, int &colorCode){
     colorCode = 2;
   }
   else if (element == '#') {
-    colorCode = 1;
+    colorCode = 5;
   }
   else{
     colorCode = 6;

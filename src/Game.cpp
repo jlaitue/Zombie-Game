@@ -61,7 +61,9 @@ void Game::run(){
 
       if (userStage == "KILL") {
         playing = false;
-        mvaddstr(31, 0, "GAME TERMINATED BY PLAYER");
+        mvprintw(27,0,"");
+        clrtoeol();
+        mvaddstr(27, 0, "GAME TERMINATED BY PLAYER");
       }
       else if (userStage == "NEXT") {
         stage++;
@@ -71,10 +73,12 @@ void Game::run(){
     }
     else {
       playing = false;
-      mvaddstr(31, 0, "YOU FINISHED ALL LEVELS!");
-      mvaddstr(32, 0, "CONGRATULATIONS!");
+      mvprintw(27,0,"");
+      clrtoeol();
+      mvaddstr(27, 0, "CONGRATULATIONS! YOU FINISHED ALL LEVELS!");
     }
   }
+  mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", player.Diamonds());
   mvaddstr(maxlines, 0, "PRESS ANY KEY TO EXIT... ");
   refresh();
   getch();
