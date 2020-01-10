@@ -460,13 +460,13 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
 }
 
 void Board::moveMonsters(int emptyRows, int emptyCols){
-  int monsters = 3;
+  int monsters = 5;
   int row = 0;
   int column = 0;
   char c;
   for (int i = 0; i < monsters; i++) {
     c = matrix[row][column].getSymbol();
-    while ( c == 'X' or c == '*' or c == '$' or c == 'O') {
+    while ( c == 'X' or c == '*' or c == '$' or c == 'O' or c == 'M') {
       row = rand() %emptyRows + 1;
       column = rand() %emptyCols + 1;
       c = matrix[row][column].getSymbol();
