@@ -13,12 +13,12 @@ nLives = 3;
 cout<<"Player created"<<endl;
 }
 
-Player::Player(int id, int x, int y, string t):
-Element(id,x,y,t,'O'),nDiamonds(30), nPowers(30),nLives(30)
-{
-  playerCount++;
-  cout<<"Player created"<<endl;
-}
+// Player::Player(int id, int x, int y, string t):
+// Element(id,x,y,t,'O'),nDiamonds(30), nPowers(30),nLives(30)
+// {
+//   playerCount++;
+//   cout<<"Player created"<<endl;
+// }
 
 int Player::Diamonds(){
   return nDiamonds;

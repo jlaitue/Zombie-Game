@@ -4,14 +4,13 @@
 #include <vector>
 #include "Board.hpp"
 #include "Player.hpp"
-using namespace std;
 
 class Game {
 private:
   int level;
   int identifier;
-  // vector <Board> boards;
-  Board boards[5];
+  vector <Board> boards;
+  // Board boards[5];
   Player player;
 
 public:

@@ -16,10 +16,11 @@ Game::Game(){
   // cout<<"Game id: "<<identifier<<"\n";
 }
 
-// Fix inconsistency with level and index fro createTheMatrix
 void Game::addBoard(int index, string filename, string directive){
   if (directive == "read") {
-    boards[index].readBoard(filename);
+    Board board;
+    board.readBoard(filename);
+    boards.push_back(board);
     // boards[index].displayBoard();
   }
   else if (directive == "create"){
@@ -64,9 +65,6 @@ void Game::run(){
     }
     else if (userStage == "NEXT") {
       stage++;
-      // string clas = boards[stage].getBoardName();
-      // char mesg[20];
-      // mesg = boards[stage].getBoardName();
       mvprintw(31, 0, "REACHED NEW LEVEL!");
       refresh();
     }
@@ -77,7 +75,7 @@ void Game::run(){
 void Game::loadBoards(){
   srand (time(NULL));
   // Value 5 is hardcoded with Game.hpp should change it
-  for (size_t i = 0; i < 5; i++) {
+  for (size_t i = 0; i < 8; i++) {
     // int boardId = rand() %19 + 2;
     string s;
     s = to_string(i);
