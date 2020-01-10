@@ -372,15 +372,21 @@ bool Board::openDoor(){
 }
 
 void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
-  bool &movementValid, int &cDiams,
+  bool &movementValid, bool &nextBoard, int &cDiams,
   int &cStars, int &cLives, int moveCase){
 
   if (nextStr == 'X') {
     mvaddstr(31, 0, "INVALID MOVE. THERE IS AN OBSTACLE!");
   }
+
   else if (nextStr == '/') {
     mvaddstr(31, 0, "DOOR CLOSED. GET A DIAMOND TO OPEN IT!");
   }
+
+  else if (nextStr == '#'){
+    nextBoard = 1;
+  }
+
   else{
     movementValid = 1;
     if(nextStr == '$'){
@@ -485,6 +491,7 @@ string Board::play(){
   mvaddstr(27, 0, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
     bool movementValid = 0;
+    bool nextBoard = 0;
     if (cLives>0) {
       userInput = getch();
       mvprintw(27, 0, "ENTER NEXT MOVE: %c", userInput);
@@ -505,54 +512,50 @@ string Board::play(){
 
       else if (userInput == 'w' or userInput == 'W'){
         char nextStr = matrix[rowPosition-1][colPosition].getSymbol();
-        validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-           cStars, cLives, 1);
+        validateMovement(rowPosition, colPosition, nextStr, movementValid,
+          nextBoard, cDiams, cStars, cLives, 1);
       }
 
       else if (userInput == 's' or userInput == 'S'){
         char nextStr = matrix[rowPosition+1][colPosition].getSymbol();
-        validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-           cStars, cLives, 2);
+        validateMovement(rowPosition, colPosition, nextStr, movementValid,
+          nextBoard, cDiams, cStars, cLives, 2);
       }
 
       else if (userInput == 'd' or userInput == 'D'){
         char nextStr = matrix[rowPosition][colPosition+1].getSymbol();
-        validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-           cStars, cLives, 3);
+        validateMovement(rowPosition, colPosition, nextStr, movementValid,
+          nextBoard, cDiams, cStars, cLives, 3);
       }
 
       else if (userInput == 'a' or userInput == 'A'){
         char nextStr = matrix[rowPosition][colPosition-1].getSymbol();
-        validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-           cStars, cLives, 4);
+        validateMovement(rowPosition, colPosition, nextStr, movementValid,
+          nextBoard, cDiams, cStars, cLives, 4);
       }
 
       else if (userInput == 'e' or userInput == 'E'){
         char nextStr = matrix[rowPosition-1][colPosition+1].getSymbol();
-        validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-           cStars, cLives, 5);
+        validateMovement(rowPosition, colPosition, nextStr, movementValid,
+          nextBoard, cDiams, cStars, cLives, 5);
       }
 
       else if (userInput == 'q' or userInput == 'Q'){
         char nextStr = matrix[rowPosition-1][colPosition-1].getSymbol();
-        validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-           cStars, cLives, 6);
+        validateMovement(rowPosition, colPosition, nextStr, movementValid,
+          nextBoard, cDiams, cStars, cLives, 6);
       }
 
       else if (userInput == 'z' or userInput == 'Z'){
         char nextStr = matrix[rowPosition+1][colPosition-1].getSymbol();
-        validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-           cStars, cLives, 7);
+        validateMovement(rowPosition, colPosition, nextStr, movementValid,
+          nextBoard, cDiams, cStars, cLives, 7);
       }
 
       else if (userInput == 'c' or userInput == 'C'){
         char nextStr = matrix[rowPosition+1][colPosition+1].getSymbol();
-        validateMovement(rowPosition, colPosition, nextStr, movementValid, cDiams,
-           cStars, cLives, 8);
-      }
-
-      else if (userInput == 'n' or userInput == 'N'){
-        // return "NEXT";
+        validateMovement(rowPosition, colPosition, nextStr, movementValid,
+          nextBoard, cDiams, cStars, cLives, 8);
       }
 
       else if (userInput == 't' or userInput == 'T'){
@@ -577,6 +580,10 @@ string Board::play(){
         mvaddstr(31, 0, "TRY A VALID KEY INPUT.");
       }
 
+      if (nextBoard){
+        return "NEXT";
+      }
+
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
@@ -584,6 +591,7 @@ string Board::play(){
         mvprintw(7, m+30, "Lives: %d", cLives);
         mvprintw(8, m+30, "Teleports: %d", cStars);
       }
+
     }
 
     else{

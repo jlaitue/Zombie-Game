@@ -29,7 +29,7 @@ public:
     void createTheMatrix(int level, string filename);
     bool openDoor();
     void validateMovement(int &rowPosition, int &colPosition, char nextStr,
-      bool &movementValid, int &cDiams,
+      bool &movementValid, bool &nextBoard, int &cDiams,
       int &cStars, int &cLives, int moveCase);
     string getBoardName();
     string play();
