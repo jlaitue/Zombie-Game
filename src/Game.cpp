@@ -34,7 +34,7 @@ void Game::addBoard(int index, string filename, string directive){
 }
 
 void Game::run(){
-  int stage = 0;
+  size_t stage = 0;
   bool playing = true;
   string userStage = "";
   int maxlines;
@@ -53,6 +53,7 @@ void Game::run(){
   init_pair(6,COLOR_WHITE, COLOR_BLACK);
 
   maxlines = LINES-1;
+  // maxcols = COLUMNS-1;
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
 
@@ -60,7 +61,7 @@ void Game::run(){
 
       if (userStage == "KILL") {
         playing = false;
-        mvaddstr(maxlines-1, 0, "GAME TERMINATED BY PLAYER");
+        mvaddstr(31, 0, "GAME TERMINATED BY PLAYER");
       }
       else if (userStage == "NEXT") {
         stage++;
@@ -71,9 +72,10 @@ void Game::run(){
     else {
       playing = false;
       mvaddstr(31, 0, "YOU FINISHED ALL LEVELS!");
+      mvaddstr(32, 0, "CONGRATULATIONS!");
     }
   }
-  mvaddstr(maxlines, 0, "PRESS ANY KEY TO TERMINATE... ");
+  mvaddstr(maxlines, 0, "PRESS ANY KEY TO EXIT... ");
   refresh();
   getch();
   endwin();

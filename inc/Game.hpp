@@ -10,7 +10,6 @@ private:
   int level;
   int identifier;
   vector <Board> boards;
-  // Board boards[5];
   Player player;
 
 public:

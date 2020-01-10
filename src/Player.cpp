@@ -10,7 +10,7 @@ Player::Player(){
 nDiamonds = 0;
 nPowers = 0;
 nLives = 3;
-cout<<"Player created"<<endl;
+// cout<<"Player created"<<endl;
 }
 
 // Player::Player(int id, int x, int y, string t):
