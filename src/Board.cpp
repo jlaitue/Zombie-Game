@@ -471,14 +471,14 @@ void Board::clearMonsters(){
 }
 
 void Board::moveMonsters(int emptyRows, int emptyCols){
-  int monsters = 1;
+  int monsters = 20;
   int row = 0;
   int column = 0;
   char c;
   clearMonsters();
   for (int i = 0; i < monsters; i++) {
     c = matrix[row][column].getSymbol();
-    while ( c == 'X' or c == '*' or c == '$' or c == 'O' or c == 'M') {
+    while ( c == 'X' or c == '*' or c == '$' or c == 'M') {
       row = rand() %emptyRows + 1;
       column = rand() %emptyCols + 1;
       c = matrix[row][column].getSymbol();
