@@ -2,7 +2,8 @@
 
 int main() {
   Game game;
-  game.loadBoards();
-  game.run();
+  game.getPlayerInfo();
+  // game.loadBoards();
+  // game.run();
   return 0;
 }

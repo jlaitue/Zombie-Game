@@ -10,6 +10,7 @@ private:
   int nDiamonds;
   int nPowers;
   int nLives;
+  string name;
 
 public:
   static int playerCount;
@@ -23,6 +24,7 @@ public:
     void incrementDiamonds();
     void incrementPowerups();
     void decrementPowerups();
+    string updateName(string newName);
     void decrementLives();
 
     ~Player();

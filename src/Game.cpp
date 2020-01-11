@@ -12,6 +12,7 @@ int Game::gameCount = 0;
 Game::Game(){
   gameCount++;
   identifier = gameCount;
+  gameLevel = 0;
   // cout<<"Game created"<<"\n";
   // cout<<"Game id: "<<identifier<<"\n";
 }
@@ -30,11 +31,70 @@ void Game::addBoard(int index, string filename, string directive){
   }
 }
 
+void Game::getPlayerInfo(){
+  char inputName[100];
+  char inputLevel;
+  const char *cstr;
+
+  string newName;
+  bool valid = false;
+  int maxcols;
+  initscr();
+  raw();
+  clear();
+  maxcols = COLS-1;
+
+  mvaddstr(0, maxcols/2-15, "<| ULTRON'S BOARD GAME v1.0 |>");
+  mvaddstr(1, maxcols/2-19, "Alexander Morakhovski | Julian Lechuga");
+  mvaddstr(4, 0, "This is a fun board game in which you must collect diamonds");
+  mvaddstr(5, 0, "You should avoid getting eaten by monsters and finish all levels!");
+  mvaddstr(6, 0, "Before we begin we need some information to create a game suited to you liking");
+  mvaddstr(8, 0, "Please press any key to continue...");
+  refresh();
+  getch();
+  mvaddstr(2,0,"");
+  clrtobot();
+
+  mvaddstr(4, 0, "First enter your name: ");
+  refresh();
+  getstr(inputName);
+  newName = inputName;
+  cstr = player.updateName(newName).c_str();
+
+  mvprintw(4, 0, "Welcome to the AVENGERS TOWER | %s | ", cstr);
+  mvaddstr(5, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
+  inputLevel = getch();
+  refresh();
+
+  while(!valid){
+    mvaddstr(5,0,"");
+    clrtoeol();
+    if (inputLevel == '1' || inputLevel == '2' || inputLevel == '3'
+       || inputLevel == '4' || inputLevel == '5' || inputLevel == '6'
+       || inputLevel == '7' || inputLevel == '8' || inputLevel == '9') {
+      valid = true;
+      mvprintw(5, 0, "Game difficulty selected: %c", inputLevel);
+    }
+    else{
+      mvprintw(5, 0, "The value you entered is not valid integer, please try again: %c", inputLevel);
+      refresh();
+      inputLevel = getch();
+    }
+  }
+
+  gameLevel = inputLevel;
+  mvaddstr(8, 0, "Please press any key to continue...");
+  refresh();
+  getch();
+  endwin();
+  exit(0);
+}
+
 void Game::run(){
   size_t stage = 0;
   bool playing = true;
   string userStage = "";
-  int maxlines;
+  int maxlines, maxcols;
 
   initscr();
   raw();
@@ -50,7 +110,9 @@ void Game::run(){
   init_pair(6,COLOR_WHITE, COLOR_BLACK);
 
   maxlines = LINES-1;
-  // maxcols = COLUMNS-1;
+  maxcols = COLS-1;
+
+  
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
 

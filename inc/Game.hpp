@@ -7,8 +7,8 @@
 
 class Game {
 private:
-  int level;
   int identifier;
+  int gameLevel;
   vector <Board> boards;
   Player player;
 
@@ -21,6 +21,7 @@ public:
     void displayGame();
     void loadBoards();
     void addBoard(int level, string filename, string directive);
+    void getPlayerInfo();
     void run();
 
     ~Game();

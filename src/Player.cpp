@@ -10,6 +10,7 @@ Player::Player(){
 nDiamonds = 0;
 nPowers = 0;
 nLives = 3;
+name = "Iron Man";
 // cout<<"Player created"<<endl;
 }
 
@@ -19,6 +20,12 @@ nLives = 3;
 //   playerCount++;
 //   cout<<"Player created"<<endl;
 // }
+string Player::updateName(string newName){
+  if (newName != "") {
+    name = newName;
+  }
+  return name;
+}
 
 int Player::Diamonds(){
   return nDiamonds;
@@ -49,5 +56,5 @@ void Player::decrementLives(){
 }
 
 Player::~Player(){
-  cout<<"Player destroyed"<<endl;
+  // cout<<"Player destroyed"<<endl;
 }
