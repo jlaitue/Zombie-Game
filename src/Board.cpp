@@ -174,7 +174,8 @@ void Board::displayBoard(){
   }
 }
 
-void Board::readBoard(string filename){
+void Board::readBoard(int l, string filename){
+  level = l;
   boardName = filename;
   // cout<<"Operation READING..."<<"\n";
   string line;
@@ -464,14 +465,15 @@ void Board::clearMonsters(){
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
       if(matrix[i][j].getSymbol() == 'M'){
-        matrix[i][j].updateElement(i,j,"space",' ');
+        matrix[i][j].updateElement(i,j,"space",'P');
       }
     }
   }
 }
 
 void Board::moveMonsters(int emptyRows, int emptyCols){
-  int monsters = 20;
+  // WTF!!! We have to assign this to value level but it doesnt work
+  int monsters = 5;
   int row = 0;
   int column = 0;
   char c;

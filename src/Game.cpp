@@ -25,7 +25,7 @@ void Game::addBoard(int level, string filename){
 
   if (file) {
     // cout<<"READING"<<endl;
-    board.readBoard(filename);
+    board.readBoard(level, filename);
   }
   else{
     // cout<<"CREATING"<<endl;
