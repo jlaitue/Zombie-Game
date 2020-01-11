@@ -15,6 +15,9 @@ private:
   string boardName;
   int n = rows;
   int m = columns;
+  int rowOrigin;
+  int colOrigin;
+  int infoBoxIdent;
   Element matrix[rows][columns];
 
 public:
