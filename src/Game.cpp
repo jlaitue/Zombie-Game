@@ -74,6 +74,8 @@ void Game::getPlayerInfo(){
       inputLevel = getch();
     }
   }
+  /* We need to substract the ASCII value of char '0' in order to obtain the
+  actual integer value of the number the user introduced as input */
   gameLevel = inputLevel - '0';
 }
 

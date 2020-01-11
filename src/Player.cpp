@@ -20,6 +20,10 @@ name = "Iron Man";
 //   playerCount++;
 //   cout<<"Player created"<<endl;
 // }
+string Player::getName(){
+  return name;
+}
+
 string Player::updateName(string newName){
   if (newName != "") {
     name = newName;

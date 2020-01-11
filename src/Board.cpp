@@ -477,6 +477,7 @@ void Board::moveMonsters(int emptyRows, int emptyCols){
 
 string Board::play(Player &player){
   string move = "";
+  const char *cstr = player.getName().c_str();
   // Initial player position which probably should be changed to a randomized pos
   int rowPosition = n/2;
   int colPosition = m/2;
@@ -490,8 +491,12 @@ string Board::play(Player &player){
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
   // matrix[rowPosition][colPosition] = player;
 
+  //Clear the contents of the previous window but maintaining the header info
+  mvaddstr(3,0,"");
+  clrtobot();
+
   displayBoard();
-  mvprintw(5, m+30, "PLAYER");
+  mvprintw(5, m+30, "PLAYER | %s |",cstr);
   mvprintw(6, m+30, "Diamonds: %d", player.Diamonds());
   mvprintw(7, m+30, "Lives: %d", player.Lives());
   mvprintw(8, m+30, "Teleports: %d", player.Powerups());
