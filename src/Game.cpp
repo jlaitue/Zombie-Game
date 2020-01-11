@@ -42,7 +42,7 @@ void Game::getPlayerInfo(){
   mvaddstr(4, 0, "This is a fun board game in which you must collect diamonds");
   mvaddstr(5, 0, "You should avoid getting eaten by monsters and finish all levels!");
   mvaddstr(6, 0, "Before we begin we need some information to create a game suited to your liking");
-  mvaddstr(8, 0, "Please press any key to continue...");
+  mvaddstr(8, 0, "PRESS ANY KEY TO CONTINUE...");
   refresh();
   getch();
   mvaddstr(2,0,"");
@@ -54,7 +54,7 @@ void Game::getPlayerInfo(){
   newName = inputName;
   cstr = player.updateName(newName).c_str();
 
-  mvprintw(4, 0, "Welcome to the AVENGERS TOWER | %s | ", cstr);
+  mvprintw(4, 0, "WELCOME TO THE AVENGERS TOWER | %s | ", cstr);
   mvaddstr(5, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
   inputLevel = getch();
   refresh();
@@ -66,7 +66,7 @@ void Game::getPlayerInfo(){
        || inputLevel == '4' || inputLevel == '5' || inputLevel == '6'
        || inputLevel == '7' || inputLevel == '8' || inputLevel == '9') {
       valid = true;
-      mvprintw(5, 0, "Game difficulty selected: %c", inputLevel);
+      mvprintw(5, 0, "GAME DIFFICULTY SELECTED: %c", inputLevel);
     }
     else{
       mvprintw(5, 0, "The value you entered is not valid integer, please try again: %c", inputLevel);
@@ -77,7 +77,7 @@ void Game::getPlayerInfo(){
   /* We need to substract the ASCII value of char '0' in order to obtain the
   actual integer value of the number the user introduced as input */
   gameLevel = inputLevel - '0';
-  mvaddstr(8, 0, "Please press any key to begin the game...");
+  mvaddstr(8, 0, "PRESS ANY KEY TO BEGIN THE GAME...");
   refresh();
   getch();
 }
@@ -90,7 +90,6 @@ void Game::run(){
 
   initscr();
   raw();
-  noecho();
   clear();
   start_color();
 
@@ -105,11 +104,12 @@ void Game::run(){
   maxcols = COLS-1;
 
   mvaddstr(0, maxcols/2-15, "<| ULTRON'S BOARD GAME v1.0 |>");
-  mvaddstr(1, maxcols/2-19, "Alexander Morakhovski | Julian Lechuga");
+  mvaddstr(1, maxcols/2-19, "ALEXANDER MORAKHOVSKI | JULIAN LECHUGA");
 
   getPlayerInfo();
   loadBoards();
 
+  noecho();
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
 
@@ -123,7 +123,7 @@ void Game::run(){
       }
       else if (userStage == "NEXT") {
         stage++;
-        mvprintw(18, maxcols/2+10, "REACHED NEW LEVEL!");
+        mvprintw(7, maxcols/2+10, "REACHED NEW LEVEL!");
         refresh();
       }
     }

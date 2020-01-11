@@ -612,9 +612,9 @@ string Board::play(Player &player){
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
-        mvprintw(rowOrigin+5, maxcols/2+infoBoxIdent, "Diamonds: %d", player.Diamonds());
-        mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "Lives: %d", player.Lives());
-        mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
+        mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "Diamonds: %d", player.Diamonds());
+        mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "Lives: %d", player.Lives());
+        mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
       }
     }
 
