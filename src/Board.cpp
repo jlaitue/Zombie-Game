@@ -531,7 +531,6 @@ string Board::play(Player &player){
         mvprintw(rowOrigin+11, maxcols/2+infoBoxIdent,"");
         clrtoeol();
         mvprintw(rowOrigin+11, maxcols/2+infoBoxIdent, "GAME OVER!");
-        mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", player.Diamonds());
         refresh();
         return "KILL";
       }

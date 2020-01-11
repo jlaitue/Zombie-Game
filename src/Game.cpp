@@ -117,25 +117,25 @@ void Game::run(){
 
       if (userStage == "KILL") {
         playing = false;
-        mvprintw(27,0,"");
+        mvprintw(27, 0,"");
         clrtoeol();
-        mvaddstr(27, 0, "GAME TERMINATED BY PLAYER");
+        mvaddstr(27, maxcols/2-25, "GAME TERMINATED BY PLAYER");
       }
       else if (userStage == "NEXT") {
         stage++;
-        mvprintw(31, 0, "REACHED NEW LEVEL!");
+        mvprintw(18, maxcols/2+10, "REACHED NEW LEVEL!");
         refresh();
       }
     }
     else {
       playing = false;
-      mvprintw(27,0,"");
+      mvprintw(27, 0,"");
       clrtoeol();
-      mvaddstr(27, 0, "CONGRATULATIONS! YOU FINISHED ALL LEVELS!");
+      mvaddstr(27, maxcols/2-25, "CONGRATULATIONS! YOU COMPLETED ALL LEVELS!");
     }
   }
 
-  mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", player.Diamonds());
+  mvprintw(28, maxcols/2-25, "FINAL SCORE: %d DIAMONDS COLLECTED", player.Diamonds());
   mvaddstr(maxlines, 0, "PRESS ANY KEY TO EXIT... ");
   refresh();
   getch();
