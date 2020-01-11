@@ -166,7 +166,7 @@ void Game::loadBoards(){
     // int boardId = rand() %19 + 2;
     // cout<<s<<endl;
     string path = "../boards", ext = ".board", name = "board";
-    string filename = "/level_"+to_string(gameLevel)+"/"+to_string(i)+name+ext;
+    string filename = "/level_"+to_string(gameLevel)+"/"+name+to_string(i)+ext;
     addBoard(gameLevel, path+filename);
   }
 }
