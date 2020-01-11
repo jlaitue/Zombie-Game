@@ -495,7 +495,7 @@ string Board::play(Player &player){
   // matrix[rowPosition][colPosition] = player;
 
   //Clear the contents of the previous window but maintaining the header info
-  mvaddstr(3,0,"");
+  mvaddstr(4,0,"");
   clrtobot();
 
   displayBoard();

@@ -116,6 +116,7 @@ void Game::run(){
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
 
+      mvprintw(3, 20, "Game stage %d/%d", stage+1, boards.size());
       userStage = boards[stage].play(player);
 
       if (userStage == "KILL") {
@@ -149,25 +150,13 @@ void Game::run(){
 void Game::loadBoards(){
   srand (time(NULL));
   for (int i = 0; i < gameLevel; i++) {
-    // int boardLevel = 0;
-    // switch (gameLevel) {
-    //   case 1:
-    //   boardLevel = 1;
-    //   case 2:
-    //   boardLevel = 1;
-    //   case 3:
-    //   boardLevel = 1;
-    //   case 4:
-    //   boardLevel = 1;
-    //   case 5:
-    //   boardLevel = 1;
-    //   default: return true;
-    // }
-    // int boardId = rand() %19 + 2;
-    // cout<<s<<endl;
+    int level;
     string path = "../boards", ext = ".board", name = "board";
     string filename = "/level_"+to_string(gameLevel)+"/"+name+to_string(i)+ext;
-    addBoard(gameLevel, path+filename);
+    if (gameLevel>5) {
+      level = rand() %5 + 3;
+    }
+    addBoard(level, path+filename);
   }
 }
 
