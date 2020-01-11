@@ -4,6 +4,7 @@ Final project
 
 TODO:
 
+- Intro window with user input to decide what to do
 - Make it work the way its supposed to do
 - Apparently we should divide the project into to apps
 - Improve the generation of random values
