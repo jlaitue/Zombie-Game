@@ -38,6 +38,7 @@ public:
     string play(Player &player);
     //Move this method to Monsters class
     void moveMonsters(int emptyRows, int emptyCols);
+    void clearMonsters();
     ~Board();
 };
 

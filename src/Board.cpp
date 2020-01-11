@@ -460,11 +460,22 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
   }
 }
 
+void Board::clearMonsters(){
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      if(matrix[i][j].getSymbol() == 'M'){
+        matrix[i][j].updateElement(i,j,"space",' ');
+      }
+    }
+  }
+}
+
 void Board::moveMonsters(int emptyRows, int emptyCols){
-  int monsters = 2;
+  int monsters = 1;
   int row = 0;
   int column = 0;
   char c;
+  clearMonsters();
   for (int i = 0; i < monsters; i++) {
     c = matrix[row][column].getSymbol();
     while ( c == 'X' or c == '*' or c == '$' or c == 'O' or c == 'M') {
