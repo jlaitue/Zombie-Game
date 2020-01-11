@@ -378,11 +378,11 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
   bool &movementValid, bool &nextBoard, Player &player, int moveCase){
 
   if (nextStr == 'X') {
-    mvaddstr(31, 0, "INVALID MOVE. THERE IS AN OBSTACLE!");
+    mvaddstr(rowOrigin+13, m+infoBoxIdent, "INVALID MOVE. THERE IS AN OBSTACLE!");
   }
 
   else if (nextStr == '#') {
-    mvaddstr(31, 0, "DOOR CLOSED. GET A DIAMOND TO OPEN IT!");
+    mvaddstr(rowOrigin+13, m+infoBoxIdent, "DOOR CLOSED. GET A DIAMOND TO OPEN IT!");
   }
 
   else if (nextStr == '+'){
@@ -394,23 +394,23 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
     if(nextStr == '$'){
       player.incrementDiamonds();
       if(openDoor()) {
-        mvaddstr(31, 0, "YOUR DIAMOND OPENED A DOOR!");
+        mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOUR DIAMOND OPENED A DOOR!");
       }
       else{
-        mvaddstr(31, 0, "YOU FOUND A DIAMOND!");
+        mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU FOUND A DIAMOND!");
       }
     }
     else if(nextStr == '*'){
       player.incrementPowerups();
-      mvaddstr(31, 0, "YOU FOUND A TELEPORTER!");
+      mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU FOUND A TELEPORTER!");
     }
     else if(nextStr == 'M'){
       player.decrementLives();
-      mvaddstr(31, 0, "YOU JUST GOT EATEN!");
+      mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU JUST GOT EATEN!");
       if(player.Lives() == 0){
-        mvprintw(31,0,"");
+        mvprintw(rowOrigin+13, m+infoBoxIdent,"");
         clrtoeol();
-        mvaddstr(31, 0, "YOU ARE DEAD! :C");
+        mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU ARE DEAD! :C");
       }
     }
     switch (moveCase) {
@@ -516,7 +516,7 @@ string Board::play(Player &player){
     if (player.Lives() > 0) {
       userInput = getch();
       mvprintw(rowOrigin+11, m+infoBoxIdent, "ENTER NEXT MOVE: %c", userInput);
-      mvprintw(31, m+infoBoxIdent,"");
+      mvprintw(rowOrigin+13, m+infoBoxIdent,"");
       clrtoeol();
       refresh();
 
@@ -594,12 +594,12 @@ string Board::play(Player &player){
           colPosition = column;
         }
         else{
-          mvaddstr(31, m+infoBoxIdent, "YOU DO NOT HAVE ANY TELEPORTERS. SORRY!");
+          mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU DO NOT HAVE ANY TELEPORTERS. SORRY!");
         }
       }
 
       else{
-        mvaddstr(31, m+infoBoxIdent, "TRY A VALID KEY INPUT.");
+        mvaddstr(rowOrigin+13, m+infoBoxIdent, "TRY A VALID KEY INPUT.");
       }
 
       if (nextBoard){
