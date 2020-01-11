@@ -21,7 +21,7 @@ public:
     void displayGame();
     void loadBoards();
     void addBoard(int level, string filename, string directive);
-    void getPlayerInfo();
+    void getPlayerInfo(int maxcols);
     void run();
 
     ~Game();

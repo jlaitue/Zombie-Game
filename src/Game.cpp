@@ -31,21 +31,14 @@ void Game::addBoard(int index, string filename, string directive){
   }
 }
 
-void Game::getPlayerInfo(){
+void Game::getPlayerInfo(int maxcols){
   char inputName[100];
   char inputLevel;
   const char *cstr;
 
   string newName;
   bool valid = false;
-  int maxcols;
-  initscr();
-  raw();
-  clear();
-  maxcols = COLS-1;
 
-  mvaddstr(0, maxcols/2-15, "<| ULTRON'S BOARD GAME v1.0 |>");
-  mvaddstr(1, maxcols/2-19, "Alexander Morakhovski | Julian Lechuga");
   mvaddstr(4, 0, "This is a fun board game in which you must collect diamonds");
   mvaddstr(5, 0, "You should avoid getting eaten by monsters and finish all levels!");
   mvaddstr(6, 0, "Before we begin we need some information to create a game suited to you liking");
@@ -81,13 +74,7 @@ void Game::getPlayerInfo(){
       inputLevel = getch();
     }
   }
-
-  gameLevel = inputLevel;
-  mvaddstr(8, 0, "Please press any key to continue...");
-  refresh();
-  getch();
-  endwin();
-  exit(0);
+  gameLevel = inputLevel - '0';
 }
 
 void Game::run(){
@@ -112,7 +99,12 @@ void Game::run(){
   maxlines = LINES-1;
   maxcols = COLS-1;
 
-  
+  mvaddstr(0, maxcols/2-15, "<| ULTRON'S BOARD GAME v1.0 |>");
+  mvaddstr(1, maxcols/2-19, "Alexander Morakhovski | Julian Lechuga");
+
+  getPlayerInfo(maxcols);
+  loadBoards();
+
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
 
@@ -137,6 +129,7 @@ void Game::run(){
       mvaddstr(27, 0, "CONGRATULATIONS! YOU FINISHED ALL LEVELS!");
     }
   }
+
   mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", player.Diamonds());
   mvaddstr(maxlines, 0, "PRESS ANY KEY TO EXIT... ");
   refresh();
@@ -147,12 +140,12 @@ void Game::run(){
 
 void Game::loadBoards(){
   srand (time(NULL));
-  // Value 5 is hardcoded with Game.hpp should change it
-  for (size_t i = 0; i < 2; i++) {
+  // cout<<"FUck "<<gameLevel<<endl;
+  for (int i = 0; i < gameLevel; i++) {
     // int boardId = rand() %19 + 2;
     string s;
     s = to_string(i);
-    // cout<<"Name: "<<boardId<<endl;
+    // cout<<s<<endl;
     addBoard(i, s+"prueba.txt", "read");
   }
 }
