@@ -508,10 +508,10 @@ string Board::play(Player &player){
   mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
 
   mvaddstr(rowOrigin+10, maxcols/2+infoBoxIdent, "KEYBOARD COMMANDS");
-  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "T for teleportation");
-  mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "K for terminating");
-  mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "N for next board");
-  mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "W,Q,E,S,A,D,Z,C for movement");
+  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press T to teleport");
+  mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "Press K to exit");
+  mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press W A S D for lineal movement");
+  mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
 
   mvaddstr(rowOrigin, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
