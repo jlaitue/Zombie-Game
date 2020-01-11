@@ -41,7 +41,7 @@ void Game::getPlayerInfo(){
 
   mvaddstr(4, 0, "This is a fun board game in which you must collect diamonds");
   mvaddstr(5, 0, "You should avoid getting eaten by monsters and finish all levels!");
-  mvaddstr(6, 0, "Before we begin we need some information to create a game suited to you liking");
+  mvaddstr(6, 0, "Before we begin we need some information to create a game suited to your liking");
   mvaddstr(8, 0, "Please press any key to continue...");
   refresh();
   getch();
@@ -77,6 +77,9 @@ void Game::getPlayerInfo(){
   /* We need to substract the ASCII value of char '0' in order to obtain the
   actual integer value of the number the user introduced as input */
   gameLevel = inputLevel - '0';
+  mvaddstr(8, 0, "Please press any key to begin the game...");
+  refresh();
+  getch();
 }
 
 void Game::run(){

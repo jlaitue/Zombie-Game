@@ -16,7 +16,7 @@ int Board::boardCount = 0;
 Board::Board(){
   rowOrigin = 5;
   colOrigin = 20;
-  infoBoxIdent = 30;
+  infoBoxIdent = 10;
   // cout<<"Board created"<<endl;
 }
 
@@ -376,13 +376,14 @@ bool Board::openDoor(){
 
 void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
   bool &movementValid, bool &nextBoard, Player &player, int moveCase){
+    int maxcols = COLS-1;
 
   if (nextStr == 'X') {
-    mvaddstr(rowOrigin+13, m+infoBoxIdent, "INVALID MOVE. THERE IS AN OBSTACLE!");
+    mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "INVALID MOVE. THERE IS AN OBSTACLE!");
   }
 
   else if (nextStr == '#') {
-    mvaddstr(rowOrigin+13, m+infoBoxIdent, "DOOR CLOSED. GET A DIAMOND TO OPEN IT!");
+    mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "DOOR CLOSED. GET A DIAMOND TO OPEN IT!");
   }
 
   else if (nextStr == '+'){
@@ -394,23 +395,23 @@ void Board::validateMovement(int &rowPosition, int &colPosition, char nextStr,
     if(nextStr == '$'){
       player.incrementDiamonds();
       if(openDoor()) {
-        mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOUR DIAMOND OPENED A DOOR!");
+        mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "YOUR DIAMOND OPENED A DOOR!");
       }
       else{
-        mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU FOUND A DIAMOND!");
+        mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "YOU FOUND A DIAMOND!");
       }
     }
     else if(nextStr == '*'){
       player.incrementPowerups();
-      mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU FOUND A TELEPORTER!");
+      mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "YOU FOUND A TELEPORTER!");
     }
     else if(nextStr == 'M'){
       player.decrementLives();
-      mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU JUST GOT EATEN!");
+      mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "YOU JUST GOT EATEN!");
       if(player.Lives() == 0){
-        mvprintw(rowOrigin+13, m+infoBoxIdent,"");
+        mvprintw(rowOrigin+13, maxcols/2+infoBoxIdent,"");
         clrtoeol();
-        mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU ARE DEAD! :C");
+        mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "YOU ARE DEAD! :C");
       }
     }
     switch (moveCase) {
@@ -485,6 +486,9 @@ string Board::play(Player &player){
   int rowPosition = n/2;
   int colPosition = m/2;
   char userInput;
+  int maxcols = COLS-1;
+
+  colOrigin = maxcols/2-m;
 
   // Square area in which the player can teleport to
   int emptyRows = n-2;
@@ -498,25 +502,25 @@ string Board::play(Player &player){
   clrtobot();
 
   displayBoard();
-  mvprintw(rowOrigin, m+infoBoxIdent, "PLAYER | %s |",charedPlayerName);
-  mvprintw(rowOrigin+1, m+infoBoxIdent, "Diamonds: %d", player.Diamonds());
-  mvprintw(rowOrigin+2, m+infoBoxIdent, "Lives: %d", player.Lives());
-  mvprintw(rowOrigin+3, m+infoBoxIdent, "Teleports: %d", player.Powerups());
+  mvprintw(rowOrigin, maxcols/2+infoBoxIdent, "PLAYER | %s |",charedPlayerName);
+  mvprintw(rowOrigin+1, maxcols/2+infoBoxIdent, "Diamonds: %d", player.Diamonds());
+  mvprintw(rowOrigin+2, maxcols/2+infoBoxIdent, "Lives: %d", player.Lives());
+  mvprintw(rowOrigin+3, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
 
-  mvaddstr(rowOrigin+5, m+infoBoxIdent, "KEYBOARD COMMANDS");
-  mvaddstr(rowOrigin+6, m+infoBoxIdent, "T for teleportation");
-  mvaddstr(rowOrigin+7, m+infoBoxIdent, "K for terminating");
-  mvaddstr(rowOrigin+8, m+infoBoxIdent, "N for next board");
-  mvaddstr(rowOrigin+9, m+infoBoxIdent, "W,Q,E,S,A,D,Z,C for movement");
+  mvaddstr(rowOrigin+5, maxcols/2+infoBoxIdent, "KEYBOARD COMMANDS");
+  mvaddstr(rowOrigin+6, maxcols/2+infoBoxIdent, "T for teleportation");
+  mvaddstr(rowOrigin+7, maxcols/2+infoBoxIdent, "K for terminating");
+  mvaddstr(rowOrigin+8, maxcols/2+infoBoxIdent, "N for next board");
+  mvaddstr(rowOrigin+9, maxcols/2+infoBoxIdent, "W,Q,E,S,A,D,Z,C for movement");
 
-  mvaddstr(rowOrigin+11, m+infoBoxIdent, "ENTER NEXT MOVE: ");
+  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
     bool movementValid = 0;
     bool nextBoard = 0;
     if (player.Lives() > 0) {
       userInput = getch();
-      mvprintw(rowOrigin+11, m+infoBoxIdent, "ENTER NEXT MOVE: %c", userInput);
-      mvprintw(rowOrigin+13, m+infoBoxIdent,"");
+      mvprintw(rowOrigin+11, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: %c", userInput);
+      mvprintw(rowOrigin+13, maxcols/2+infoBoxIdent,"");
       clrtoeol();
       refresh();
 
@@ -524,9 +528,9 @@ string Board::play(Player &player){
       matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",'.');
 
       if (userInput == 'k' or userInput == 'K'){
-        mvprintw(rowOrigin+11, m+infoBoxIdent,"");
+        mvprintw(rowOrigin+11, maxcols/2+infoBoxIdent,"");
         clrtoeol();
-        mvprintw(rowOrigin+11, m+infoBoxIdent, "GAME OVER!");
+        mvprintw(rowOrigin+11, maxcols/2+infoBoxIdent, "GAME OVER!");
         mvprintw(28, 0, "FINAL SCORE: %d DIAMONDS COLLECTED", player.Diamonds());
         refresh();
         return "KILL";
@@ -594,12 +598,12 @@ string Board::play(Player &player){
           colPosition = column;
         }
         else{
-          mvaddstr(rowOrigin+13, m+infoBoxIdent, "YOU DO NOT HAVE ANY TELEPORTERS. SORRY!");
+          mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "YOU DO NOT HAVE ANY TELEPORTERS. SORRY!");
         }
       }
 
       else{
-        mvaddstr(rowOrigin+13, m+infoBoxIdent, "TRY A VALID KEY INPUT.");
+        mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "TRY A VALID KEY INPUT.");
       }
 
       if (nextBoard){
@@ -609,9 +613,9 @@ string Board::play(Player &player){
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
-        mvprintw(rowOrigin+1, m+infoBoxIdent, "Diamonds: %d", player.Diamonds());
-        mvprintw(rowOrigin+2, m+infoBoxIdent, "Lives: %d", player.Lives());
-        mvprintw(rowOrigin+3, m+infoBoxIdent, "Teleports: %d", player.Powerups());
+        mvprintw(rowOrigin+1, maxcols/2+infoBoxIdent, "Diamonds: %d", player.Diamonds());
+        mvprintw(rowOrigin+2, maxcols/2+infoBoxIdent, "Lives: %d", player.Lives());
+        mvprintw(rowOrigin+3, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
       }
     }
 
