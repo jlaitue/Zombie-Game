@@ -31,7 +31,7 @@ void Game::addBoard(int index, string filename, string directive){
   }
 }
 
-void Game::getPlayerInfo(int maxcols){
+void Game::getPlayerInfo(){
   char inputName[100];
   char inputLevel;
   const char *cstr;
@@ -102,7 +102,7 @@ void Game::run(){
   mvaddstr(0, maxcols/2-15, "<| ULTRON'S BOARD GAME v1.0 |>");
   mvaddstr(1, maxcols/2-19, "Alexander Morakhovski | Julian Lechuga");
 
-  getPlayerInfo(maxcols);
+  getPlayerInfo();
   loadBoards();
 
   while (playing == true) {
@@ -140,7 +140,6 @@ void Game::run(){
 
 void Game::loadBoards(){
   srand (time(NULL));
-  // cout<<"FUck "<<gameLevel<<endl;
   for (int i = 0; i < gameLevel; i++) {
     // int boardId = rand() %19 + 2;
     string s;
