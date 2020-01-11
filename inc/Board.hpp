@@ -36,6 +36,7 @@ public:
       bool &movementValid, bool &nextBoard, Player &player, int moveCase);
     string getBoardName();
     string play(Player &player);
+    //Move this method to Monsters class
     void moveMonsters(int emptyRows, int emptyCols);
     ~Board();
 };

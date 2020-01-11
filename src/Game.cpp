@@ -3,6 +3,7 @@
 #include "../inc/Player.hpp"
 #include <iostream>
 #include <ctime>
+#include <fstream>
 #include <ncurses.h>
 
 using namespace std;
@@ -17,18 +18,20 @@ Game::Game(){
   // cout<<"Game id: "<<identifier<<"\n";
 }
 
-void Game::addBoard(int index, string filename, string directive){
-  if (directive == "read") {
-    Board board;
+void Game::addBoard(int level, string filename){
+  Board board;
+  fstream file;
+  file.open(filename);
+
+  if (file) {
+    // cout<<"READING"<<endl;
     board.readBoard(filename);
-    boards.push_back(board);
-  }
-  else if (directive == "create"){
-    boards[index].createTheMatrix(index, filename);
   }
   else{
-    cout<<"You have not sent a correct directive."<<endl;
+    // cout<<"CREATING"<<endl;
+    board.createTheMatrix(level, filename);
   }
+  boards.push_back(board);
 }
 
 void Game::getPlayerInfo(){
@@ -146,11 +149,25 @@ void Game::run(){
 void Game::loadBoards(){
   srand (time(NULL));
   for (int i = 0; i < gameLevel; i++) {
+    // int boardLevel = 0;
+    // switch (gameLevel) {
+    //   case 1:
+    //   boardLevel = 1;
+    //   case 2:
+    //   boardLevel = 1;
+    //   case 3:
+    //   boardLevel = 1;
+    //   case 4:
+    //   boardLevel = 1;
+    //   case 5:
+    //   boardLevel = 1;
+    //   default: return true;
+    // }
     // int boardId = rand() %19 + 2;
-    string s;
-    s = to_string(i);
     // cout<<s<<endl;
-    addBoard(i, s+"prueba.txt", "read");
+    string path = "../boards", ext = ".board", name = "board";
+    string filename = "/level_"+to_string(gameLevel)+"/"+to_string(i)+board+ext;
+    addBoard(gameLevel, path+filename);
   }
 }
 

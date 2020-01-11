@@ -263,13 +263,10 @@ void Board::readBoard(string filename){
     // cout<<"\n\n";
 }
 
-void Board::createTheMatrix(int l, string filename){
-  string path = "../boards/level_"+ to_string(l)+"/";
+void Board::createTheMatrix(int l, string file){
   level = l;
-  boardName = filename;
-
-  // boost::filesystem::create_directories(path);
-  ofstream myfile (path + filename);
+  boardName = file;
+  ofstream myfile(file);
 
 // Creation of string matrix with elements of board
   for (int i = 0; i < n; i++) {
@@ -295,54 +292,52 @@ chosen
 switch (level) {
   case 1:
     {
-      cout<<"Creation of board of level 1\n\n";
+      // cout<<"Creation of board of level 1\n\n";
       int nDiam = 5, nMons = 1, nStars = 0, nDoors = 5, nWalls = 2;
       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
       break;
     }
   case 2:
     {
-      cout<<"Creation of board of level 2\n\n";
+      // cout<<"Creation of board of level 2\n\n";
       int nDiam = 5, nMons = 1, nStars = 1, nDoors = 4, nWalls = 2;
       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
       break;
     }
   case 3:
     {
-      cout<<"Creation of board of level 3\n\n";
+      // cout<<"Creation of board of level 3\n\n";
       int nDiam = 4, nMons = 3, nStars = 2, nDoors = 3, nWalls = 3;
       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
       break;
     }
   case 4:
     {
-      cout<<"Creation of board of level 4\n\n";
+      // cout<<"Creation of board of level 4\n\n";
       int nDiam = 4, nMons = 4, nStars = 3, nDoors = 2, nWalls = 3;
       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
       break;
     }
   case 5:
     {
-      cout<<"Creation of board of level 5\n\n";
+      // cout<<"Creation of board of level 5\n\n";
       int nDiam = 8, nMons = 5, nStars = 4, nDoors = 1, nWalls = 5;
       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
-      cout<<"PENE\n\n";
       break;
     }
   default:
     {
-      cout<<"Creation of board of level default\n\n";
+      // cout<<"Creation of board of level default\n\n";
       int nDiam = 15, nMons = 10, nStars = 10, nDoors = 1, nWalls = 10;
       positionObjects(nDiam, nMons, nDoors, nStars, nWalls);
       break;
     }
 
 }
-  // displayBoard();
 
 // Writting of matrix previously created to .txt file
   if (myfile.is_open()) {
-    cout<<"Writting to board file: boards/"<< filename<<" ..."<<"\n";
+    // cout<<"Writting to board file: "<< filename<<"\n";
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < m; j++) {
         myfile<<matrix[i][j].getSymbol();
@@ -350,9 +345,11 @@ switch (level) {
       myfile<<"\n";
     }
     myfile.close();
-    cout<<"Done writting."<<"\n";
+    // cout<<"Done writting."<<"\n";
   }
-  else cout << "Unable to open file";
+  else {
+    // cout << "Unable to open file for creation";
+  }
 }
 
 string Board::getBoardName(){
