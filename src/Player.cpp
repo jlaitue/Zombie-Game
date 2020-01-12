@@ -51,6 +51,14 @@ void Player::incrementPowerups(){
   nPowers++;
 }
 
+void Player::incrementLives(){
+  nLives++;
+}
+
+void Player::decrementDiamonds(){
+  nDiamonds--;
+}
+
 void Player::decrementPowerups(){
   nPowers--;
 }
@@ -58,6 +66,7 @@ void Player::decrementPowerups(){
 void Player::decrementLives(){
   nLives--;
 }
+
 
 Player::~Player(){
   // cout<<"Player destroyed"<<endl;

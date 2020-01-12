@@ -154,6 +154,7 @@ void Game::loadBoards(){
     string path = "../boards", ext = ".board", name = "board";
     string filename = "/level_"+to_string(gameLevel)+"/"+name+to_string(i)+ext;
     if (gameLevel>5) {
+      //Maybe change this to 0 to have the default difficulty level
       level = rand() %5 + 3;
     }
     addBoard(level, path+filename);

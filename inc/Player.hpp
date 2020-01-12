@@ -23,7 +23,9 @@ public:
 
     void incrementDiamonds();
     void incrementPowerups();
+    void incrementLives();
     void decrementPowerups();
+    void decrementDiamonds();
     string getName();
     string updateName(string newName);
     void decrementLives();

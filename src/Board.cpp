@@ -472,8 +472,6 @@ void Board::clearMonsters(){
 }
 
 void Board::moveMonsters(int emptyRows, int emptyCols){
-  // WTF!!! We have to assign this to value level but it doesnt work
-  mvprintw(22, 0, "Nivel: %d", level);
   int monsters = level;
   int row = 0;
   int column = 0;
@@ -612,8 +610,48 @@ string Board::play(Player &player){
         }
       }
 
+      else if (userInput == 'n' or userInput == 'N'){
+        if (player.Powerups() >= 5) {
+          bool found = false;
+          for (int i = 0; i < n; i++) {
+            if(found){break;}
+            for (int j = 0; j < m; j++) {
+              if(matrix[i][j].getSymbol() == '+'){
+                found = true;
+                break;
+              }
+            }
+          }
+          if (found) {
+            for (size_t i = 0; i < 5; i++) {
+              player.decrementPowerups();
+            }
+            nextBoard = 1;
+          }
+          else{
+            mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "YOU NEED TO OPEN A DOOR FIRST!");
+          }
+        }
+        else{
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "NOT ENOUGH POWER TO CHANGE BOARD!");
+        }
+      }
+
+      else if (userInput == 'b' or userInput == 'B'){
+        if (player.Diamonds() >= 3) {
+          movementValid = 1;
+          player.incrementLives();
+          for (size_t i = 0; i < 2; i++) {
+            player.decrementDiamonds();
+          }
+        }
+        else{
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "NOT ENOUGH DIAMONDS TO BUY A LIFE");
+        }
+      }
+
       else{
-        mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "TRY A VALID KEY INPUT.");
+        mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "TRY A VALID KEYBOARD INPUT");
       }
 
       if (nextBoard){
