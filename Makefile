@@ -1,7 +1,10 @@
 CC := g++ # This is the main compiler
 SRCDIR := src
 BUILDDIR := build
-TARGET := bin/Test.game
+MAINBUILDDIR := main/build
+MAINDIR := main
+TARGET := bin/Play
+TARGET1 := bin/Create
 
 SRCEXT := cpp
 CFLAGS := --std=c++11 -Wall
@@ -11,24 +14,29 @@ LDLIBS := -lncurses
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
+all : $(TARGET) $(TARGET1)
+
 $(TARGET): $(OBJECTS)
-	@echo " Linking...";
-	@echo " $(CC) $^ -o $(TARGET)"; $(CC) $^ -o $(TARGET) $(LDLIBS)
+	@echo " Compiling Play...";
+	$(CC) $(CFLAGS) $(INC) -c -o $(MAINBUILDDIR)/Play.o main/Play.cpp
+	@echo " Linking Play...";
+	@echo " $(CC) $^ -o $(TARGET)"; $(CC) $^ $(MAINBUILDDIR)/Play.o -o $(TARGET) $(LDLIBS)
+
+$(TARGET1): $(OBJECTS)
+	@echo " Compiling Create...";
+	$(CC) $(CFLAGS) $(INC) -c -o $(MAINBUILDDIR)/Create.o main/Create.cpp
+	@echo " Linking Create...";
+	@echo " $(CC) $^ -o $(TARGET1)"; $(CC) $^ $(MAINBUILDDIR)/Create.o -o $(TARGET1) $(LDLIBS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR);
+	@mkdir -p $(MAINBUILDDIR);
 	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 clean:
 	@echo " Cleaning...";
-	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
+	@echo " $(RM) -r $(BUILDDIR) $(TARGET)";
+	$(RM) -r $(BUILDDIR) $(MAINBUILDDIR) $(TARGET) $(TARGET1)
 
-# # Tests
-# tester:
-#   $(CC) $(CFLAGS) test/tester.cpp $(INC) $(LIB) -o bin/tester
-#
-# # Spikes
-# ticket:
-#   $(CC) $(CFLAGS) spikes/ticket.cpp $(INC) $(LIB) -o bin/ticket
-
+.PHONY : all
 .PHONY: clean
