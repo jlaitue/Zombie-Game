@@ -9,7 +9,7 @@ int Element::objectCount = 0;
 Element::Element(){
   objectCount++;
   idtag = objectCount;
-  symbol = ' ';
+  symbol = 'W';
   cout<<"Element "<<type<<" "<<idtag<<" created"<<endl;
 }
 

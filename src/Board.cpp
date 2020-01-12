@@ -14,14 +14,15 @@ using namespace std;
 int Board::boardCount = 0;
 
 Board::Board(){
-  // n = 20;
-  // n = 40;
+  n = 20;
+  n = 40;
   rowOrigin = 5;
   colOrigin = 20;
   infoBoxIdent = 5;
   availableDiamonds = 0;
-  // for ( int i = 0 ; i < RR ; i++ )
-  //  matrix[i].resize(CC);
+  for ( int i = 0 ; i < n ; i++ ){
+    matrix[i].resize(m);
+  }
   cout<<"Board created"<<endl;
 }
 
@@ -175,6 +176,9 @@ void colorCoding(char element, int &colorCode){
 void Board::displayBoard(){
   char element;
   int colorCode;
+  mvaddstr(LINES-1, 0, "Display... ");
+  refresh();
+  getch();
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
       element = matrix[i][j].getSymbol();
