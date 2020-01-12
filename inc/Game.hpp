@@ -9,6 +9,7 @@ class Game {
 private:
   int identifier;
   int gameLevel;
+  int totalDiamonds;
   vector <Board> boards;
   Player player;
 

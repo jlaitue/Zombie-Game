@@ -14,6 +14,7 @@ Game::Game(){
   gameCount++;
   identifier = gameCount;
   gameLevel = 0;
+  totalDiamonds = 0;
   // cout<<"Game created"<<"\n";
   // cout<<"Game id: "<<identifier<<"\n";
 }
@@ -32,6 +33,7 @@ void Game::addBoard(int level, string filename){
     board.createTheMatrix(level, filename);
   }
   boards.push_back(board);
+  totalDiamonds = totalDiamonds + board.getNumberDiamonds();
 }
 
 void Game::getPlayerInfo(){
@@ -139,7 +141,7 @@ void Game::run(){
     }
   }
 
-  mvprintw(28, maxcols/2-25, "FINAL SCORE: %d DIAMONDS COLLECTED", player.Diamonds());
+  mvprintw(28, maxcols/2-25, "FINAL SCORE: %d DIAMONDS COLLECTED OUT OF %d", player.Diamonds(), totalDiamonds);
   mvaddstr(maxlines, 0, "PRESS ANY KEY TO EXIT... ");
   refresh();
   getch();
