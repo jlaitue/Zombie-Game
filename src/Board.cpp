@@ -517,11 +517,11 @@ string Board::play(Player &player){
   mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
 
   mvaddstr(rowOrigin+10, maxcols/2+infoBoxIdent, "KEYBOARD COMMANDS");
-  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press T to teleport to a random position in board");
-  mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "Press K to exit");
-  mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press B to buy a life for 3 diamonds ($)");
+  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press K to terminate the game");
+  mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "Press T to teleport to a random position in board");
+  mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press L to buy a life for 3 diamonds ($)");
   mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press N to skip board using 5 powerups (*)");
-  mvaddstr(rowOrigin+15, maxcols/2+infoBoxIdent, "Press W A S D for lineal movement");
+  mvaddstr(rowOrigin+15, maxcols/2+infoBoxIdent, "Press W A S D or ARROW KEYS for lineal movement");
   mvaddstr(rowOrigin+16, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
 
   mvaddstr(rowOrigin, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: ");
@@ -530,6 +530,8 @@ string Board::play(Player &player){
     bool nextBoard = 0;
     if (player.Lives() > 0) {
       userInput = getch();
+      mvprintw(rowOrigin, maxcols/2+infoBoxIdent,"");
+      clrtoeol();
       mvprintw(rowOrigin, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: %c", userInput);
       mvprintw(rowOrigin+2, maxcols/2+infoBoxIdent,"");
       clrtoeol();
@@ -546,25 +548,25 @@ string Board::play(Player &player){
         return "KILL";
       }
 
-      else if (userInput == 'w' or userInput == 'W'){
+      else if (userInput == 'w' or userInput == 'A'){
         char nextStr = matrix[rowPosition-1][colPosition].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
           nextBoard, player, 1);
       }
 
-      else if (userInput == 's' or userInput == 'S'){
+      else if (userInput == 's' or userInput == 'B'){
         char nextStr = matrix[rowPosition+1][colPosition].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
           nextBoard, player, 2);
       }
 
-      else if (userInput == 'd' or userInput == 'D'){
+      else if (userInput == 'd' or userInput == 'C'){
         char nextStr = matrix[rowPosition][colPosition+1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
           nextBoard, player, 3);
       }
 
-      else if (userInput == 'a' or userInput == 'A'){
+      else if (userInput == 'a' or userInput == 'D'){
         char nextStr = matrix[rowPosition][colPosition-1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
           nextBoard, player, 4);
@@ -588,7 +590,7 @@ string Board::play(Player &player){
           nextBoard, player, 7);
       }
 
-      else if (userInput == 'c' or userInput == 'C'){
+      else if (userInput == 'c'){
         char nextStr = matrix[rowPosition+1][colPosition+1].getSymbol();
         validateMovement(rowPosition, colPosition, nextStr, movementValid,
           nextBoard, player, 8);
@@ -639,7 +641,7 @@ string Board::play(Player &player){
         }
       }
 
-      else if (userInput == 'b' or userInput == 'B'){
+      else if (userInput == 'l' or userInput == 'L'){
         if (player.Diamonds() >= 3) {
           movementValid = 1;
           player.incrementLives();
