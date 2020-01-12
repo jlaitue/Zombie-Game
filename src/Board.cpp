@@ -473,7 +473,8 @@ void Board::clearMonsters(){
 
 void Board::moveMonsters(int emptyRows, int emptyCols){
   // WTF!!! We have to assign this to value level but it doesnt work
-  int monsters = 10;
+  mvprintw(22, 0, "Nivel: %d", level);
+  int monsters = level;
   int row = 0;
   int column = 0;
   char c;

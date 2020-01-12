@@ -150,7 +150,7 @@ void Game::run(){
 void Game::loadBoards(){
   srand (time(NULL));
   for (int i = 0; i < gameLevel; i++) {
-    int level;
+    int level = gameLevel;
     string path = "../boards", ext = ".board", name = "board";
     string filename = "/level_"+to_string(gameLevel)+"/"+name+to_string(i)+ext;
     if (gameLevel>5) {
