@@ -476,7 +476,9 @@ void Board::moveMonsters(int emptyRows, int emptyCols){
   int row = 0;
   int column = 0;
   char c;
-  clearMonsters();
+  if (level < 4) {
+    clearMonsters();
+  }
   for (int i = 0; i < monsters; i++) {
     c = matrix[row][column].getSymbol();
     while ( c == 'X' or c == '*' or c == '$' or c == 'M') {
