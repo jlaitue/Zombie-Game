@@ -7,10 +7,11 @@ using namespace std;
 int Player::playerCount = 0;
 
 Player::Player(){
+string defaultPlayers[] = {"Iron Man", "SpiderMan", "Thor", "Wolverine", "Phoenix"};
 nDiamonds = 0;
 nPowers = 0;
 nLives = 3;
-name = "Iron Man";
+name = defaultPlayers[rand() % 5];
 // cout<<"Player created"<<endl;
 }
 

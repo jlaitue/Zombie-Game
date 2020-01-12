@@ -143,7 +143,7 @@ void Game::run(){
 
   mvprintw(28, maxcols/2-25, "FINAL SCORE: %d DIAMONDS COLLECTED OUT OF %d", player.Diamonds(), totalDiamonds);
   if (player.Diamonds() == totalDiamonds) {
-    mvprintw(29, maxcols/2-25, "YOU REACHED THE HIGHEST SCORE!", player.Diamonds(), totalDiamonds);
+    mvprintw(29, maxcols/2-25, "YOU REACHED THE HIGHEST SCORE, CONGRATS MATE!", player.Diamonds(), totalDiamonds);
   }
   mvaddstr(maxlines, 0, "PRESS ANY KEY TO EXIT... ");
   refresh();
