@@ -14,7 +14,8 @@ LDLIBS := -lncurses
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
-all : $(TARGET) $(TARGET1)
+all: $(TARGET) $(TARGET1)
+# $(MAINBUILDDIR)/Play.o: $(CC) $(CFLAGS) $(INC) -c -o $(MAINBUILDDIR)/Play.o main/Play.cpp
 
 $(TARGET): $(OBJECTS)
 	@echo " Compiling Play...";
@@ -32,6 +33,9 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR);
 	@mkdir -p $(MAINBUILDDIR);
 	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+
+# Create.o: main/Create.cpp
+# 	$(CC) $(CFLAGS) $(INC) -c -o $(MAINBUILDDIR)/Create.o main/Create.cpp
 
 clean:
 	@echo " Cleaning...";
