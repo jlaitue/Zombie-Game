@@ -16,7 +16,7 @@ int Board::boardCount = 0;
 Board::Board(){
   rowOrigin = 5;
   colOrigin = 20;
-  infoBoxIdent = 10;
+  infoBoxIdent = 5;
   // cout<<"Board created"<<endl;
 }
 
@@ -517,10 +517,12 @@ string Board::play(Player &player){
   mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
 
   mvaddstr(rowOrigin+10, maxcols/2+infoBoxIdent, "KEYBOARD COMMANDS");
-  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press T to teleport");
+  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press T to teleport to a random position in board");
   mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "Press K to exit");
-  mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press W A S D for lineal movement");
-  mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
+  mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press B to buy a life for 3 diamonds ($)");
+  mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press N to skip board using 5 powerups (*)");
+  mvaddstr(rowOrigin+15, maxcols/2+infoBoxIdent, "Press W A S D for lineal movement");
+  mvaddstr(rowOrigin+16, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
 
   mvaddstr(rowOrigin, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
@@ -606,7 +608,7 @@ string Board::play(Player &player){
           colPosition = column;
         }
         else{
-          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "YOU DO NOT HAVE ANY TELEPORTERS. SORRY!");
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "YOU DO NOT HAVE ANY TELEPORTERS MATE!");
         }
       }
 
