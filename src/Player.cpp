@@ -1,17 +1,18 @@
 #include "../inc/Player.hpp"
 #include <iostream>
 #include <string>
-
+#include <ctime>
 using namespace std;
 
 int Player::playerCount = 0;
 
 Player::Player(){
-string defaultPlayers[] = {"Iron Man", "SpiderMan", "Thor", "Wolverine", "Phoenix"};
-nDiamonds = 0;
-nPowers = 0;
-nLives = 3;
-name = defaultPlayers[rand() % 5];
+  srand(time(0));
+  string defaultPlayers[] = {"Iron Man", "SpiderMan", "Thor", "Wolverine", "Phoenix"};
+  nDiamonds = 0;
+  nPowers = 0;
+  nLives = 3;
+  name = defaultPlayers[rand() % 5];
 // cout<<"Player created"<<endl;
 }
 
