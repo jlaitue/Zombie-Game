@@ -14,11 +14,15 @@ using namespace std;
 int Board::boardCount = 0;
 
 Board::Board(){
+  // n = 20;
+  // n = 40;
   rowOrigin = 5;
   colOrigin = 20;
   infoBoxIdent = 5;
   availableDiamonds = 0;
-  // cout<<"Board created"<<endl;
+  // for ( int i = 0 ; i < RR ; i++ )
+  //  matrix[i].resize(CC);
+  cout<<"Board created"<<endl;
 }
 
 Board::Board(int id): identifier(id){
@@ -32,6 +36,7 @@ int Board::getNumberDiamonds(){
 }
 
 string columnOrientation(){
+  // srand(time(0));
     if (rand() % 2 == 0)
         return "horizontal";
     else return "vertical";

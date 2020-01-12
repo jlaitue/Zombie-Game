@@ -1,7 +1,9 @@
 #include "../inc/Game.hpp"
+#include "../inc/Board.hpp"
 
 int main() {
-  Game game;
-  game.run();
+  Board board;
+  // Game game;
+  // game.run();
   return 0;
 }

@@ -15,6 +15,7 @@ private:
 public:
   static int objectCount;
   static int deletedCount;
+  
     //Default Constructor
     Element();
     // Parameterized Constructor

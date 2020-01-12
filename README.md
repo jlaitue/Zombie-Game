@@ -4,21 +4,14 @@ Final project
 
 TODO:
 
-- Intro window with user input to decide what to do
 - Make it work the way its supposed to do
 - Apparently we should divide the project into to apps
 - Improve the generation of random values
 - Creation of .game and .board files / Almost DONE already created .game files
   we still need to include all the capabilities required
-- Improve rules of movement to play() function
-- If board file is already created just read from it
 - Creation of all Classes of the project
 - Improve logic of movement of MONSTERS
-- Hardcoded value for amount of boards in Game object
 - Add doors attribute to Board class?
-- Welcome text for instructions of use
 - Considering changing the harcoded dimensions of matrix
 - Considering changing data structure for matrix
-- Consider different movement for monsters and after a certain level make it
-  like pacman chasing, then teleportation next to you
 - lechugal BasOmyic

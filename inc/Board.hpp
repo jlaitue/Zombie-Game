@@ -3,6 +3,7 @@
 #include <string>
 #include "Element.hpp"
 #include "Player.hpp"
+#include <vector>
 using namespace std;
 
 const int rows = 20;
@@ -19,7 +20,8 @@ private:
   int colOrigin;
   int infoBoxIdent;
   int availableDiamonds;
-  Element matrix[rows][columns];
+  vector<vector<Element>> matrix;
+  // Element matrix[rows][columns];
 
 public:
   static int boardCount;
