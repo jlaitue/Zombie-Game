@@ -2,23 +2,27 @@
 # Master Mathématiques et Informatique: Data Science
 Final project
 
+Board game using OOP paradigm
+- Player (O) you need to collect as many Diamonds ($) as you can throughout the game
+- Diamonds ($) open the doors through which you access new stages
+- 3 Diamonds ($) allow you to buy 1 live point
+- Powerups (*) can teleport you to a random position in the board"
+- 5 Powerups (*) allow you to automatically change to the next stage, after opening a door
+- Avoid crashing with Monsters (M) as they eat your life points!
+- Monsters (M) move randomly across the board. Be careful!
+- Virus mode makes the Monsters reproduce and attack you fiercely
+- Virus mode can be turned on/off Virus Mode in levels 1 to 5
+- Virus mode is PERMANENT in level 6
+- Remaining lives are accounted as diamonds collected
+- There two types of game modes RANDOM and USER BASED
+- RANDOM mode generates random boards for you to play along different stages
+- USER BASED allows you to select which boards you want to try
+
 TODO:
 
-- Intro window with user input to decide what to do
-- Make it work the way its supposed to do
-- Apparently we should divide the project into to apps
 - Improve the generation of random values
-- Creation of .game and .board files / Almost DONE already created .game files
-  we still need to include all the capabilities required
-- Improve rules of movement to play() function
-- If board file is already created just read from it
-- Creation of all Classes of the project
-- Improve logic of movement of MONSTERS
-- Hardcoded value for amount of boards in Game object
-- Add doors attribute to Board class?
-- Welcome text for instructions of use
+- Creation of exec .game files
 - Considering changing the harcoded dimensions of matrix
 - Considering changing data structure for matrix
-- Consider different movement for monsters and after a certain level make it
-  like pacman chasing, then teleportation next to you
+- Test the game in order to find bugs
 - lechugal BasOmyic
