@@ -48,18 +48,22 @@ void Game::getPlayerInfo(){
   const char *cstr;
 
   string newName;
+  int helpRow0 = 5;
 
-  mvaddstr(4, 0, "This is Ultron's board game for saving the planet!");
-  mvaddstr(5, 0, "You should avoid getting eaten by monsters and finish all levels!");
-  mvaddstr(6, 0, "Before we begin we need some information to create a game suited to your liking");
-  mvaddstr(8, 0, "PRESS ANY KEY TO CONTINUE...");
+  mvaddstr(3, (COLS-1)/2-25, "Welcome! You have entered ULTRON'S board game system!");
+
+  mvaddstr(helpRow0, 5, "  The rules of the game are simple: ");
+  help(helpRow0);
+  mvaddstr(helpRow0+15, 5, "  Before we begin this adventure we need some information...");
+
+  mvaddstr(LINES-1, 0, "PRESS ANY KEY TO CONTINUE...");
   refresh();
   getch();
   // Clear everything in window
   mvaddstr(2,0,"");
   clrtobot();
 
-  mvaddstr(4, 0, "Enter your name: ");
+  mvaddstr(4, 0, "Enter your player name: ");
   refresh();
   getstr(inputName);
   newName = inputName;
@@ -68,7 +72,7 @@ void Game::getPlayerInfo(){
   mvprintw(4, 0, "WELCOME TO THE AVENGERS TOWER | %s | ", cstr);
 
   // We ask for the type of game the user wants
-  mvaddstr(6, 0, "Please choose the type of game you want Random = (1) ||  User Boards = (2): ");
+  mvaddstr(6, 0, "Please choose the type of game you want Random (1) or User Based (2): ");
   refresh();
   getstr(inputGameChoice);
   gameType = validateInputValue(6, inputGameChoice, 1, 2);
@@ -77,16 +81,16 @@ void Game::getPlayerInfo(){
   if (gameType == 1) {
     int maxcols = COLS-1;
     mvprintw(6, 0, "GAME TYPE SELECTED: RANDOM");
-    mvaddstr(10, maxcols/2-15, "BLOCK 1 -> 1 Stage  of difficulty 1");
-    mvaddstr(11, maxcols/2-15, "BLOCK 2 -> 2 Stages of difficulty 2");
-    mvaddstr(12, maxcols/2-15, "BLOCK 3 -> 3 Stages of difficulty 3");
-    mvaddstr(13, maxcols/2-15, "BLOCK 4 -> 4 Stages of random difficulty 3-5");
-    mvaddstr(14, maxcols/2-15, "BLOCK 5 -> 5 Stages of random difficulty 3-5");
-    mvaddstr(15, maxcols/2-15, "BLOCK 6 -> 6 Stages of random difficulty 3-5");
-    mvaddstr(16, maxcols/2-15, "BLOCK 7 -> 7 Stages of difficulty 6");
-    mvaddstr(17, maxcols/2-15, "BLOCK 8 -> 8 Stages of difficulty 6");
-    mvaddstr(18, maxcols/2-15, "BLOCK 9 -> 9 Stages of difficulty 6");
-    mvaddstr(20, maxcols/2-15, "Virus mode is ENABLED in difficulty level 6");
+    mvaddstr(10, maxcols/2-20, "BLOCK 1 -> 1 Stage  of difficulty 1");
+    mvaddstr(11, maxcols/2-20, "BLOCK 2 -> 2 Stages of difficulty 2");
+    mvaddstr(12, maxcols/2-20, "BLOCK 3 -> 3 Stages of difficulty 3");
+    mvaddstr(13, maxcols/2-20, "BLOCK 4 -> 4 Stages of difficulty 4");
+    mvaddstr(14, maxcols/2-20, "BLOCK 5 -> 5 Stages of difficulty 5");
+    mvaddstr(15, maxcols/2-20, "BLOCK 6 -> 6 Stages of difficulty 6");
+    mvaddstr(16, maxcols/2-20, "BLOCK 7 -> 7 Stages of difficulty 6");
+    mvaddstr(17, maxcols/2-20, "BLOCK 8 -> 8 Stages of difficulty 6");
+    mvaddstr(18, maxcols/2-20, "BLOCK 9 -> 9 Stages of difficulty 6");
+    mvaddstr(20, maxcols/2-20, "Virus mode is FIXED in difficulty level 6");
     mvaddstr(8, 0, "Please enter the game BLOCK you want to play from 1 to 9: ");
     refresh();
     getstr(inputLevel);
@@ -96,7 +100,7 @@ void Game::getPlayerInfo(){
     mvprintw(8, 0, "GAME BLOCK SELECTED: %d", gameBlock);
   }
   else {
-    mvprintw(6, 0, "GAME TYPE SELECTED: USER BOARDS", gameType);
+    mvprintw(6, 0, "GAME TYPE SELECTED: USER BASED", gameType);
 
     mvaddstr(8, 0, "Please enter the number of boards you would like to play: ");
     refresh();
@@ -197,19 +201,24 @@ void Game::run(){
       if (userStage == "KILL") {
         playing = false;
         mvprintw(27, 0,"");
-        clrtoeol();
-        mvaddstr(27, maxcols/2-25, "GAME TERMINATED BY PLAYER");
+        clrtobot();
+        if (player.Lives() == 0) {
+          mvaddstr(27, maxcols/2-20, "YOU HAVE BEEN KILLED");
+        }
+        else {
+          mvaddstr(27, maxcols/2-20, "PLAYER TERMINATED THE GAME");
+        }
       }
       else if (userStage == "NEXT") {
         stage++;
-        mvprintw(7, maxcols/2+10, "REACHED NEW LEVEL!");
+        mvprintw(7, maxcols/2+5, "REACHED NEW LEVEL!");
         refresh();
       }
     }
     else {
       playing = false;
       mvprintw(27, 0,"");
-      clrtoeol();
+      clrtobot();
       mvaddstr(27, maxcols/2-25, "CONGRATULATIONS! YOU COMPLETED ALL LEVELS!");
     }
   }

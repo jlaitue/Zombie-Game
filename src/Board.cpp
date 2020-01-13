@@ -24,6 +24,7 @@ Board::Board(){
   availablePowerups = 0;
   availableWalls = 0;
   virusModeBoard = false;
+  helpShown = false;
   // cout<<"Board created"<<endl;
 }
 
@@ -542,19 +543,21 @@ string Board::play(Player &player){
   clrtobot();
 
   displayBoard();
-  mvprintw(rowOrigin+5, maxcols/2+infoBoxIdent, "PLAYER | %s |",charedPlayerName);
-  mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "($) Diamonds:  %d", player.Diamonds());
-  mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "(*) Teleports: %d", player.Powerups());
-  mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "(O) Lives:     %d", player.Lives());
+  mvprintw(rowOrigin+4, maxcols/2+infoBoxIdent, "PLAYER  %s ",charedPlayerName);
+  mvprintw(rowOrigin+5, maxcols/2+infoBoxIdent, "($) Diamonds:  %d", player.Diamonds());
+  mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "(*) Powerups:  %d", player.Powerups());
+  mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "(O) Lives:     %d", player.Lives());
 
-  mvaddstr(rowOrigin+10, maxcols/2+infoBoxIdent, "KEYBOARD COMMANDS");
-  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press K to terminate the game");
-  mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "Press T to teleport to a random position in board");
-  mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press L to buy a life for 3 diamonds ($)");
-  mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press N to skip board using 5 teleports (*)");
-  mvaddstr(rowOrigin+15, maxcols/2+infoBoxIdent, "Press W A S D or ARROW KEYS for lineal movement");
-  mvaddstr(rowOrigin+16, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
-  mvaddstr(rowOrigin+17, maxcols/2+infoBoxIdent, "Press V to switch Virus Mode");
+  mvaddstr(rowOrigin+9, maxcols/2+infoBoxIdent, "KEYBOARD MOVEMENT COMMANDS");
+  mvaddstr(rowOrigin+10, maxcols/2+infoBoxIdent, "Press W A S D or ARROW KEYS for lineal movement");
+  mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
+  mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "SPECIAL KEYBORD COMMANDS");
+  mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press T to teleport using 1 powerup (*)");
+  mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press L to buy a life for 3 diamonds ($)");
+  mvaddstr(rowOrigin+15, maxcols/2+infoBoxIdent, "Press N to skip board using 5 powerups (*)");
+  mvaddstr(rowOrigin+16, maxcols/2+infoBoxIdent, "Press V to toogle Virus Mode");
+  mvaddstr(rowOrigin+17, maxcols/2+infoBoxIdent, "Press K to terminate the game");
+  mvaddstr(rowOrigin+18, maxcols/2+infoBoxIdent, "Press H to toogle help info");
 
   mvaddstr(rowOrigin, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
@@ -701,6 +704,21 @@ string Board::play(Player &player){
         }
       }
 
+      else if (userInput == 'h' or userInput == 'H'){
+        int helpRow0 = 27;
+        if (!helpShown) {
+          help(helpRow0);
+          helpShown = true;
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "HELP TOGGLED ON");
+        }
+        else {
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "HELP TOGGLED OFF");
+          mvaddstr(helpRow0,0,"");
+          clrtobot();
+          helpShown = false;
+        }
+      }
+
       else{
         mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "TRY A VALID KEYBOARD INPUT");
       }
@@ -713,15 +731,15 @@ string Board::play(Player &player){
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
         // This is to make sure the correct amount of items is shown to player
+        mvaddstr(rowOrigin+5,maxcols/2+infoBoxIdent,"");
+        clrtoeol();
         mvaddstr(rowOrigin+6,maxcols/2+infoBoxIdent,"");
         clrtoeol();
         mvaddstr(rowOrigin+7,maxcols/2+infoBoxIdent,"");
         clrtoeol();
-        mvaddstr(rowOrigin+8,maxcols/2+infoBoxIdent,"");
-        clrtoeol();
-        mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "($) Diamonds:  %d", player.Diamonds());
-        mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "(*) Teleports: %d", player.Powerups());
-        mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "(O) Lives:     %d", player.Lives());
+        mvprintw(rowOrigin+5, maxcols/2+infoBoxIdent, "($) Diamonds:  %d", player.Diamonds());
+        mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "(*) Powerups:  %d", player.Powerups());
+        mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "(O) Lives:     %d", player.Lives());
       }
     }
 
@@ -760,15 +778,11 @@ void Board::creator(){
   maxcols = COLS-1;
   maxlines = LINES-1;
   //Header info and instructions
-  mvaddstr(0, maxcols/2-18, "<| TONY STARK'S BOARD CREATOR v1.0 |>");
-  mvaddstr(1, maxcols/2-19, "ALEXANDER MORAKHOVSKI | JULIAN LECHUGA");
-  mvaddstr(4, 0, "This is the board creator for Ultron's game");
-  mvaddstr(5, 0, "In this version 1.0 the size of the board is fixed to 20x40 elements");
-  mvaddstr(6, 0, "You can create boards with different types of elements");
-  mvaddstr(7, 0, "These include Monsters, Diamonds, Doors, Powerups and Walls");
-  mvaddstr(8, 0, "In order to create a good playing experience you can add up to 30 elements of each type");
-  mvaddstr(9, 0, "Let's begin creating!");
-  mvaddstr(11, 0, "PRESS ANY KEY TO CONTINUE...");
+  mvaddstr(0, maxcols/2-18, "<| STARK INDUSTRIES BOARD CREATOR v1.0 |>");
+  mvaddstr(1, maxcols/2-16, "ALEXANDER MORAKHOVSKI | JULIAN LECHUGA");
+  mvaddstr(3, maxcols/2-30, "Welcome! This is the board creator for ULTRON'S board game system!");
+  helpCreator(4);
+  mvaddstr(LINES-1, 0, "PRESS ANY KEY TO CONTINUE...");
   refresh();
   getch();
   mvaddstr(2,0,"");

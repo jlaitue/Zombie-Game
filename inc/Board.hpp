@@ -24,6 +24,7 @@ private:
   int availableDoors;
   int availableWalls;
   bool virusModeBoard;
+  bool helpShown;
   Element matrix[rows][columns];
 
 public:
