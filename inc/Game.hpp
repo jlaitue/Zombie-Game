@@ -9,6 +9,7 @@ class Game {
 private:
   int identifier;
   int gameLevel;
+  int gameType;
   int totalDiamonds;
   vector <Board> boards;
   Player player;
@@ -21,6 +22,7 @@ public:
 
     void displayGame();
     void loadBoards();
+    void loadUserBoards();
     void addBoard(int level, string filename);
     void getPlayerInfo();
     void run();
