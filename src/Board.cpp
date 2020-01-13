@@ -664,7 +664,7 @@ string Board::play(Player &player){
         if (player.Diamonds() >= 3) {
           movementValid = 1;
           player.incrementLives();
-          for (size_t i = 0; i < 2; i++) {
+          for (size_t i = 0; i < 3; i++) {
             player.decrementDiamonds();
           }
         }
@@ -694,6 +694,8 @@ string Board::play(Player &player){
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
+        mvaddstr(rowOrigin+6,maxcols/2+infoBoxIdent,"");
+        clrtoeol();
         mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "Diamonds: %d", player.Diamonds());
         mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "Lives: %d", player.Lives());
         mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
