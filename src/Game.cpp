@@ -79,6 +79,7 @@ void Game::getPlayerInfo(){
   char inputName[100];
   char inputLevel[100];
   char inputGameChoice[100];
+  char inputDesiredBoards[100];
   const char *cstr;
 
   string newName;
@@ -101,48 +102,60 @@ void Game::getPlayerInfo(){
   mvprintw(4, 0, "WELCOME TO THE AVENGERS TOWER | %s | ", cstr);
 
   // We ask for the type of game the user wants
-  mvaddstr(5, 0, "Please choose the type of game you want Random (1) ||  User Defined Boards (2): ");
+  mvaddstr(6, 0, "Please choose the type of game you want Random (1) ||  User Defined Boards (2): ");
   refresh();
   getstr(inputGameChoice);
-  gameType = validateInputValue(5, inputGameChoice, 1, 2);
-  mvaddstr(5,0,"");
+  gameType = validateInputValue(6, inputGameChoice, 1, 2);
+  mvaddstr(6,0,"");
   clrtoeol();
-  mvprintw(5, 0, "GAME DIFFICULTY SELECTED: %d", gameType);
-
-  if (gameType == 2) {
-    char inputFilename[100];
-    fstream file;
-
-    mvaddstr(5,0,"");
-    clrtobot();
-    mvprintw(5, 0, "Enter the file name you would like to test: boards/");
-    refresh();
-    getstr(inputFilename);
-    gamefilename = inputFilename;
-
-    file.open("../boards/"+gamefilename);
-
-    while (!file) {
-      mvaddstr(5,0,"");
-      clrtobot();
-      mvprintw(5, 0, "The filename you entered does not exist, try again: ");
-      refresh();
-      getstr(inputFilename);
-      gamefilename = inputFilename;
-      file.open("../boards/"+gamefilename);
-    }
-    mvaddstr(5,0,"");
-    clrtoeol();
-    mvprintw(5, 0, "Board file selected: %s.board", inputFilename);
+  if (gameType == 1) {
+    mvprintw(6, 0, "GAME TYPE SELECTED: RANDOM")
   }
+  else {
+    mvprintw(6, 0, "GAME TYPE SELECTED: USER BOARDS", gameType);
 
-  mvaddstr(5, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
+    mvaddstr(8, 0, "Please enter the number of boards you would like to play: ");
+    refresh();
+    getstr(inputDesiredBoards);
+    desiredStages = validateInputValue(8, inputDesiredBoards, 1, 5);
+    mvaddstr(8,0,"");
+    clrtoeol();
+    mvprintw(8, 0, "NUMBER OF STAGES IN GAME: %d", desiredStages);
+    refresh();
+    for (int i = 0; i < desiredStages; i++) {
+      char inputFileName[100];
+      string boardFileName;
+      fstream file;
+
+      mvaddstr(10,0,"");
+      clrtobot();
+      mvprintw(10, 0, "Enter the file name you would like to test for stage %d/%d: boards/",i+1,desiredStages);
+      refresh();
+      getstr(inputFileName);
+      boardFileName = inputFileName;
+
+      file.open("../boards/"+boardFileName);
+
+      while (!file) {
+        mvaddstr(10,0,"");
+        clrtobot();
+        mvprintw(10, 0, "The filename you entered does not exist, try again: boards/");
+        refresh();
+        getstr(inputFileName);
+        boardFileName = inputFileName;
+        file.open("../boards/"+boardFileName);
+      }
+      userFileNames.push_back(boardFileName);
+    }
+  }
+  
+  mvaddstr(12, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
   refresh();
   getstr(inputLevel);
-  gameLevel = validateInputValue(5, inputLevel, 1, 9);
-  mvaddstr(5,0,"");
+  gameLevel = validateInputValue(12, inputLevel, 1, 9);
+  mvaddstr(12,0,"");
   clrtoeol();
-  mvprintw(5, 0, "GAME DIFFICULTY SELECTED: %d", gameLevel);
+  mvprintw(12, 0, "GAME DIFFICULTY SELECTED: %d", gameLevel);
 
   mvaddstr(LINES-1, 0, "PRESS ANY KEY TO BEGIN THE GAME...");
   refresh();
@@ -245,7 +258,9 @@ void Game::loadBoards(){
 void Game::loadUserBoards(){
   srand (time(NULL));
   string path = "../boards/";
-  addBoard(gameLevel, path+gamefilename);
+  for (int i = 0; i < desiredStages; i++) {
+    addBoard(gameLevel, userFileNames[i]);
+  }
 }
 
 Game::~Game(){
