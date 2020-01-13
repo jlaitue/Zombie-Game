@@ -35,26 +35,6 @@ int Board::getNumberDiamonds(){
   return availableDiamonds;
 }
 
-void Board::updateNumberDiamonds(int newValue){
-  availableDiamonds = newValue;
-}
-
-void Board::updateNumberMonsters(int newValue){
-  availableMonsters = newValue;
-}
-
-void Board::updateNumberDoors(int newValue){
-  availableDoors = newValue;
-}
-
-void Board::updateNumberPowerups(int newValue){
-  availablePowerups = newValue;
-}
-
-void Board::updateNumberWalls(int newValue){
-  availableWalls = newValue;
-}
-
 string columnOrientation(){
     if (rand() % 2 == 0)
         return "horizontal";
@@ -741,6 +721,185 @@ string Board::play(Player &player){
     }
   }
   return "CONTINUE";
+}
+
+int validateInputValue(int windowLine, char *inputAttribute){
+  string inputStr;
+  int value;
+  int maxElementsValue = 30;
+  inputStr = inputAttribute;
+  bool validNumber = (inputStr.find_first_not_of( "0123456789" ) == string::npos);
+  bool acceptedInput = false;
+  bool rangeInvalid = false;
+
+  while(!acceptedInput){
+    while (!validNumber) {
+      mvaddstr(windowLine,0,"");
+      clrtoeol();
+      if(rangeInvalid){
+        mvprintw(windowLine, 0, "The number of elements must be less or equal to %d, please try again:  ", maxElementsValue);
+        rangeInvalid = false;
+      }
+      else {
+        mvprintw(windowLine, 0, "The value you entered is not a number, please try again: ");
+      }
+      refresh();
+      getstr(inputAttribute);
+      inputStr = inputAttribute;
+      validNumber = (inputStr.find_first_not_of( "0123456789" ) == string::npos);
+    }
+    istringstream(inputStr) >> value;
+
+    if (value <= maxElementsValue) {
+      acceptedInput = true;
+    }
+    else {
+      validNumber = false;
+      rangeInvalid = true;
+    }
+  }
+
+  return value;
+}
+
+void Board::creator(){
+  srand (time(NULL));
+  char inputFilename[100];
+  char inputAttribute[100];
+
+  int maxcols, maxlines;
+  int requestedBoards;
+  int requestedDiamonds;
+  int requestedMonsters;
+  int requestedDoors;
+  int requestedPowerups;
+  int requestedWalls;
+
+  string path = "../boards/user/";
+  string ext = ".board";
+  string filename;
+
+  initscr();
+  raw();
+  clear();
+  start_color();
+
+  init_pair(1,COLOR_GREEN, COLOR_BLACK);
+  init_pair(2,COLOR_RED, COLOR_BLACK);
+  init_pair(3,COLOR_YELLOW, COLOR_BLACK);
+  init_pair(4,COLOR_BLUE, COLOR_BLACK);
+  init_pair(5,COLOR_CYAN, COLOR_BLACK);
+  init_pair(6,COLOR_WHITE, COLOR_BLACK);
+
+  maxcols = COLS-1;
+  maxlines = LINES-1;
+  //Header info and instructions
+  mvaddstr(0, maxcols/2-18, "<| TONY STARK'S BOARD CREATOR v1.0 |>");
+  mvaddstr(1, maxcols/2-19, "ALEXANDER MORAKHOVSKI | JULIAN LECHUGA");
+  mvaddstr(4, 0, "This is the board creator for Ultron's game");
+  mvaddstr(5, 0, "In this version 1.0 the size of the board is fixed to 20x40 elements");
+  mvaddstr(6, 0, "You can create boards with different types of elements");
+  mvaddstr(7, 0, "These include Monsters, Diamonds, Doors, Powerups and Walls");
+  mvaddstr(8, 0, "In order to create a good playing experience you can add up to 30 elements of each type");
+  mvaddstr(9, 0, "Let's begin creating!");
+  mvaddstr(11, 0, "PRESS ANY KEY TO CONTINUE...");
+  refresh();
+  getch();
+  mvaddstr(2,0,"");
+  clrtobot();
+
+  // User input of number of boards to create
+  mvaddstr(3, 0, "Please enter the number of boards you would like to create: ");
+  refresh();
+  getstr(inputAttribute);
+  requestedBoards = validateInputValue(3, inputAttribute);
+  mvaddstr(3,0,"");
+  clrtoeol();
+  mvprintw(3, 0, "Number of boards to create: %d", requestedBoards);
+
+  for (int i = 0; i < requestedBoards; i++) {
+    mvaddstr(3,0,"");
+    clrtobot();
+    mvprintw(3, 0, "Enter the file name for board %d/%d: ",i+1,requestedBoards);
+    refresh();
+    getstr(inputFilename);
+    filename = inputFilename;
+    mvaddstr(3,0,"");
+    clrtoeol();
+    mvprintw(3, 0, "File name: %s.board", inputFilename);
+
+    // User input of number of diamonds for board
+    mvaddstr(5, 0, "Please enter the number of diamonds: ");
+    refresh();
+    getstr(inputAttribute);
+    requestedDiamonds = validateInputValue(5, inputAttribute);
+    mvaddstr(5,0,"");
+    clrtoeol();
+    mvprintw(5, 0, "Number of diamonds: %d", requestedDiamonds);
+
+    // User input of number of Monsters for board
+    mvaddstr(7, 0, "Please enter the number of monsters: ");
+    refresh();
+    getstr(inputAttribute);
+    requestedMonsters = validateInputValue(7, inputAttribute);
+    mvaddstr(7,0,"");
+    clrtoeol();
+    mvprintw(7, 0, "Number of monsters: %d", requestedMonsters);
+
+    // User input of number of Powerups for board
+    mvaddstr(9, 0, "Please enter the number of powerups: ");
+    refresh();
+    getstr(inputAttribute);
+    requestedPowerups = validateInputValue(9, inputAttribute);
+    mvaddstr(9,0,"");
+    clrtoeol();
+    mvprintw(9, 0, "Number of powerups: %d", requestedPowerups);
+
+    // User input of number of Powerups for board
+    mvaddstr(11, 0, "Please enter the number of doors: ");
+    refresh();
+    getstr(inputAttribute);
+    requestedDoors = validateInputValue(11, inputAttribute);
+    mvaddstr(11,0,"");
+    clrtoeol();
+    mvprintw(11, 0, "Number of doors: %d", requestedDoors);
+
+    // User input of number of Powerups for board
+    mvaddstr(13, 0, "Please enter the number of walls: ");
+    refresh();
+    getstr(inputAttribute);
+    requestedWalls = validateInputValue(13, inputAttribute);
+    mvaddstr(13,0,"");
+    clrtoeol();
+    mvprintw(13, 0, "Number of walls: %d", requestedWalls);
+
+
+    availableDiamonds = requestedDiamonds;
+    availableMonsters = requestedMonsters;
+    availableDoors = requestedDoors;
+    availablePowerups = requestedPowerups;
+    availableWalls = requestedWalls;
+
+    mvaddstr(maxlines, 0, "PRESS ANY KEY TO CREATE THE BOARD... ");
+    getch();
+
+    createTheMatrix(0, path + filename + ext);
+
+    mvaddstr(3,0,"");
+    clrtobot();
+    mvprintw(3, 0, "Game board: %s.board", inputFilename);
+
+    displayBoard();
+    mvaddstr(maxlines, 0, "PRESS ANY KEY TO CONTINUE... ");
+    refresh();
+    getch();
+  }
+
+  mvaddstr(maxlines, 0, "YOU HAVE FINISHED ALL BOARDS, PRESS ANY KEY TO EXIT... ");
+  refresh();
+  getch();
+  endwin();
+  exit(0);
 }
 
 Board::~Board(){
