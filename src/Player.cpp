@@ -8,7 +8,8 @@ int Player::playerCount = 0;
 
 Player::Player(){
   srand(time(0));
-  string defaultPlayers[] = {"Iron Man", "SpiderMan", "Thor", "Wolverine", "Phoenix"};
+  string defaultPlayers[] = { "Iron Man", "Kenobi", "Goku","Wolverine",
+    "Phoenix", "Rogue", "Skywalker"};
   nDiamonds = 0;
   nPowers = 0;
   nLives = 3;
@@ -16,12 +17,6 @@ Player::Player(){
 // cout<<"Player created"<<endl;
 }
 
-// Player::Player(int id, int x, int y, string t):
-// Element(id,x,y,t,'O'),nDiamonds(30), nPowers(30),nLives(30)
-// {
-//   playerCount++;
-//   cout<<"Player created"<<endl;
-// }
 string Player::getName(){
   return name;
 }
