@@ -1,6 +1,7 @@
 #include "../inc/Board.hpp"
 #include "../inc/Element.hpp"
 #include "../inc/Player.hpp"
+#include "../inc/Helper.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -739,45 +740,6 @@ string Board::play(Player &player){
   return "CONTINUE";
 }
 
-int validateInputValue(int windowLine, char *inputAttribute){
-  string inputStr;
-  int value;
-  int maxElementsValue = 30;
-  inputStr = inputAttribute;
-  bool validNumber = (inputStr.find_first_not_of( "0123456789" ) == string::npos);
-  bool acceptedInput = false;
-  bool rangeInvalid = false;
-
-  while(!acceptedInput){
-    while (!validNumber) {
-      mvaddstr(windowLine,0,"");
-      clrtoeol();
-      if(rangeInvalid){
-        mvprintw(windowLine, 0, "The number of elements must be less or equal to %d, please try again:  ", maxElementsValue);
-        rangeInvalid = false;
-      }
-      else {
-        mvprintw(windowLine, 0, "The value you entered is not a number, please try again: ");
-      }
-      refresh();
-      getstr(inputAttribute);
-      inputStr = inputAttribute;
-      validNumber = (inputStr.find_first_not_of( "0123456789" ) == string::npos);
-    }
-    istringstream(inputStr) >> value;
-
-    if (value <= maxElementsValue) {
-      acceptedInput = true;
-    }
-    else {
-      validNumber = false;
-      rangeInvalid = true;
-    }
-  }
-
-  return value;
-}
-
 void Board::creator(){
   srand (time(NULL));
   char inputFilename[100];
@@ -785,6 +747,7 @@ void Board::creator(){
 
   int maxcols, maxlines;
   int requestedBoards;
+  int maxElementsAllowed = 30;
 
   string path = "../boards/user/";
   string ext = ".board";
@@ -823,7 +786,7 @@ void Board::creator(){
   mvaddstr(3, 0, "Please enter the number of boards you would like to create: ");
   refresh();
   getstr(inputAttribute);
-  requestedBoards = validateInputValue(3, inputAttribute);
+  requestedBoards = validateInputValue(3, inputAttribute, 1, 10);
   mvaddstr(3,0,"");
   clrtoeol();
   mvprintw(3, 0, "Number of boards to create: %d", requestedBoards);
@@ -843,7 +806,7 @@ void Board::creator(){
     mvaddstr(5, 0, "Please enter the number of diamonds: ");
     refresh();
     getstr(inputAttribute);
-    availableDiamonds = validateInputValue(5, inputAttribute);
+    availableDiamonds = validateInputValue(5, inputAttribute, 1, maxElementsAllowed);
     mvaddstr(5,0,"");
     clrtoeol();
     mvprintw(5, 0, "Number of diamonds: %d", availableDiamonds);
@@ -852,7 +815,7 @@ void Board::creator(){
     mvaddstr(7, 0, "Please enter the number of monsters: ");
     refresh();
     getstr(inputAttribute);
-    availableMonsters = validateInputValue(7, inputAttribute);
+    availableMonsters = validateInputValue(7, inputAttribute, 1, maxElementsAllowed);
     mvaddstr(7,0,"");
     clrtoeol();
     mvprintw(7, 0, "Number of monsters: %d", availableMonsters);
@@ -861,7 +824,7 @@ void Board::creator(){
     mvaddstr(9, 0, "Please enter the number of powerups: ");
     refresh();
     getstr(inputAttribute);
-    availablePowerups = validateInputValue(9, inputAttribute);
+    availablePowerups = validateInputValue(9, inputAttribute, 1, maxElementsAllowed);
     mvaddstr(9,0,"");
     clrtoeol();
     mvprintw(9, 0, "Number of powerups: %d", availablePowerups);
@@ -870,7 +833,7 @@ void Board::creator(){
     mvaddstr(11, 0, "Please enter the number of doors: ");
     refresh();
     getstr(inputAttribute);
-    availableDoors = validateInputValue(11, inputAttribute);
+    availableDoors = validateInputValue(11, inputAttribute, 1, maxElementsAllowed);
     mvaddstr(11,0,"");
     clrtoeol();
     mvprintw(11, 0, "Number of doors: %d", availableDoors);
@@ -879,7 +842,7 @@ void Board::creator(){
     mvaddstr(13, 0, "Please enter the number of walls: ");
     refresh();
     getstr(inputAttribute);
-    availableWalls = validateInputValue(13, inputAttribute);
+    availableWalls = validateInputValue(13, inputAttribute, 1, maxElementsAllowed);
     mvaddstr(13,0,"");
     clrtoeol();
     mvprintw(13, 0, "Number of walls: %d", availableWalls);
