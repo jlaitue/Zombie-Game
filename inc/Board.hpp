@@ -42,12 +42,6 @@ public:
 
     string getBoardName();
     int getNumberDiamonds();
-    //
-    // void updateNumberDiamonds(int newValue);
-    // void updateNumberMonsters(int newValue);
-    // void updateNumberDoors(int newValue);
-    // void updateNumberPowerups(int newValue);
-    // void updateNumberWalls(int newValue);
 
     void moveMonsters(int emptyRows, int emptyCols);
     void clearMonsters();
