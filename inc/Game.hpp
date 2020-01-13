@@ -10,8 +10,9 @@ private:
   int identifier;
   int gameLevel;
   int gameType;
-  int desiredStages;
+  int gameStages;
   int totalDiamonds;
+  bool legendaryMode;
   vector <string> userFileNames;
   vector <Board> boards;
   Player player;
@@ -23,7 +24,7 @@ public:
     Game();
 
     void displayGame();
-    void loadBoards();
+    void loadRandomBoards();
     void loadUserBoards();
     void addBoard(int level, string filename);
     void getPlayerInfo();

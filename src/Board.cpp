@@ -22,6 +22,7 @@ Board::Board(){
   availableDoors = 0;
   availablePowerups = 0;
   availableWalls = 0;
+  legendaryModeBoard = false;
   // cout<<"Board created"<<endl;
 }
 
@@ -29,6 +30,10 @@ Board::Board(int id): identifier(id){
   cout<<"Board created"<<"\n";
   cout<<"Board id: "<<identifier<<"\n";
   boardCount++;
+}
+
+void Board::switchLegendaryMode(){
+    legendaryModeBoard = !legendaryModeBoard;
 }
 
 int Board::getNumberDiamonds(){
@@ -519,7 +524,7 @@ void Board::moveMonsters(int emptyRows, int emptyCols){
   int row = 0;
   int column = 0;
   char c;
-  if (level < 4) {
+  if (!legendaryModeBoard) {
     clearMonsters();
   }
   for (int i = 0; i < availableMonsters; i++) {
@@ -568,6 +573,7 @@ string Board::play(Player &player){
   mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press N to skip board using 5 powerups (*)");
   mvaddstr(rowOrigin+15, maxcols/2+infoBoxIdent, "Press W A S D or ARROW KEYS for lineal movement");
   mvaddstr(rowOrigin+16, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
+  mvaddstr(rowOrigin+17, maxcols/2+infoBoxIdent, "Press V to switch Legendary Mode");
 
   mvaddstr(rowOrigin, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
@@ -696,6 +702,16 @@ string Board::play(Player &player){
         }
         else{
           mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "NOT ENOUGH DIAMONDS TO BUY A LIFE");
+        }
+      }
+
+      else if (userInput == 'v' or userInput == 'V'){
+        switchLegendaryMode();
+        if (legendaryModeBoard) {
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "LEGENDARY MODE ACTIVATED");
+        }
+        else{
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "LEGENDARY MODE DISABLED");
         }
       }
 

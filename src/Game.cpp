@@ -60,16 +60,15 @@ int validateInputValue(int windowLine, char *inputAttribute, int rangeInit, int 
 
 void Game::addBoard(int level, string filename){
   Board board;
-  fstream file;
-  file.open(filename);
 
-  if (file) {
-    // cout<<"READING"<<endl;
-    board.readBoard(level, filename);
+  if (gameType == 1) {
+    board.createTheMatrix(level, filename);
   }
   else{
-    // cout<<"CREATING"<<endl;
-    board.createTheMatrix(level, filename);
+    board.readBoard(level, filename);
+  }
+  if (legendaryMode) {
+    board.switchLegendaryMode();
   }
   boards.push_back(board);
   totalDiamonds = totalDiamonds + board.getNumberDiamonds();
@@ -80,6 +79,7 @@ void Game::getPlayerInfo(){
   char inputLevel[100];
   char inputGameChoice[100];
   char inputDesiredBoards[100];
+  char inputLegendMode[100];
   const char *cstr;
 
   string newName;
@@ -93,7 +93,7 @@ void Game::getPlayerInfo(){
   mvaddstr(2,0,"");
   clrtobot();
 
-  mvaddstr(4, 0, "First enter your name: ");
+  mvaddstr(4, 0, "Enter your name: ");
   refresh();
   getstr(inputName);
   newName = inputName;
@@ -102,7 +102,7 @@ void Game::getPlayerInfo(){
   mvprintw(4, 0, "WELCOME TO THE AVENGERS TOWER | %s | ", cstr);
 
   // We ask for the type of game the user wants
-  mvaddstr(6, 0, "Please choose the type of game you want Random (1) ||  User Defined Boards (2): ");
+  mvaddstr(6, 0, "Please choose the type of game you want Random = (1) ||  User Boards = (2): ");
   refresh();
   getstr(inputGameChoice);
   gameType = validateInputValue(6, inputGameChoice, 1, 2);
@@ -110,6 +110,13 @@ void Game::getPlayerInfo(){
   clrtoeol();
   if (gameType == 1) {
     mvprintw(6, 0, "GAME TYPE SELECTED: RANDOM");
+    mvaddstr(8, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
+    refresh();
+    getstr(inputLevel);
+    gameLevel = validateInputValue(8, inputLevel, 1, 9);
+    mvaddstr(8,0,"");
+    clrtoeol();
+    mvprintw(8, 0, "GAME DIFFICULTY SELECTED: %d", gameLevel);
   }
   else {
     mvprintw(6, 0, "GAME TYPE SELECTED: USER BOARDS", gameType);
@@ -117,19 +124,19 @@ void Game::getPlayerInfo(){
     mvaddstr(8, 0, "Please enter the number of boards you would like to play: ");
     refresh();
     getstr(inputDesiredBoards);
-    desiredStages = validateInputValue(8, inputDesiredBoards, 1, 5);
+    gameStages = validateInputValue(8, inputDesiredBoards, 1, 5);
     mvaddstr(8,0,"");
     clrtoeol();
-    mvprintw(8, 0, "NUMBER OF STAGES IN GAME: %d", desiredStages);
+    mvprintw(8, 0, "NUMBER OF STAGES IN GAME: %d", gameStages);
     refresh();
-    for (int i = 0; i < desiredStages; i++) {
+    for (int i = 0; i < gameStages; i++) {
       char inputFileName[100];
       string boardFileName;
       fstream file;
 
       mvaddstr(10,0,"");
       clrtobot();
-      mvprintw(10, 0, "Enter the file name you would like to test for stage %d/%d: boards/",i+1,desiredStages);
+      mvprintw(10, 0, "Enter the file name you would like to test for stage %d/%d: boards/",i+1, gameStages);
       refresh();
       getstr(inputFileName);
       boardFileName = inputFileName;
@@ -149,13 +156,18 @@ void Game::getPlayerInfo(){
     }
   }
 
-  mvaddstr(12, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
+  mvaddstr(12, 0, "Do you want to activate Legendary Mode? Yes = (1) No = (0): ");
   refresh();
-  getstr(inputLevel);
-  gameLevel = validateInputValue(12, inputLevel, 1, 9);
+  getstr(inputLegendMode);
+  legendaryMode = validateInputValue(12, inputLegendMode, 0, 1);
   mvaddstr(12,0,"");
   clrtoeol();
-  mvprintw(12, 0, "GAME DIFFICULTY SELECTED: %d", gameLevel);
+  if (legendaryMode) {
+    mvprintw(12, 0, "LEGENDARY MODE ACTIVATED");
+  }
+  else {
+    mvprintw(12, 0, "LEGENDARY MODE DISABLED");
+  }
 
   mvaddstr(LINES-1, 0, "PRESS ANY KEY TO BEGIN THE GAME...");
   refresh();
@@ -190,7 +202,7 @@ void Game::run(){
   getPlayerInfo();
 
   if (gameType == 1) {
-    loadBoards();
+    loadRandomBoards();
   }
   else {
     loadUserBoards();
@@ -233,32 +245,42 @@ void Game::run(){
   exit(0);
 }
 
-void Game::loadBoards(){
+void Game::loadRandomBoards(){
   srand (time(NULL));
-  // The level selected defines the number of boards to play in the game
-  int numberBoards = gameLevel;
-  for (int i = 0; i < numberBoards; i++) {
+  // List of cool names for boards jiji :D
+  string boardNames[] = { "akiva", "alderaan", "behpour","bogano",
+    "chandrila", "corellia", "tatooine","dantooine","lothal", "geonosis",
+    "kuat","iego","coruscant", "kessel", "kamino","hoth", "jedha", "exegol",
+    "devaron"};
+  // The level selected defines the number of stages to play in the game for the
+  // RANDOM type game
+  gameStages = gameLevel;
+  // The game level selected also defines the difficulty for each board in
+  // difficulty levels 1, 2 and 3
+  int boardLevel = gameLevel;
+  string name, path, filename, ext = ".board";
+  for (int i = 0; i < gameStages; i++) {
+    name = boardNames[rand() % 17];
+    filename = "/"+to_string(i)+name+ext;
 
-    // The game level selected also defines the difficulty for each board
-    int level = gameLevel;
-    string path = "../boards", ext = ".board", name = "board";
-    string filename = "/level_"+to_string(gameLevel)+"/"+name+to_string(i)+ext;
-
-    // If the game level selected is bigger than 5 then a random difficulty
-    // level for each board is selected among the 3 highest levels available
-    if (gameLevel>5) {
-      //Maybe change this to 6 to have the highest difficulty level
-      level = rand() %6 + 3;
+    // If game difficulty 5, 6, 7 is selected then a board of level 3-5 is created
+    if (gameLevel > 4 and gameLevel < 8) {
+      boardLevel = rand() %5 + 3;
     }
+    // If game difficulty 7, 8, 9 is selected then a board of level 6 is created
+    else if (gameLevel > 7) {
+      boardLevel = 6;
+    }
+    path = "../boards/level_"+to_string(boardLevel);
 
-    addBoard(level, path+filename);
+    addBoard(boardLevel, path+filename);
   }
 }
 
 void Game::loadUserBoards(){
   srand (time(NULL));
   string path = "../boards/";
-  for (int i = 0; i < desiredStages; i++) {
+  for (int i = 0; i <  gameStages; i++) {
     addBoard(gameLevel, path+userFileNames[i]);
   }
 }

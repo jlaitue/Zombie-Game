@@ -23,6 +23,7 @@ private:
   int availablePowerups;
   int availableDoors;
   int availableWalls;
+  bool legendaryModeBoard;
   Element matrix[rows][columns];
 
 public:
@@ -46,6 +47,7 @@ public:
     void moveMonsters(int emptyRows, int emptyCols);
     void clearMonsters();
 
+    void switchLegendaryMode();
     string play(Player &player);
     void creator();
     ~Board();
