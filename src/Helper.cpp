@@ -1,10 +1,10 @@
 #include "../inc/Helper.h"
-#include "../inc/Element.hpp"
-#include "../inc/Player.hpp"
 #include <string>
 #include <ncurses.h>
 #include <sstream>
 
+using namespace std;
+//
 int validateInputValue(int windowLine, char *inputAttribute, int rangeInit, int rangeEnd){
   string inputStr;
   int value;
@@ -40,4 +40,37 @@ int validateInputValue(int windowLine, char *inputAttribute, int rangeInit, int 
     }
   }
   return value;
+}
+
+void colorCoding(char element, int &colorCode){
+  if (element == 'O') {
+    colorCode = 1;
+  }
+  else if (element == 'M') {
+    colorCode = 2;
+  }
+  else if (element == '*') {
+    colorCode = 3;
+  }
+  else if (element == '$') {
+    colorCode = 4;
+  }
+  else if (element == '.') {
+    colorCode = 5;
+  }
+  else if (element == '#') {
+    colorCode = 2;
+  }
+  else if (element == '+') {
+    colorCode = 5;
+  }
+  else{
+    colorCode = 6;
+  }
+}
+
+std::string columnOrientation(){
+    if (rand() % 2 == 0)
+        return "horizontal";
+    else return "vertical";
 }

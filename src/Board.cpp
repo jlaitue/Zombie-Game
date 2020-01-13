@@ -41,12 +41,6 @@ int Board::getNumberDiamonds(){
   return availableDiamonds;
 }
 
-string columnOrientation(){
-    if (rand() % 2 == 0)
-        return "horizontal";
-    else return "vertical";
-}
-
 void Board::positionObjects(){
   int nDiam = availableDiamonds;
   int nMons = availableMonsters;
@@ -152,33 +146,6 @@ void Board::positionObjects(){
       }
     }
     nDoors--;
-  }
-}
-
-void colorCoding(char element, int &colorCode){
-  if (element == 'O') {
-    colorCode = 1;
-  }
-  else if (element == 'M') {
-    colorCode = 2;
-  }
-  else if (element == '*') {
-    colorCode = 3;
-  }
-  else if (element == '$') {
-    colorCode = 4;
-  }
-  else if (element == '.') {
-    colorCode = 5;
-  }
-  else if (element == '#') {
-    colorCode = 2;
-  }
-  else if (element == '+') {
-    colorCode = 5;
-  }
-  else{
-    colorCode = 6;
   }
 }
 
