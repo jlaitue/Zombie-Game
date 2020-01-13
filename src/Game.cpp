@@ -154,14 +154,22 @@ void Game::run(){
 
 void Game::loadBoards(){
   srand (time(NULL));
-  for (int i = 0; i < gameLevel; i++) {
+  // The level selected defines the number of boards to play in the game
+  int numberBoards = gameLevel;
+  for (int i = 0; i < numberBoards; i++) {
+
+    // The game level selected also defines the difficulty for each board
     int level = gameLevel;
     string path = "../boards", ext = ".board", name = "board";
     string filename = "/level_"+to_string(gameLevel)+"/"+name+to_string(i)+ext;
+
+    // If the game level selected is bigger than 5 then a random difficulty
+    // level for each board is selected among the 3 highest levels available
     if (gameLevel>5) {
       //Maybe change this to 0 to have the default difficulty level
       level = rand() %5 + 3;
     }
+
     addBoard(level, path+filename);
   }
 }

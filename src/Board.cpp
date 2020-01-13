@@ -18,6 +18,9 @@ Board::Board(){
   colOrigin = 20;
   infoBoxIdent = 5;
   availableDiamonds = 0;
+  availableMonsters = 0;
+  availableDoors = 0;
+  availablePowerups = 0;
   // cout<<"Board created"<<endl;
 }
 
@@ -31,14 +34,33 @@ int Board::getNumberDiamonds(){
   return availableDiamonds;
 }
 
+void Board::updateNumberDiamonds(int newValue){
+  availableDiamonds = newValue;
+}
+
+void Board::updateNumberMonsters(int newValue){
+  availableMonsters = newValue;
+}
+
+void Board::updateNumberDoors(int newValue){
+  availableDoors = newValue;
+}
+
+void Board::updateNumberPowerups(int newValue){
+  availablePowerups = newValue;
+}
+
 string columnOrientation(){
     if (rand() % 2 == 0)
         return "horizontal";
     else return "vertical";
 }
 
-void Board::positionObjects(int nMons, int nDoors, int nStars, int nWalls){
+void Board::positionObjects(int nWalls){
   int nDiam = availableDiamonds;
+  int nMons = availableMonsters;
+  int nDoors = availableDoors;
+  int nStars = availablePowerups;
   int emptyRows = n-2;
   int emptyCols = m-2;
   while(nWalls != 0){
@@ -186,7 +208,7 @@ void Board::readBoard(int l, string filename){
   string line;
   int rows=0;
   // int columns=0;
-  int xcount = 0, powcount=0, monscount=0, whitecount=0, doorscount = 0;
+  int xcount = 0, powcount=0, whitecount=0, doorscount = 0;
 
   fstream inFile;
   inFile.open("../boards/"+filename);
@@ -226,8 +248,8 @@ void Board::readBoard(int l, string filename){
           else if (line[i] == 'M'){
             // cout<<"FOUND A MONSTER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            // matrix[rows][i].updateElement(rows,i,"mons",'M');
-            monscount++;
+            matrix[rows][i].updateElement(rows,i,"mons",'M');
+            availableMonsters++;
           }
           else if (line[i] == ' '){
             // cout<<"FOUND EMPTY SPACE ";
@@ -299,49 +321,79 @@ switch (level) {
   case 1:
     {
       // cout<<"Creation of board of level 1\n\n";
-      int nMons = 1, nStars = 0, nDoors = 5, nWalls = 2;
+      int nWalls = 3;
       availableDiamonds = 5;
-      positionObjects(nMons, nDoors, nStars, nWalls);
+      availableMonsters = 3;
+      availablePowerups = 0;
+      availableDoors = 5;
+      positionObjects(nWalls);
       break;
     }
   case 2:
     {
       // cout<<"Creation of board of level 2\n\n";
-      int nMons = 1, nStars = 1, nDoors = 4, nWalls = 2;
+      int nWalls = 3;
       availableDiamonds = 5;
-      positionObjects(nMons, nDoors, nStars, nWalls);
+      availableMonsters = 3;
+      availablePowerups = 1;
+      availableDoors = 4;
+      positionObjects(nWalls);
       break;
     }
   case 3:
     {
       // cout<<"Creation of board of level 3\n\n";
-      int nMons = 3, nStars = 2, nDoors = 3, nWalls = 3;
+      int nWalls = 3;
       availableDiamonds = 4;
-      positionObjects(nMons, nDoors, nStars, nWalls);
+      availableMonsters = 4;
+      availablePowerups = 2;
+      availableDoors = 3;
+      positionObjects(nWalls);
       break;
     }
   case 4:
     {
       // cout<<"Creation of board of level 4\n\n";
-      int nMons = 4, nStars = 3, nDoors = 2, nWalls = 3;
+      int nWalls = 3;
       availableDiamonds = 4;
-      positionObjects(nMons, nDoors, nStars, nWalls);
+      availableMonsters = 5;
+      availablePowerups = 3;
+      availableDoors = 2;
+      positionObjects(nWalls);
       break;
     }
   case 5:
     {
       // cout<<"Creation of board of level 5\n\n";
-      int nMons = 5, nStars = 4, nDoors = 1, nWalls = 5;
+      int nWalls = 5;
       availableDiamonds = 8;
-      positionObjects(nMons, nDoors, nStars, nWalls);
+      availableMonsters = 5;
+      availablePowerups = 4;
+      availableDoors = 1;
+      positionObjects(nWalls);
       break;
     }
+  case 6:
+    {
+      // cout<<"Creation of board of level 6\n\n";
+      int nWalls = 10;
+      availableDiamonds = 15;
+      availableMonsters = 10;
+      availablePowerups = 10;
+      availableDoors = 1;
+      positionObjects(nWalls);
+      break;
+    }
+    // User created board
   default:
     {
-      // cout<<"Creation of board of level default\n\n";
-      int nMons = 10, nStars = 10, nDoors = 1, nWalls = 10;
-      availableDiamonds = 15;
-      positionObjects(nMons, nDoors, nStars, nWalls);
+      // User created board, values are the ones selected by user
+      int nWalls = 5;
+      // availableDiamonds = 15;
+      // availableMonsters = 10;
+      // availablePowerups = 10;
+      // availableDoors = 10;
+      positionObjects(nWalls);
       break;
     }
 
@@ -483,14 +535,13 @@ void Board::clearMonsters(){
 }
 
 void Board::moveMonsters(int emptyRows, int emptyCols){
-  int monsters = level;
   int row = 0;
   int column = 0;
   char c;
   if (level < 4) {
     clearMonsters();
   }
-  for (int i = 0; i < monsters; i++) {
+  for (int i = 0; i < availableMonsters; i++) {
     c = matrix[row][column].getSymbol();
     while ( c == 'X' or c == '*' or c == '$' or c == 'M') {
       row = rand() %emptyRows + 1;
