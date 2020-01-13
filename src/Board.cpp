@@ -336,10 +336,10 @@ switch (level) {
   case 6:
     {
       // cout<<"Creation of board of level 6\n\n";
-      availableDiamonds = 15;
-      availableMonsters = 10;
-      availablePowerups = 10;
-      availableDoors = 1;
+      availableDiamonds = 20;
+      availableMonsters = 5;
+      availablePowerups = 25;
+      availableDoors = 2;
       availableWalls = 10;
       positionObjects();
       break;

@@ -11,9 +11,9 @@ Player::Player(){
   string defaultPlayers[] = { "Iron Man", "Kenobi", "Goku","Wolverine",
     "Phoenix", "Rogue", "Skywalker"};
   nDiamonds = 0;
-  nPowers = 0;
-  nLives = 100;
-  name = defaultPlayers[rand() % 5];
+  nPowers = 2;
+  nLives = 5;
+  name = defaultPlayers[rand() % 6];
 // cout<<"Player created"<<endl;
 }
 
@@ -50,6 +50,10 @@ void Player::incrementPowerups(){
 
 void Player::incrementLives(){
   nLives++;
+}
+
+void Player::liveBoost(int boost){
+  nLives+=boost;
 }
 
 void Player::decrementDiamonds(){

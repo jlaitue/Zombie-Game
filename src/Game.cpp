@@ -55,6 +55,7 @@ void Game::getPlayerInfo(){
   mvaddstr(8, 0, "PRESS ANY KEY TO CONTINUE...");
   refresh();
   getch();
+  // Clear everything in window
   mvaddstr(2,0,"");
   clrtobot();
 
@@ -186,10 +187,6 @@ void Game::run(){
     loadUserBoards();
   }
 
-  mvaddstr(LINES-2, 0, "Terminar de enlistar...");
-  refresh();
-  getch();
-
   noecho();
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
@@ -218,7 +215,7 @@ void Game::run(){
   }
 
   // Each live is worth 3 diamonds, so we increment the respective amount
-  for (int i = 0; i < 3*(player.Lives()-3); i++) {
+  for (int i = 0; i < 3*(player.Lives()-5); i++) {
     player.incrementDiamonds();
   }
   mvprintw(28, maxcols/2-25, "FINAL SCORE: %d DIAMONDS COLLECTED OUT OF %d", player.Diamonds(), totalDiamonds);
@@ -237,19 +234,20 @@ void Game::loadRandomBoards(){
   srand (time(NULL));
   // List of cool names for boards jiji :D
   string boardNames[] = { "akiva", "alderaan", "behpour","bogano",
-    "chandrila", "corellia", "tatooine","dantooine","lothal", "geonosis",
-    "kuat","iego","coruscant", "kessel", "kamino","hoth", "jedha", "exegol",
-    "devaron"};
+    "chandrila", "corellia", "tatooine","exegol","jedha", "geonosis"};
   // The block selected defines the number of stages to play in the game for the
   // RANDOM type game
   gameStages = gameBlock;
   // The game level selected also defines the difficulty for each board in
   // difficulty levels 1 to 6
   int boardLevel = gameBlock;
+  if (gameBlock >= 6) {
+    player.liveBoost(30);
+  }
   string name, path, filename, ext = ".board";
   for (int i = 0; i < gameStages; i++) {
-    name = boardNames[rand() % 17];
-    filename = "/"+to_string(i)+name+ext;
+    name = boardNames[rand() % 10];
+    filename = "/"+name+ext;
     // If game block 7, 8, 9 is selected then a board of level 6 is created
     if (gameBlock >= 7) {
       boardLevel = 6;
