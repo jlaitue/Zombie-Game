@@ -15,9 +15,10 @@ int Game::gameCount = 0;
 Game::Game(){
   gameCount++;
   identifier = gameCount;
-  gameLevel = 0;
+  gameBlock = 0;
   gameType = 1;
   totalDiamonds = 0;
+  virusMode = 0;
   // cout<<"Game created"<<"\n";
   // cout<<"Game id: "<<identifier<<"\n";
 }
@@ -31,8 +32,8 @@ void Game::addBoard(int level, string filename){
   else{
     board.readBoard(level, filename);
   }
-  if (legendaryMode) {
-    board.switchLegendaryMode();
+  if (virusMode or level == 6) {
+    board.switchVirusMode();
   }
   boards.push_back(board);
   totalDiamonds += board.getNumberDiamonds();
@@ -43,7 +44,7 @@ void Game::getPlayerInfo(){
   char inputLevel[100];
   char inputGameChoice[100];
   char inputDesiredBoards[100];
-  char inputLegendMode[100];
+  char inputVirusMode[100];
   const char *cstr;
 
   string newName;
@@ -73,14 +74,25 @@ void Game::getPlayerInfo(){
   mvaddstr(6,0,"");
   clrtoeol();
   if (gameType == 1) {
+    int maxcols = COLS-1;
     mvprintw(6, 0, "GAME TYPE SELECTED: RANDOM");
-    mvaddstr(8, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
+    mvaddstr(10, maxcols/2-15, "BLOCK 1 -> 1 Stage  of difficulty 1");
+    mvaddstr(11, maxcols/2-15, "BLOCK 2 -> 2 Stages of difficulty 2");
+    mvaddstr(12, maxcols/2-15, "BLOCK 3 -> 3 Stages of difficulty 3");
+    mvaddstr(13, maxcols/2-15, "BLOCK 4 -> 4 Stages of random difficulty 3-5");
+    mvaddstr(14, maxcols/2-15, "BLOCK 5 -> 5 Stages of random difficulty 3-5");
+    mvaddstr(15, maxcols/2-15, "BLOCK 6 -> 6 Stages of random difficulty 3-5");
+    mvaddstr(16, maxcols/2-15, "BLOCK 7 -> 7 Stages of difficulty 6");
+    mvaddstr(17, maxcols/2-15, "BLOCK 8 -> 8 Stages of difficulty 6");
+    mvaddstr(18, maxcols/2-15, "BLOCK 9 -> 9 Stages of difficulty 6");
+    mvaddstr(20, maxcols/2-15, "Virus mode is ENABLED in difficulty level 6");
+    mvaddstr(8, 0, "Please enter the game BLOCK you want to play from 1 to 9: ");
     refresh();
     getstr(inputLevel);
-    gameLevel = validateInputValue(8, inputLevel, 1, 9);
+    gameBlock = validateInputValue(8, inputLevel, 1, 9);
     mvaddstr(8,0,"");
     clrtoeol();
-    mvprintw(8, 0, "GAME DIFFICULTY SELECTED: %d", gameLevel);
+    mvprintw(8, 0, "GAME BLOCK SELECTED: %d", gameBlock);
   }
   else {
     mvprintw(6, 0, "GAME TYPE SELECTED: USER BOARDS", gameType);
@@ -120,17 +132,19 @@ void Game::getPlayerInfo(){
     }
   }
 
-  mvaddstr(12, 0, "Do you want to activate Legendary Mode? Yes = (1) No = (0): ");
-  refresh();
-  getstr(inputLegendMode);
-  legendaryMode = validateInputValue(12, inputLegendMode, 0, 1);
-  mvaddstr(12,0,"");
-  clrtoeol();
-  if (legendaryMode) {
-    mvprintw(12, 0, "LEGENDARY MODE ACTIVATED");
-  }
-  else {
-    mvprintw(12, 0, "LEGENDARY MODE DISABLED");
+  if (gameBlock < 7) {
+    mvaddstr(22, 0, "Do you want to activate Virus Mode? Yes = (1) No = (0): ");
+    refresh();
+    getstr(inputVirusMode);
+    virusMode = validateInputValue(22, inputVirusMode, 0, 1);
+    mvaddstr(22,0,"");
+    clrtoeol();
+    if (virusMode) {
+      mvprintw(22, 0, "VIRUS MODE ACTIVATED");
+    }
+    else {
+      mvprintw(22, 0, "VIRUS MODE DISABLED");
+    }
   }
 
   mvaddstr(LINES-1, 0, "PRESS ANY KEY TO BEGIN THE GAME...");
@@ -172,10 +186,15 @@ void Game::run(){
     loadUserBoards();
   }
 
+  mvaddstr(LINES-2, 0, "Terminar de enlistar...");
+  refresh();
+  getch();
+
   noecho();
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
-      mvprintw(3, 20, "Game stage %d/%d", stage+1, boards.size());
+      mvprintw(3, 12, "Game stage %d/%d", stage+1, boards.size());
+      mvprintw(3, maxcols/2-20, "Stage difficulty %d", boards[stage].getBoardLevel());
       userStage = boards[stage].play(player);
 
       if (userStage == "KILL") {
@@ -221,23 +240,18 @@ void Game::loadRandomBoards(){
     "chandrila", "corellia", "tatooine","dantooine","lothal", "geonosis",
     "kuat","iego","coruscant", "kessel", "kamino","hoth", "jedha", "exegol",
     "devaron"};
-  // The level selected defines the number of stages to play in the game for the
+  // The block selected defines the number of stages to play in the game for the
   // RANDOM type game
-  gameStages = gameLevel;
+  gameStages = gameBlock;
   // The game level selected also defines the difficulty for each board in
-  // difficulty levels 1, 2 and 3
-  int boardLevel = gameLevel;
+  // difficulty levels 1 to 6
+  int boardLevel = gameBlock;
   string name, path, filename, ext = ".board";
   for (int i = 0; i < gameStages; i++) {
     name = boardNames[rand() % 17];
     filename = "/"+to_string(i)+name+ext;
-
-    // If game difficulty 5, 6, 7 is selected then a board of level 3-5 is created
-    if (gameLevel > 4 and gameLevel < 8) {
-      boardLevel = rand() %5 + 3;
-    }
-    // If game difficulty 7, 8, 9 is selected then a board of level 6 is created
-    else if (gameLevel > 7) {
+    // If game block 7, 8, 9 is selected then a board of level 6 is created
+    if (gameBlock >= 7) {
       boardLevel = 6;
     }
     path = "../boards/level_"+to_string(boardLevel);
@@ -250,7 +264,7 @@ void Game::loadUserBoards(){
   srand (time(NULL));
   string path = "../boards/";
   for (int i = 0; i <  gameStages; i++) {
-    addBoard(gameLevel, path+userFileNames[i]);
+    addBoard(gameBlock, path+userFileNames[i]);
   }
 }
 

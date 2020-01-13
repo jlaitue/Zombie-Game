@@ -12,7 +12,7 @@ Player::Player(){
     "Phoenix", "Rogue", "Skywalker"};
   nDiamonds = 0;
   nPowers = 0;
-  nLives = 3;
+  nLives = 100;
   name = defaultPlayers[rand() % 5];
 // cout<<"Player created"<<endl;
 }

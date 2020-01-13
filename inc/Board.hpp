@@ -23,7 +23,7 @@ private:
   int availablePowerups;
   int availableDoors;
   int availableWalls;
-  bool legendaryModeBoard;
+  bool virusModeBoard;
   Element matrix[rows][columns];
 
 public:
@@ -42,12 +42,13 @@ public:
       bool &movementValid, bool &nextBoard, Player &player, int moveCase);
 
     string getBoardName();
+    int getBoardLevel();
     int getNumberDiamonds();
 
     void moveMonsters(int emptyRows, int emptyCols);
     void clearMonsters();
 
-    void switchLegendaryMode();
+    void switchVirusMode();
     string play(Player &player);
     void creator();
     ~Board();

@@ -23,7 +23,7 @@ Board::Board(){
   availableDoors = 0;
   availablePowerups = 0;
   availableWalls = 0;
-  legendaryModeBoard = false;
+  virusModeBoard = false;
   // cout<<"Board created"<<endl;
 }
 
@@ -33,8 +33,8 @@ Board::Board(int id): identifier(id){
   boardCount++;
 }
 
-void Board::switchLegendaryMode(){
-    legendaryModeBoard = !legendaryModeBoard;
+void Board::switchVirusMode(){
+    virusModeBoard = !virusModeBoard;
 }
 
 int Board::getNumberDiamonds(){
@@ -374,6 +374,10 @@ string Board::getBoardName(){
   return boardName;
 }
 
+int Board::getBoardLevel(){
+  return level;
+}
+
 bool Board::openDoor(){
   bool found = false;
   for (int i = 0; i < n; i++) {
@@ -492,7 +496,7 @@ void Board::moveMonsters(int emptyRows, int emptyCols){
   int row = 0;
   int column = 0;
   char c;
-  if (!legendaryModeBoard) {
+  if (!virusModeBoard) {
     clearMonsters();
   }
   for (int i = 0; i < availableMonsters; i++) {
@@ -510,8 +514,8 @@ string Board::play(Player &player){
   string move = "";
   const char *charedPlayerName = player.getName().c_str();
   // Initial player position which probably should be changed to a randomized pos
-  int rowPosition = n/2;
-  int colPosition = m/2;
+  int rowPosition;
+  int colPosition;
   char userInput;
   int maxcols = COLS-1;
 
@@ -521,8 +525,17 @@ string Board::play(Player &player){
   int emptyRows = n-2;
   int emptyCols = m-2;
 
+  // Initial random position of player in board
+  int playerRow0 = rand() %emptyRows + 1;
+  int playerCol0 = rand() %emptyCols + 1;
+
+  while (matrix[playerCol0][playerRow0].getSymbol() != ' ') {
+    playerRow0 = rand() %emptyRows + 1;
+    playerCol0 = rand() %emptyCols + 1;
+  }
+  rowPosition = playerRow0;
+  colPosition = playerCol0;
   matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
-  // matrix[rowPosition][colPosition] = player;
 
   //Clear the contents of the previous window but maintaining the header info
   mvaddstr(4,0,"");
@@ -530,18 +543,18 @@ string Board::play(Player &player){
 
   displayBoard();
   mvprintw(rowOrigin+5, maxcols/2+infoBoxIdent, "PLAYER | %s |",charedPlayerName);
-  mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "Diamonds: %d", player.Diamonds());
-  mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "Lives: %d", player.Lives());
-  mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
+  mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "($) Diamonds:  %d", player.Diamonds());
+  mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "(*) Teleports: %d", player.Powerups());
+  mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "(O) Lives:     %d", player.Lives());
 
   mvaddstr(rowOrigin+10, maxcols/2+infoBoxIdent, "KEYBOARD COMMANDS");
   mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press K to terminate the game");
   mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "Press T to teleport to a random position in board");
   mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press L to buy a life for 3 diamonds ($)");
-  mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press N to skip board using 5 powerups (*)");
+  mvaddstr(rowOrigin+14, maxcols/2+infoBoxIdent, "Press N to skip board using 5 teleports (*)");
   mvaddstr(rowOrigin+15, maxcols/2+infoBoxIdent, "Press W A S D or ARROW KEYS for lineal movement");
   mvaddstr(rowOrigin+16, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
-  mvaddstr(rowOrigin+17, maxcols/2+infoBoxIdent, "Press V to switch Legendary Mode");
+  mvaddstr(rowOrigin+17, maxcols/2+infoBoxIdent, "Press V to switch Virus Mode");
 
   mvaddstr(rowOrigin, maxcols/2+infoBoxIdent, "ENTER NEXT MOVE: ");
   while (move != "STOP") {
@@ -656,7 +669,7 @@ string Board::play(Player &player){
           }
         }
         else{
-          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "NOT ENOUGH POWER TO CHANGE BOARD!");
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "NOT ENOUGH POWER TO SKIP BOARD!");
         }
       }
 
@@ -674,12 +687,17 @@ string Board::play(Player &player){
       }
 
       else if (userInput == 'v' or userInput == 'V'){
-        switchLegendaryMode();
-        if (legendaryModeBoard) {
-          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "LEGENDARY MODE ACTIVATED");
+        if (level != 6) {
+          switchVirusMode();
+          if (virusModeBoard) {
+            mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "VIRUS MODE ACTIVATED");
+          }
+          else{
+            mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "VIRUS MODE DISABLED");
+          }
         }
-        else{
-          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "LEGENDARY MODE DISABLED");
+        else {
+          mvaddstr(rowOrigin+2, maxcols/2+infoBoxIdent, "VIRUS MODE CAN'T BE DISABLED IN THIS LEVEL");
         }
       }
 
@@ -701,9 +719,9 @@ string Board::play(Player &player){
         clrtoeol();
         mvaddstr(rowOrigin+8,maxcols/2+infoBoxIdent,"");
         clrtoeol();
-        mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "Diamonds: %d", player.Diamonds());
-        mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "Lives: %d", player.Lives());
-        mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "Teleports: %d", player.Powerups());
+        mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "($) Diamonds:  %d", player.Diamonds());
+        mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "(*) Teleports: %d", player.Powerups());
+        mvprintw(rowOrigin+8, maxcols/2+infoBoxIdent, "(O) Lives:     %d", player.Lives());
       }
     }
 

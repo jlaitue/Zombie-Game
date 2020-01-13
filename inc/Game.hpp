@@ -8,11 +8,11 @@
 class Game {
 private:
   int identifier;
-  int gameLevel;
+  int gameBlock;
   int gameType;
   int gameStages;
   int totalDiamonds;
-  bool legendaryMode;
+  bool virusMode;
   vector <string> userFileNames;
   vector <Board> boards;
   Player player;
