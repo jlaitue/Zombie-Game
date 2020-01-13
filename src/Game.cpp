@@ -4,6 +4,7 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
+#include <sstream>
 #include <ncurses.h>
 
 using namespace std;
@@ -18,6 +19,43 @@ Game::Game(){
   totalDiamonds = 0;
   // cout<<"Game created"<<"\n";
   // cout<<"Game id: "<<identifier<<"\n";
+}
+
+int validateInputValue(int windowLine, char *inputAttribute, int rangeInit, int rangeEnd){
+  string inputStr;
+  int value;
+  inputStr = inputAttribute;
+  bool validNumber = (inputStr.find_first_not_of( "0123456789" ) == string::npos);
+  bool acceptedInput = false;
+  bool rangeInvalid = false;
+
+  while(!acceptedInput){
+    while (!validNumber) {
+      mvaddstr(windowLine,0,"");
+      clrtoeol();
+      if(rangeInvalid){
+        mvprintw(windowLine, 0, "The value entered must be in range [%d,%d], please try again:  ", rangeInit, rangeEnd);
+        rangeInvalid = false;
+      }
+      else {
+        mvprintw(windowLine, 0, "The value you entered is not a number, please try again: ");
+      }
+      refresh();
+      getstr(inputAttribute);
+      inputStr = inputAttribute;
+      validNumber = (inputStr.find_first_not_of( "0123456789" ) == string::npos);
+    }
+    istringstream(inputStr) >> value;
+
+    if (value >= rangeInit and value <= rangeEnd) {
+      acceptedInput = true;
+    }
+    else {
+      validNumber = false;
+      rangeInvalid = true;
+    }
+  }
+  return value;
 }
 
 void Game::addBoard(int level, string filename){
@@ -39,13 +77,11 @@ void Game::addBoard(int level, string filename){
 
 void Game::getPlayerInfo(){
   char inputName[100];
-  char inputLevel;
-  char inputGameChoice;
+  char inputLevel[100];
+  char inputGameChoice[100];
   const char *cstr;
 
   string newName;
-  bool valid = false;
-  bool gameChoice = false;
 
   mvaddstr(4, 0, "This is Ultron's board game for saving the planet!");
   mvaddstr(5, 0, "You should avoid getting eaten by monsters and finish all levels!");
@@ -64,56 +100,53 @@ void Game::getPlayerInfo(){
 
   mvprintw(4, 0, "WELCOME TO THE AVENGERS TOWER | %s | ", cstr);
 
-  // Preguntamos que tipo de juego quiere hacer
-  mvaddstr(5, 0, "Please choose the type of game you want Random (1) ||  User Defined Boards (2) ");
+  // We ask for the type of game the user wants
+  mvaddstr(5, 0, "Please choose the type of game you want Random (1) ||  User Defined Boards (2): ");
   refresh();
-  inputGameChoice = getch();
+  getstr(inputGameChoice);
+  gameType = validateInputValue(5, inputGameChoice, 1, 2);
+  mvaddstr(5,0,"");
+  clrtoeol();
+  mvprintw(5, 0, "GAME DIFFICULTY SELECTED: %d", gameType);
 
-  while(!gameChoice){
+  if (gameType == 2) {
+    char inputFilename[100];
+    fstream file;
+
+    mvaddstr(5,0,"");
+    clrtobot();
+    mvprintw(5, 0, "Enter the file name you would like to test: boards/");
+    refresh();
+    getstr(inputFilename);
+    gamefilename = inputFilename;
+
+    file.open("../boards/"+gamefilename);
+
+    while (!file) {
+      mvaddstr(5,0,"");
+      clrtobot();
+      mvprintw(5, 0, "The filename you entered does not exist, try again: ");
+      refresh();
+      getstr(inputFilename);
+      gamefilename = inputFilename;
+      file.open("../boards/"+gamefilename);
+    }
     mvaddstr(5,0,"");
     clrtoeol();
-    if (inputGameChoice == '1' || inputGameChoice == '2') {
-      gameChoice = true;
-      mvprintw(5, 0, "GAME TYPE SELECTED: %c", inputGameChoice);
-    }
-    else{
-      mvprintw(5, 0, "The value you entered is not a valid game choice, please try again: %c", inputGameChoice);
-      refresh();
-      inputGameChoice = getch();
-    }
+    mvprintw(5, 0, "Board file selected: %s.board", inputFilename);
   }
-  gameType = inputGameChoice - '0';
 
-  if (gameType == 1) {
-    mvaddstr(5, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
-    refresh();
-    inputLevel = getch();
+  mvaddstr(5, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
+  refresh();
+  getstr(inputLevel);
+  gameLevel = validateInputValue(5, inputLevel, 1, 9);
+  mvaddstr(5,0,"");
+  clrtoeol();
+  mvprintw(5, 0, "GAME DIFFICULTY SELECTED: %d", gameLevel);
 
-    while(!valid){
-      mvaddstr(5,0,"");
-      clrtoeol();
-      if (inputLevel == '1' || inputLevel == '2' || inputLevel == '3'
-         || inputLevel == '4' || inputLevel == '5' || inputLevel == '6'
-         || inputLevel == '7' || inputLevel == '8' || inputLevel == '9') {
-        valid = true;
-        mvprintw(5, 0, "GAME DIFFICULTY SELECTED: %c", inputLevel);
-      }
-      else{
-        mvprintw(5, 0, "The value you entered is not valid integer, please try again: %c", inputLevel);
-        refresh();
-        inputLevel = getch();
-      }
-    }
-    /* We need to substract the ASCII value of char '0' in order to obtain the
-    actual integer value of the number the user introduced as input */
-    gameLevel = inputLevel - '0';
-    mvaddstr(LINES-1, 0, "PRESS ANY KEY TO BEGIN THE GAME...");
-    refresh();
-    getch();
-  }
-  // else {
-  //
-  // }
+  mvaddstr(LINES-1, 0, "PRESS ANY KEY TO BEGIN THE GAME...");
+  refresh();
+  getch();
 
 }
 
@@ -153,7 +186,6 @@ void Game::run(){
   noecho();
   while (playing == true) {
     if (stage <= (boards.size()-1)) {
-
       mvprintw(3, 20, "Game stage %d/%d", stage+1, boards.size());
       userStage = boards[stage].play(player);
 
@@ -212,26 +244,8 @@ void Game::loadBoards(){
 
 void Game::loadUserBoards(){
   srand (time(NULL));
-  int level = 0;
-  string filename = "fok.board";
-  string path = "../boards/user/";
-  addBoard(level, path+filename);
-
-  // The level selected defines the number of boards to play in the game
-  // int numberBoards = gameLevel;
-  // for (int i = 0; i < numberBoards; i++) {
-  //   // The game level selected also defines the difficulty for each board
-  //   int level = gameLevel;
-  //   string path = "../boards/user", ext = ".board", name = "board";
-  //   string filename = "/level_"+to_string(gameLevel)+"/"+name+to_string(i)+ext;
-  //
-  //   // If the game level selected is bigger than 5 then a random difficulty
-  //   // level for each board is selected among the 3 highest levels available
-  //   if (gameLevel>5) {
-  //     //Maybe change this to 6 to have the highest difficulty level
-  //     level = rand() %6 + 3;
-  //   }
-  // }
+  string path = "../boards/";
+  addBoard(gameLevel, path+gamefilename);
 }
 
 Game::~Game(){

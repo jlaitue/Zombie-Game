@@ -10,7 +10,9 @@ private:
   int identifier;
   int gameLevel;
   int gameType;
+  string gamefilename;
   int totalDiamonds;
+  vector <string> userFileNames;
   vector <Board> boards;
   Player player;
 

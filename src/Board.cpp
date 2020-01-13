@@ -769,11 +769,6 @@ void Board::creator(){
 
   int maxcols, maxlines;
   int requestedBoards;
-  int requestedDiamonds;
-  int requestedMonsters;
-  int requestedDoors;
-  int requestedPowerups;
-  int requestedWalls;
 
   string path = "../boards/user/";
   string ext = ".board";
@@ -832,53 +827,46 @@ void Board::creator(){
     mvaddstr(5, 0, "Please enter the number of diamonds: ");
     refresh();
     getstr(inputAttribute);
-    requestedDiamonds = validateInputValue(5, inputAttribute);
+    availableDiamonds = validateInputValue(5, inputAttribute);
     mvaddstr(5,0,"");
     clrtoeol();
-    mvprintw(5, 0, "Number of diamonds: %d", requestedDiamonds);
+    mvprintw(5, 0, "Number of diamonds: %d", availableDiamonds);
 
     // User input of number of Monsters for board
     mvaddstr(7, 0, "Please enter the number of monsters: ");
     refresh();
     getstr(inputAttribute);
-    requestedMonsters = validateInputValue(7, inputAttribute);
+    availableMonsters = validateInputValue(7, inputAttribute);
     mvaddstr(7,0,"");
     clrtoeol();
-    mvprintw(7, 0, "Number of monsters: %d", requestedMonsters);
+    mvprintw(7, 0, "Number of monsters: %d", availableMonsters);
 
     // User input of number of Powerups for board
     mvaddstr(9, 0, "Please enter the number of powerups: ");
     refresh();
     getstr(inputAttribute);
-    requestedPowerups = validateInputValue(9, inputAttribute);
+    availablePowerups = validateInputValue(9, inputAttribute);
     mvaddstr(9,0,"");
     clrtoeol();
-    mvprintw(9, 0, "Number of powerups: %d", requestedPowerups);
+    mvprintw(9, 0, "Number of powerups: %d", availablePowerups);
 
     // User input of number of Powerups for board
     mvaddstr(11, 0, "Please enter the number of doors: ");
     refresh();
     getstr(inputAttribute);
-    requestedDoors = validateInputValue(11, inputAttribute);
+    availableDoors = validateInputValue(11, inputAttribute);
     mvaddstr(11,0,"");
     clrtoeol();
-    mvprintw(11, 0, "Number of doors: %d", requestedDoors);
+    mvprintw(11, 0, "Number of doors: %d", availableDoors);
 
     // User input of number of Powerups for board
     mvaddstr(13, 0, "Please enter the number of walls: ");
     refresh();
     getstr(inputAttribute);
-    requestedWalls = validateInputValue(13, inputAttribute);
+    availableWalls = validateInputValue(13, inputAttribute);
     mvaddstr(13,0,"");
     clrtoeol();
-    mvprintw(13, 0, "Number of walls: %d", requestedWalls);
-
-
-    availableDiamonds = requestedDiamonds;
-    availableMonsters = requestedMonsters;
-    availableDoors = requestedDoors;
-    availablePowerups = requestedPowerups;
-    availableWalls = requestedWalls;
+    mvprintw(13, 0, "Number of walls: %d", availableWalls);
 
     mvaddstr(maxlines, 0, "PRESS ANY KEY TO CREATE THE BOARD... ");
     getch();
