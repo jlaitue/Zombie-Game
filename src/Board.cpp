@@ -21,6 +21,7 @@ Board::Board(){
   availableMonsters = 0;
   availableDoors = 0;
   availablePowerups = 0;
+  availableWalls = 0;
   // cout<<"Board created"<<endl;
 }
 
@@ -50,17 +51,23 @@ void Board::updateNumberPowerups(int newValue){
   availablePowerups = newValue;
 }
 
+void Board::updateNumberWalls(int newValue){
+  availableWalls = newValue;
+}
+
 string columnOrientation(){
     if (rand() % 2 == 0)
         return "horizontal";
     else return "vertical";
 }
 
-void Board::positionObjects(int nWalls){
+void Board::positionObjects(){
   int nDiam = availableDiamonds;
   int nMons = availableMonsters;
   int nDoors = availableDoors;
   int nStars = availablePowerups;
+  int nWalls = availableWalls;
+
   int emptyRows = n-2;
   int emptyCols = m-2;
   while(nWalls != 0){
@@ -321,79 +328,73 @@ switch (level) {
   case 1:
     {
       // cout<<"Creation of board of level 1\n\n";
-      int nWalls = 3;
       availableDiamonds = 5;
       availableMonsters = 3;
       availablePowerups = 0;
       availableDoors = 5;
-      positionObjects(nWalls);
+      availableWalls = 3;
+      positionObjects();
       break;
     }
   case 2:
     {
       // cout<<"Creation of board of level 2\n\n";
-      int nWalls = 3;
       availableDiamonds = 5;
       availableMonsters = 3;
       availablePowerups = 1;
       availableDoors = 4;
-      positionObjects(nWalls);
+      availableWalls = 3;
+      positionObjects();
       break;
     }
   case 3:
     {
       // cout<<"Creation of board of level 3\n\n";
-      int nWalls = 3;
       availableDiamonds = 4;
       availableMonsters = 4;
       availablePowerups = 2;
       availableDoors = 3;
-      positionObjects(nWalls);
+      availableWalls = 3;
+      positionObjects();
       break;
     }
   case 4:
     {
       // cout<<"Creation of board of level 4\n\n";
-      int nWalls = 3;
       availableDiamonds = 4;
       availableMonsters = 5;
       availablePowerups = 3;
       availableDoors = 2;
-      positionObjects(nWalls);
+      availableWalls = 3;
+      positionObjects();
       break;
     }
   case 5:
     {
       // cout<<"Creation of board of level 5\n\n";
-      int nWalls = 5;
       availableDiamonds = 8;
       availableMonsters = 5;
       availablePowerups = 4;
       availableDoors = 1;
-      positionObjects(nWalls);
+      availableWalls = 5;
+      positionObjects();
       break;
     }
   case 6:
     {
       // cout<<"Creation of board of level 6\n\n";
-      int nWalls = 10;
       availableDiamonds = 15;
       availableMonsters = 10;
       availablePowerups = 10;
       availableDoors = 1;
-      positionObjects(nWalls);
+      availableWalls = 10;
+      positionObjects();
       break;
     }
-    // User created board
   default:
     {
       // User created board, values are the ones selected by user
-      int nWalls = 5;
-      // availableDiamonds = 15;
-      // availableMonsters = 10;
-      // availablePowerups = 10;
-      // availableDoors = 10;
-      positionObjects(nWalls);
+      positionObjects();
       break;
     }
 

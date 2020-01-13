@@ -22,6 +22,7 @@ private:
   int availableMonsters;
   int availablePowerups;
   int availableDoors;
+  int availableWalls;
   Element matrix[rows][columns];
 
 public:
@@ -32,25 +33,26 @@ public:
     Board(int identifier);
 
     void displayBoard();
-    void positionObjects(int nWalls);
+    void positionObjects();
     void readBoard(int level, string filename);
     void createTheMatrix(int level, string filename);
     bool openDoor();
     void validateMovement(int &rowPosition, int &colPosition, char nextStr,
       bool &movementValid, bool &nextBoard, Player &player, int moveCase);
-    string getBoardName();
 
+    string getBoardName();
     int getNumberDiamonds();
 
     void updateNumberDiamonds(int newValue);
     void updateNumberMonsters(int newValue);
     void updateNumberDoors(int newValue);
     void updateNumberPowerups(int newValue);
+    void updateNumberWalls(int newValue);
 
-    string play(Player &player);
-    //Move this methods to Monsters class
     void moveMonsters(int emptyRows, int emptyCols);
     void clearMonsters();
+    
+    string play(Player &player);
     ~Board();
 };
 
