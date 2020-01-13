@@ -109,7 +109,7 @@ void Game::getPlayerInfo(){
   mvaddstr(6,0,"");
   clrtoeol();
   if (gameType == 1) {
-    mvprintw(6, 0, "GAME TYPE SELECTED: RANDOM")
+    mvprintw(6, 0, "GAME TYPE SELECTED: RANDOM");
   }
   else {
     mvprintw(6, 0, "GAME TYPE SELECTED: USER BOARDS", gameType);
@@ -148,7 +148,7 @@ void Game::getPlayerInfo(){
       userFileNames.push_back(boardFileName);
     }
   }
-  
+
   mvaddstr(12, 0, "Please enter the difficulty level that you would like to play from 1 to 9: ");
   refresh();
   getstr(inputLevel);
@@ -259,7 +259,7 @@ void Game::loadUserBoards(){
   srand (time(NULL));
   string path = "../boards/";
   for (int i = 0; i < desiredStages; i++) {
-    addBoard(gameLevel, userFileNames[i]);
+    addBoard(gameLevel, path+userFileNames[i]);
   }
 }
 
