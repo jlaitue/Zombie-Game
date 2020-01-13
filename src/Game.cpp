@@ -35,7 +35,7 @@ void Game::addBoard(int level, string filename){
     board.switchLegendaryMode();
   }
   boards.push_back(board);
-  totalDiamonds = totalDiamonds + board.getNumberDiamonds();
+  totalDiamonds += board.getNumberDiamonds();
 }
 
 void Game::getPlayerInfo(){
@@ -198,7 +198,12 @@ void Game::run(){
     }
   }
 
+  // Each live is worth 3 diamonds, so we increment the respective amount
+  for (int i = 0; i < 3*(player.Lives()-3); i++) {
+    player.incrementDiamonds();
+  }
   mvprintw(28, maxcols/2-25, "FINAL SCORE: %d DIAMONDS COLLECTED OUT OF %d", player.Diamonds(), totalDiamonds);
+  // We add the total number of lives left to the total diamonds collected
   if (player.Diamonds() == totalDiamonds) {
     mvprintw(29, maxcols/2-25, "YOU REACHED THE HIGHEST SCORE, CONGRATS MATE!", player.Diamonds(), totalDiamonds);
   }

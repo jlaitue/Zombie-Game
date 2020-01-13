@@ -694,7 +694,12 @@ string Board::play(Player &player){
       if (movementValid) {
         matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"player",'O');
         displayBoard();
+        // This is to make sure the correct amount of items is shown to player
         mvaddstr(rowOrigin+6,maxcols/2+infoBoxIdent,"");
+        clrtoeol();
+        mvaddstr(rowOrigin+7,maxcols/2+infoBoxIdent,"");
+        clrtoeol();
+        mvaddstr(rowOrigin+8,maxcols/2+infoBoxIdent,"");
         clrtoeol();
         mvprintw(rowOrigin+6, maxcols/2+infoBoxIdent, "Diamonds: %d", player.Diamonds());
         mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "Lives: %d", player.Lives());
