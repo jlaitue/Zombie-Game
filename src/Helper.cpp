@@ -84,7 +84,7 @@ void help(int helpRow0){
   mvaddstr(helpRow0+6, 5, "- Avoid crashing with Monsters (M) as they eat your life points!");
   mvaddstr(helpRow0+7, 5, "- Monsters (M) move randomly across the board. Be careful!");
   mvaddstr(helpRow0+8, 5, "- Virus mode makes the Monsters reproduce and attack you fiercely");
-  mvaddstr(helpRow0+9, 5, "- Virus mode can be turned on/off Virus Mode in levels 1 to 5");
+  mvaddstr(helpRow0+9, 5, "- Virus mode can be turned on/off in levels 1 to 5");
   mvaddstr(helpRow0+10, 5, "- Virus mode is PERMANENT in level 6");
   mvaddstr(helpRow0+11, 5, "- Remaining lives are accounted as diamonds collected");
   mvaddstr(helpRow0+12, 5, "- There two types of game modes RANDOM and USER BASED");
