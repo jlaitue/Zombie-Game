@@ -39,6 +39,7 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p boards/level_5;
 	@mkdir -p boards/level_6;
 	@mkdir -p boards/user;
+	@mkdir -p bin;
 	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 # Create.o: main/Create.cpp
