@@ -4,7 +4,7 @@ Final project
 
 Board game using OOP paradigm
 - Player (O) you need to collect as many Diamonds ($) as you can throughout the game
-- Diamonds ($) open the doors through which you access new stages
+- Diamonds ($) open the Doors (#)->(+) through which you can access new stages
 - 3 Diamonds ($) allow you to buy 1 live point
 - Powerups (*) can teleport you to a random position in the board"
 - 5 Powerups (*) allow you to automatically change to the next stage, after opening a door
@@ -21,7 +21,7 @@ Board game using OOP paradigm
 TODO:
 
 - Improve the generation of random values
-- Creation of exec .game files
+- Creation of executable .game files
 - Considering changing the harcoded dimensions of matrix
 - Considering changing data structure for matrix
 - Test the game in order to find bugs
