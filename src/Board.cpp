@@ -105,7 +105,10 @@ void Board::positionObjects(){
     int row = rand() %emptyRows + 1;
     int column = rand() %emptyCols + 1;
     if(matrix[row][column].getSymbol() == ' '){
-      matrix[row][column].updateElement(row,column,"monster",'M');
+      Monster monster;
+      monster.updateMonsterCoords(row, column);
+      monsters.push_back(monster);
+      // matrix[row][column].updateElement(row,column,"monster",'M');
       nMons --;
     }
   }
@@ -161,11 +164,12 @@ void Board::displayBoard(){
       mvaddch(rowOrigin+i,colOrigin+j, element | COLOR_PAIR(colorCode));
     }
   }
+  //Display of monsters position
   for (size_t i = 0; i < monsters.size(); i++) {
     int monsRow = monsters[i].getMonsterX();
     int monsCol = monsters[i].getMonsterY();
     char monsSymbol = monsters[i].getSymbol();
-    mvaddch(rowOrigin+monsRow,colOrigin+monsCol, monsSymbol | COLOR_PAIR(2));
+    mvaddch(rowOrigin+monsRow,colOrigin+monsCol, monsSymbol | COLOR_PAIR(1));
   }
 }
 

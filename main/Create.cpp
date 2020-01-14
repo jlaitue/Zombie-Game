@@ -1,7 +1,9 @@
 #include "../inc/Board.hpp"
 #include <ncurses.h>
+#include <ctime>
 
 int main() {
+  srand (time(NULL));
   Board board;
   initscr();
   raw();
