@@ -77,10 +77,10 @@ std::string columnOrientation(){
 
 void help(int helpRow0){
   mvaddstr(helpRow0+1, 5, "- Player (O) you need to collect as many Diamonds ($) as you can throughout the game");
-  mvaddstr(helpRow0+2, 5, "- Diamonds ($) open the doors through which you access new stages");
+  mvaddstr(helpRow0+2, 5, "- Diamonds ($) open the Doors (#)->(+) through which you can access new stages");
   mvaddstr(helpRow0+3, 5, "- 3 Diamonds ($) allow you to buy 1 live point");
   mvaddstr(helpRow0+4, 5, "- Powerups (*) can teleport you to a random position in the board");
-  mvaddstr(helpRow0+5, 5, "- 5 Powerups (*) allow you to automatically change to the next stage, after opening a door");
+  mvaddstr(helpRow0+5, 5, "- 5 Powerups (*) allow you to automatically change to the next stage, after opening a door!");
   mvaddstr(helpRow0+6, 5, "- Avoid crashing with Monsters (M) as they eat your life points!");
   mvaddstr(helpRow0+7, 5, "- Monsters (M) move randomly across the board. Be careful!");
   mvaddstr(helpRow0+8, 5, "- Virus mode makes the Monsters reproduce and attack you fiercely");
@@ -97,7 +97,7 @@ void help(int helpRow0){
 void helpCreator(int helpRow0){
   mvaddstr(helpRow0, 5, "- In this v1.0 the size of the board is fixed to 20x40 elements");
   mvaddstr(helpRow0+1, 5, "- You can create boards with different types of elements");
-  mvaddstr(helpRow0+2, 5, "- The elements are Monsters, Diamonds, Doors, Powerups and Walls");
+  mvaddstr(helpRow0+2, 5, "- The elements are Monsters (M), Diamonds ($), Doors (#), Powerups (*) and Walls (X)");
   mvaddstr(helpRow0+3, 5, "- In order to create a good playing experience you can add up to 30 elements of each type");
   mvaddstr(helpRow0+4, 5, "- You can create up to 10 boards each time");
   mvaddstr(helpRow0+5, 5, "- Each board file created is stored in boards/user");
