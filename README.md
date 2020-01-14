@@ -10,8 +10,8 @@ Board game using OOP paradigm
 - 5 Powerups (*) allow you to automatically change to the next stage, after opening a door
 - Avoid crashing with Monsters (M) as they eat your life points!
 - Monsters (M) move randomly across the board. Be careful!
-- Virus mode makes the Monsters reproduce and attack you fiercely
-- Virus mode can be turned on/off Virus Mode in levels 1 to 5
+- Virus mode makes the Monsters (M) reproduce and attack you fiercely
+- Virus mode can be turned on/off in levels 1 to 5
 - Virus mode is PERMANENT in level 6
 - Remaining lives are accounted as diamonds collected
 - There two types of game modes RANDOM and USER BASED
