@@ -826,7 +826,7 @@ void Board::creator(){
 
   int maxcols, maxlines;
   int requestedBoards;
-  int maxElementsAllowed = 30;
+  int maxElementsAllowed = 15;
 
   string path = "../boards/user/";
   string ext = ".board";
@@ -861,7 +861,7 @@ void Board::creator(){
   mvaddstr(3, 0, "Please enter the number of boards you would like to create: ");
   refresh();
   getstr(inputAttribute);
-  requestedBoards = validateInputValue(3, inputAttribute, 1, 10);
+  requestedBoards = validateInputValue(3, inputAttribute, 1, 5);
   mvaddstr(3,0,"");
   clrtoeol();
   mvprintw(3, 0, "Number of boards to create: %d", requestedBoards);

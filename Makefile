@@ -32,6 +32,13 @@ $(TARGET1): $(OBJECTS)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR);
 	@mkdir -p $(MAINBUILDDIR);
+	@mkdir -p boards/level_1;
+	@mkdir -p boards/level_2;
+	@mkdir -p boards/level_3;
+	@mkdir -p boards/level_4;
+	@mkdir -p boards/level_5;
+	@mkdir -p boards/level_6;
+	@mkdir -p boards/user;
 	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 # Create.o: main/Create.cpp
