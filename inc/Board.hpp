@@ -49,7 +49,8 @@ public:
     int getBoardLevel();
     int getNumberDiamonds();
 
-    void moveMonsters(int emptyRows, int emptyCols);
+    void virusMonsters(int emptyRows, int emptyCols);
+    void moveMonsters();
     void clearMonsters();
 
     void switchVirusMode();

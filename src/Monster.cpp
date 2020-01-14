@@ -16,14 +16,6 @@ Monster::Monster(int id, int x, int y, string t, char s): xcoord(x), ycoord(y),s
   // cout<<"Monster "<<type<<" "<<idtag<<" created"<<endl;
 }
 
-// void Monster::showMonster(){
-//   cout<<"Id  : "<<idtag<<endl;
-//   cout<<"Type: "<<type<<endl;
-//   cout<<"X   : "<<xcoord<<endl;
-//   cout<<"Y   : "<<ycoord<<endl;
-//   cout<<"Symb: "<<symbol<<endl;
-// }
-
 char Monster::getSymbol(){
   return symbol;
 }

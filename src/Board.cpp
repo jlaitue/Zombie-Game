@@ -169,7 +169,7 @@ void Board::displayBoard(){
     int monsRow = monsters[i].getMonsterX();
     int monsCol = monsters[i].getMonsterY();
     char monsSymbol = monsters[i].getSymbol();
-    mvaddch(rowOrigin+monsRow,colOrigin+monsCol, monsSymbol | COLOR_PAIR(1));
+    mvaddch(rowOrigin+monsRow,colOrigin+monsCol, monsSymbol | COLOR_PAIR(2));
   }
 }
 
@@ -507,21 +507,71 @@ void Board::clearMonsters(){
   }
 }
 
-void Board::moveMonsters(int emptyRows, int emptyCols){
+void Board::virusMonsters(int emptyRows, int emptyCols){
   int row = 0;
   int column = 0;
+  int reproductionRate = 3;
   char c;
-  if (!virusModeBoard) {
-    clearMonsters();
-  }
-  for (int i = 0; i < availableMonsters; i++) {
+  // if (!virusModeBoard) {
+  //   clearMonsters();
+  // }
+  for (int i = 0; i < reproductionRate; i++) {
     c = matrix[row][column].getSymbol();
-    while ( c == 'X' or c == '*' or c == '$' or c == 'M') {
+    while ( c == 'X' or c == '*' or c == '$' or c == 'M' or c == '#' or c == '+') {
       row = rand() %emptyRows + 1;
       column = rand() %emptyCols + 1;
       c = matrix[row][column].getSymbol();
     }
     matrix[row][column].updateElement(row,column,"monster",'M');
+  }
+}
+
+void Board::moveMonsters(){
+  int rowPosition;
+  int colPosition;
+  int direction = 0;
+  bool moveValid;
+  char nextCh;
+
+  for (size_t i = 0; i < monsters.size(); i++) {
+    rowPosition = monsters[i].getMonsterX();
+    colPosition = monsters[i].getMonsterY();
+    matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",' ');
+    moveValid = false;
+    while (!moveValid) {
+      rowPosition = monsters[i].getMonsterX();
+      colPosition = monsters[i].getMonsterY();
+      direction = rand() %4 + 1;
+      switch (direction) {
+        case 1:{
+          rowPosition--;
+          // cout<<"MOVING UP"<<endl;
+          break;
+        }
+        case 2:{
+          rowPosition++;
+          // cout<<"MOVING DOWN"<<endl;
+          break;
+        }
+        case 3:{
+          colPosition++;
+          // cout<<"MOVING RIGHT"<<endl;
+          break;
+        }
+        case 4:{
+          colPosition--;
+          // cout<<"MOVING LEFT"<<endl;
+          break;
+        }
+      }
+      // Validation if movement is possible
+      nextCh = matrix[rowPosition][colPosition].getSymbol();
+      if (nextCh != 'X' and nextCh != '*' and nextCh != '$' and nextCh != '#' and nextCh != '+') {
+        moveValid = true;
+      }
+    }
+    monsters[i].updateMonsterCoords(rowPosition,colPosition);
+    matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"monster",'M');
   }
 }
 
@@ -563,7 +613,7 @@ string Board::play(Player &player){
   mvprintw(rowOrigin+7, maxcols/2+infoBoxIdent, "(O) Lives:     %d", player.Lives());
 
   mvaddstr(rowOrigin+9, maxcols/2+infoBoxIdent, "KEYBOARD MOVEMENT COMMANDS");
-  mvaddstr(rowOrigin+10, maxcols/2+infoBoxIdent, "Press W A S D or ARROW KEYS for lineal movement");
+  mvaddstr(rowOrigin+10, maxcols/2+infoBoxIdent, "Press W A S D or ARROW KEYS for linear movement");
   mvaddstr(rowOrigin+11, maxcols/2+infoBoxIdent, "Press Q E Z C for diagonal movement");
   mvaddstr(rowOrigin+12, maxcols/2+infoBoxIdent, "SPECIAL KEYBORD COMMANDS");
   mvaddstr(rowOrigin+13, maxcols/2+infoBoxIdent, "Press T to teleport using 1 powerup (*)");
@@ -586,7 +636,12 @@ string Board::play(Player &player){
       clrtoeol();
       refresh();
 
-      moveMonsters(emptyRows, emptyCols);
+      if (virusModeBoard) {
+        virusMonsters(emptyRows, emptyCols);
+      }
+      else {
+        moveMonsters();
+      }
       matrix[rowPosition][colPosition].updateElement(rowPosition,colPosition,"space",'.');
 
       if (userInput == 'k' or userInput == 'K'){
