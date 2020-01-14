@@ -1,8 +1,10 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <string>
+#include <vector>
 #include "Element.hpp"
 #include "Player.hpp"
+#include "Monster.hpp"
 using namespace std;
 
 const int rows = 20;
@@ -26,6 +28,7 @@ private:
   bool virusModeBoard;
   bool helpShown;
   Element matrix[rows][columns];
+  vector <Monster> monsters;
 
 public:
   static int boardCount;

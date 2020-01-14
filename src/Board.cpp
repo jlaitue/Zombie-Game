@@ -1,6 +1,7 @@
 #include "../inc/Board.hpp"
 #include "../inc/Element.hpp"
 #include "../inc/Player.hpp"
+#include "../inc/Monster.hpp"
 #include "../inc/Helper.h"
 #include <iostream>
 #include <string>
@@ -160,6 +161,12 @@ void Board::displayBoard(){
       mvaddch(rowOrigin+i,colOrigin+j, element | COLOR_PAIR(colorCode));
     }
   }
+  for (size_t i = 0; i < monsters.size(); i++) {
+    int monsRow = monsters[i].getMonsterX();
+    int monsCol = monsters[i].getMonsterY();
+    char monsSymbol = monsters[i].getSymbol();
+    mvaddch(rowOrigin+monsRow,colOrigin+monsCol, monsSymbol | COLOR_PAIR(2));
+  }
 }
 
 void Board::readBoard(int l, string filename){
@@ -207,9 +214,12 @@ void Board::readBoard(int l, string filename){
 
           }
           else if (line[i] == 'M'){
+            Monster monster;
             // cout<<"FOUND A MONSTER ";
             // cout<<"Coordinates: "<<rows<<", "<<i<<"\n";
-            matrix[rows][i].updateElement(rows,i,"mons",'M');
+            // matrix[rows][i].updateElement(rows,i,"mons",'M');
+            monster.updateMonsterCoords(rows, i);
+            monsters.push_back(monster);
             availableMonsters++;
           }
           else if (line[i] == ' '){
