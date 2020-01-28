@@ -108,7 +108,7 @@ void Board::positionObjects(){
       Monster monster;
       monster.updateMonsterCoords(row, column);
       monsters.push_back(monster);
-      // matrix[row][column].updateElement(row,column,"monster",'M');
+      matrix[row][column].updateElement(row,column,"monster",'M');
       nMons --;
     }
   }
