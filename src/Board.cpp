@@ -541,7 +541,7 @@ void Board::moveMonsters(){
     while (!moveValid) {
       rowPosition = monsters[i].getMonsterX();
       colPosition = monsters[i].getMonsterY();
-      direction = rand() %4 + 1;
+      direction = rand() %8 + 1;
       switch (direction) {
         case 1:{
           rowPosition--;
@@ -561,6 +561,30 @@ void Board::moveMonsters(){
         case 4:{
           colPosition--;
           // cout<<"MOVING LEFT"<<endl;
+          break;
+        }
+        case 5:{
+          colPosition++;
+          rowPosition--;
+          // cout<<"MOVING DIAGONALLY UP R "<<endl;
+          break;
+        }
+        case 6:{
+          colPosition--;
+          rowPosition--;
+          // cout<<"MOVING DIAGONALLY UP L "<<endl;
+          break;
+        }
+        case 7:{
+          colPosition--;
+          rowPosition++;
+          // cout<<"MOVING DIAGONALLY DOWN L"<<endl;
+          break;
+        }
+        case 8:{
+          colPosition++;
+          rowPosition++;
+          // cout<<"MOVING DIAGONALLY DOWN R"<<endl;
           break;
         }
       }
